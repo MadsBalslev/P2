@@ -1,2 +1,2 @@
-server/node_modules/*
-server/coverage/*
+*/node_modules/*
+*/coverage/*
