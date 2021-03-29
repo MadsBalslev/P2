@@ -1,29 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
-    <title>Spy Site</title>
-    <link rel="icon" type="image/png" href="./favicon.png"/>
+    <title>P2 Projekt</title>
+    <link rel='icon' type='image/png' href='./favicon.png' />
 </head>
 
 <body>
-    <h1>This guy is cute femboy lover smile!</h1>
-    <img src="https://cdn.discordapp.com/attachments/806119548340142151/822430562852929566/unknown.png" id="picture"
-        alt="Femboy" width="700" height="500">
-    <button id="knap1" type="submit">Submit your ip</button>
+    <form id='form' action='/opgaver'>
+        <label for='eksamenssætType'><b>Vælg eksamenssæt type</b></label><br>
+        <select id='eksamenssætType' name='eksamenssætType'>
+            <option value='generisk'>Generisk</option>
+            <option value='emneBestemt'>Emne bestemt</option>
+            <option value='personlig'>Personlig</option>
+        </select><br><br>
+        
+        <label for='emne'><b>Inkluder Emner:</b></label>
+        <div id='emne'></div>
+
+            <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
+            <label for="andengradspolynomiumOgLigning">Andengradspolynomium og -ligning</label><br>
+
+            <input type="checkbox" id="talOgRegnearter" name="talOgRegnearter" value="true">
+            <label for="talOgRegnearter">Tal og regnearter</label><br>
+            
+            <input type="checkbox" id="ligninger" name="ligninger" value="true">
+            <label for="ligninger">Ligninger</label><br>
+            
+            <input type="checkbox" id="trigonometri" name="trigonometri" value="true">
+            <label for="trigonometri">Trigonometri</label><br>
+            
+            <input type="checkbox" id="funktioner" name="funktioner" value="true">
+            <label for="funktioner">Funktioner</label><br>
+            
+            <input type="checkbox" id="geometri" name="geometri" value="true">
+            <label for="geometri">Geometri</label><br>
+          
+            <input type="checkbox" id="differebtialregning" name="differebtialregning" value="true">
+            <label for="differebtialregning">Differebtialregning</label><br>
+            
+            <input type="checkbox" id="sandsynlighedOgKombinatorik" name="sandsynlighedOgKombinatorik" value="true">
+            <label for="sandsynlighedOgKombinatorik">Sandsynlighed</label><br>
+        </div><br>
+        
+        <input type='submit' value='Indsend'>
+    </form>
+</body>
 </body>
 
 <script>
-    const btn = document.querySelector("#knap1")
-    btn.onmouseover = function () {
-        console.log("this is button");
-    }
-
-    const img = document.querySelector("#picture")
-    img.onmouseover = function () {
-        console.log("this is pic");
-    }
 </script>
 
-
 </html>
+
+
+
+
+
