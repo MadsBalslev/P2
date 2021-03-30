@@ -16,11 +16,11 @@ jobs:
         uses: andstor/jsdoc-action@v1
         with:
           source_dir: ./server/src
+          recurse: true
           output_dir: ./out
-          front_page: readme.md
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./out
