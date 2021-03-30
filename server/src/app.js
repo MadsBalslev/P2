@@ -10,6 +10,7 @@ const filePath = path.join(__dirname, '../public/site.html');
 
 server.on('request', tryHandleRequest);
 
+/** This is shit */
 function tryHandleRequest(request, response) {
   try {
     handleRequest(request, response);
@@ -33,7 +34,7 @@ function handleRequest(request, response) {
       break;
 
     default:
-      throw new Error('bad path');
+      throw 'bad path';
   }
 }
 
@@ -41,7 +42,7 @@ function handleBaseRequest(request, response) {
   if (request.method === 'GET') {
     respondWith(filePath, response);
   } else if (request.method !== 'GET') {
-    throw new Error('bad request');
+    throw 'bad request';
   }
 }
 
