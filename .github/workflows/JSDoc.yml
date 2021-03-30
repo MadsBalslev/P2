@@ -17,7 +17,7 @@ jobs:
         with:
           source_dir: ./server/src
           output_dir: ./out
-          front_page: README.md
+          front_page: readme.md
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
