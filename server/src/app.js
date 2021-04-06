@@ -85,7 +85,7 @@ function errorResponse(response, code, reason) {
  * @param {*} response
  */
 async function respondWith(file, fileType, response) {
-  let fileData = await fs.promises.readFile(file);
+  const fileData = await fs.promises.readFile(file);
   response.writeHead(200, { 'Content-Type': fileType });
   response.end(fileData);
 }

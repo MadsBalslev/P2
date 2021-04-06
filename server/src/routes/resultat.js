@@ -5,10 +5,9 @@
  */
 function handleResultatRequest(request, response) {
   if (request.method === 'POST') {
-    handleResultatPostRequest(request, response); 
+    handleResultatPostRequest(request, response);
     console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
   } else if (request.method !== 'POST') {
     throw 'bad request';
   }
 }
-
