@@ -3,8 +3,8 @@ const http = require('http');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
-const opgaver = require('./routes/opgaver');
-const resultat = require('./routes/resultat');
+const handleOpgaverRequest = require('./routes/opgaver');
+const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
 const port = process.env.PORT || 8080;
@@ -41,11 +41,11 @@ function handleRequest(request, response) {
       break;
 
     case '/opgaver':
-      opgaver.handleOpgaverRequest(request, response);
+      handleOpgaverRequest(request, response);
       break;
 
     case '/resultat':
-      resultat.handleResultatRequest(request, response);
+      handleResultatRequest(request, response);
       break;
 
     default:

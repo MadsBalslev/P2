@@ -12,3 +12,5 @@ function handleOpgaverRequest(request, response) {
     throw 'bad request';
   }
 }
+
+module.exports = handleOpgaverRequest;

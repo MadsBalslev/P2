@@ -11,3 +11,9 @@ function handleResultatRequest(request, response) {
     throw 'bad request';
   }
 }
+
+function handleResultatPostRequest(request, response) {
+  let lint;
+}
+
+module.exports = handleResultatRequest;
