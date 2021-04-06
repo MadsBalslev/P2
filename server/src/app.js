@@ -10,7 +10,11 @@ const filePath = path.join(__dirname, '../public/site.html');
 
 server.on('request', tryHandleRequest);
 
-/** This is shit */
+/**
+ * Will try to handle the request in {@link handleRequest} or if necessary catch the error
+ * @param {*} request
+ * @param {*} response
+ */
 function tryHandleRequest(request, response) {
   try {
     handleRequest(request, response);
@@ -19,6 +23,12 @@ function tryHandleRequest(request, response) {
   }
 }
 
+/**
+ * Will check which route is requested and use the correct handler function. If a non-existing route
+ * is requsted it will throw an error which will be catched in {@link tryHandleRequest}
+ * @param {*} request
+ * @param {*} response
+ */
 function handleRequest(request, response) {
   switch (request.url) {
     case '/':
@@ -38,6 +48,11 @@ function handleRequest(request, response) {
   }
 }
 
+/**
+ * Will handle requests to the '/' route
+ * @param {*} request
+ * @param {*} response
+ */
 function handleBaseRequest(request, response) {
   if (request.method === 'GET') {
     respondWith(filePath, response);
@@ -46,6 +61,11 @@ function handleBaseRequest(request, response) {
   }
 }
 
+/**
+ * Will handle requests to the '/opgaver' route
+ * @param {*} request
+ * @param {*} response
+ */
 function handleOpgaverRequest(request, response) {
   if (request.method === 'GET') {
     // hent opgave fra db
@@ -56,6 +76,11 @@ function handleOpgaverRequest(request, response) {
   }
 }
 
+/**
+ * Will handle requests to the '/resultater' route
+ * @param {*} request
+ * @param {*} response
+ */
 function handleResultatRequest(request, response) {
   if (request.method === 'GET') {
     respondWith(filePath, response);
@@ -65,12 +90,23 @@ function handleResultatRequest(request, response) {
   }
 }
 
+/**
+ * Will handle potential errors catched in {@link tryHandleRequest}
+ * @param {*} response
+ * @param {integer} code the http status code
+ * @param {string} reason the error message
+ */
 function errorResponse(response, code, reason) {
   response.writeHead(400, { 'Content-Type': 'text/txt' });
   response.write(reason);
   response.end('\n');
 }
 
+/**
+ * Will respond with a HTML file provided
+ * @param {string} file Path to the HTML file to respond with
+ * @param {*} response
+ */
 function respondWith(file, response) {
   fs.readFile(file, (err, html) => {
     if (err) {
