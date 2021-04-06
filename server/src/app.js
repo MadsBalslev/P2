@@ -3,6 +3,11 @@ const http = require('http');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
+const handleOpgaverRequest = require('./routes/opgaver');
+const handleResultatRequest = require('./routes/resultat');
+const helper = require('./helper');
+
+const port = process.env.PORT || 8080;
 
 const server = http.createServer();
 
@@ -17,6 +22,8 @@ server.on('request', tryHandleRequest);
  */
 function tryHandleRequest(request, response) {
   try {
+    console.log('NEW ' + request.method + ' REQUEST:');
+    console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
     errorResponse(response, 400, error);
@@ -55,36 +62,7 @@ function handleRequest(request, response) {
  */
 function handleBaseRequest(request, response) {
   if (request.method === 'GET') {
-    respondWith(filePath, response);
-  } else if (request.method !== 'GET') {
-    throw 'bad request';
-  }
-}
-
-/**
- * Will handle requests to the '/opgaver' route
- * @param {*} request
- * @param {*} response
- */
-function handleOpgaverRequest(request, response) {
-  if (request.method === 'GET') {
-    // hent opgave fra db
-  } else if (request.method === 'POST') {
-    // compare answer to assignment id
-  } else if (request.method !== 'GET' && request.method !== 'POST') {
-    throw 'bad request';
-  }
-}
-
-/**
- * Will handle requests to the '/resultater' route
- * @param {*} request
- * @param {*} response
- */
-function handleResultatRequest(request, response) {
-  if (request.method === 'GET') {
-    respondWith(filePath, response);
-    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
+    respondWith(filePath, 'text/html', response);
   } else if (request.method !== 'GET') {
     throw 'bad request';
   }
@@ -97,7 +75,7 @@ function handleResultatRequest(request, response) {
  * @param {string} reason the error message
  */
 function errorResponse(response, code, reason) {
-  response.writeHead(400, { 'Content-Type': 'text/txt' });
+  response.writeHead(code, { 'Content-Type': 'text/txt' });
   response.write(reason);
   response.end('\n');
 }
@@ -105,20 +83,16 @@ function errorResponse(response, code, reason) {
 /**
  * Will respond with a HTML file provided
  * @param {string} file Path to the HTML file to respond with
+ * @param {string} fileType type of file
  * @param {*} response
  */
-function respondWith(file, response) {
-  fs.readFile(file, (err, html) => {
-    if (err) {
-      throw err;
-    }
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(html);
-    response.end();
-  });
+async function respondWith(file, fileType, response) {
+  const fileData = await fs.promises.readFile(file);
+  response.writeHead(200, { 'Content-Type': fileType });
+  response.end(fileData);
 }
 
-server.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
   console.log(filePath);
 });
