@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: ./server
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,11 +21,11 @@ jobs:
       - name: Build
         uses: andstor/jsdoc-action@v1
         with:
-          source_dir: ./server/src
-          config_file: ./server/conf.json
+          source_dir: ./src
+          config_file: ./conf.json
           template: clean-jsdoc-theme
           recurse: true
-          front_page: readme.md
+          front_page: ../readme.md
           output_dir: ./out
 
       - name: Deploy
