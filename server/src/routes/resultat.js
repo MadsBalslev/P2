@@ -1,5 +1,3 @@
-const util = require('util');
-
 /**
  * Will handle requests to the '/resultater' route
  * @param {*} request
@@ -8,7 +6,6 @@ const util = require('util');
 const handleResultatRequest = (request, response) => {
   if (request.method === 'POST') {
     handleResultatPostRequest(request, response);
-    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
   } else if (request.method !== 'POST') {
     throw 'handleResultatRequest did not get a POST request';
   }
@@ -24,17 +21,14 @@ const handleResultatRequest = (request, response) => {
 const handleResultatPostRequest = (request, response) => {
   let body = '';
   request.setEncoding('utf8');
+
   request.on('data', (chunk) => {
     body += chunk;
   });
 
   request.on('end', () => {
     body = JSON.parse(body);
-    console.log('got JSON object:');
-    console.log(body);
-    console.log('\n');
-
-    if (requestBodyIsValid(body)) { 
+    if (requestBodyIsValid(body)) {
       handleRequestBody(body, response);
     } else if (!(requestBodyIsValid(body))) {
       response.writeHead(400, { 'Content-Type': 'text/txt' });
@@ -45,9 +39,9 @@ const handleResultatPostRequest = (request, response) => {
 };
 
 /**
- * 
- * @param {*} body 
- * @returns 
+ * test
+ * @param {*} body
+ * @returns
  */
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
@@ -63,9 +57,9 @@ const requestBodyIsValid = (body) => {
 };
 
 /**
- * 
- * @param {*} opgaveSvar 
- * @returns 
+ *
+ * @param {*} opgaveSvar
+ * @returns
  */
 const isOpgaveSvarValid = (opgaveSvar) => {
   return opgaveSvar.hasOwnProperty('id') &&
@@ -75,9 +69,9 @@ const isOpgaveSvarValid = (opgaveSvar) => {
 };
 
 /**
- * 
- * @param {*} requestBody 
- * @param {*} response 
+ *
+ * @param {*} requestBody
+ * @param {*} response
  */
 const handleRequestBody = (requestBody, response) => {
 
