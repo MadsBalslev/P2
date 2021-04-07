@@ -1,3 +1,6 @@
+const util = require('util');
+const helper = require('../helper');
+
 /**
  * Will handle requests to the '/resultater' route
  * @param {*} request
@@ -31,15 +34,13 @@ const handleResultatPostRequest = (request, response) => {
     if (requestBodyIsValid(body)) {
       handleRequestBody(body, response);
     } else if (!(requestBodyIsValid(body))) {
-      response.writeHead(400, { 'Content-Type': 'text/txt' });
-      response.write('handleResultatPostRequest did not get valid body');
-      response.end('\n');
+      helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
     }
   });
 };
 
 /**
- * test
+ *
  * @param {*} body
  * @returns
  */
