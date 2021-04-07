@@ -1,4 +1,3 @@
-const util = require('util');
 const helper = require('../helper');
 
 /**
@@ -21,19 +20,24 @@ const handleResultatRequest = (request, response) => {
  * @param {*} request
  * @param {*} response
  */
-const handleResultatPostRequest = (request, response) => {
-  let body = '';
-  request.setEncoding('utf8');
+const handleResultatPostRequest = async (request, response) => {
+  const body = await getBodyFromRequest(request);
+  handleBody(body, response);
+};
 
+const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
+  let body = '';
   request.on('data', (chunk) => {
     body += chunk;
   });
 
   request.on('end', () => {
     body = JSON.parse(body);
-    handleBody(body, response);
+    resolve(body);
   });
-};
+
+  request.on('error', (error) => { rejects(error); });
+});
 
 const handleBody = (body, response) => {
   if (requestBodyIsValid(body)) {
@@ -56,7 +60,7 @@ const requestBodyIsValid = (body) => {
       bodyIsValid = false;
       break;
     }
-  };
+  }
 
   return bodyIsValid;
 };
@@ -66,12 +70,10 @@ const requestBodyIsValid = (body) => {
  * @param {*} opgaveSvar
  * @returns
  */
-const isOpgaveSvarValid = (opgaveSvar) => {
-  return opgaveSvar.hasOwnProperty('id') &&
-    opgaveSvar.hasOwnProperty('actualAnswer') &&
-    typeof opgaveSvar.id === 'number' &&
-    typeof opgaveSvar.actualAnswer === 'string';
-};
+const isOpgaveSvarValid = (opgaveSvar) => opgaveSvar.hasOwnProperty('id')
+  && opgaveSvar.hasOwnProperty('actualAnswer')
+  && typeof opgaveSvar.id === 'number'
+  && typeof opgaveSvar.actualAnswer === 'string';
 
 /**
  *
