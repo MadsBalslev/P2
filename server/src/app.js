@@ -22,7 +22,7 @@ server.on('request', tryHandleRequest);
  */
 function tryHandleRequest(request, response) {
   try {
-    console.log('NEW ' + request.method + ' REQUEST:');
+    console.log(`NEW ${request.method} REQUEST:`);
     console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
