@@ -31,8 +31,6 @@ const getJSON = async () => {
 
 getJSON();
 
-con.end();
-
 module.exports = {
   getJSON,
 };
