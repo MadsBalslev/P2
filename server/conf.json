@@ -1,6 +1,6 @@
 {
   "source": {
-      "include": ["server/src", "server/package.json"],
+      "include": ["server/src"],
       "includePattern": ".js$",
       "excludePattern": "(node_modules/|docs)"
   },
@@ -9,7 +9,7 @@
 
   "opts": {
       "encoding": "utf8",
-      "destination": "./",
+      "destination": "./docs",
       "recurse": true,
       "verbose": true,
       "template": "./node_modules/clean-jsdoc-theme",
