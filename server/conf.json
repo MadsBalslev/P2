@@ -1,0 +1,19 @@
+{
+  "source": {
+      "include": ["server/src", "server/package.json"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+  },
+
+  "plugins": ["plugins/markdown"],
+
+  "opts": {
+      "encoding": "utf8",
+      "recurse": true,
+      "verbose": true,
+      "template": "server/node_modules/clean-jsdoc-theme",
+      "theme_opts": {
+          "theme": "dark"
+      }
+  }
+}
