@@ -25,5 +25,5 @@ jobs:
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           allow_empty_commit: true
-          publish_dir: ./
+          publish_dir: /docs
 
