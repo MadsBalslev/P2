@@ -1,4 +1,4 @@
-const util = require('util'); 
+const util = require('util');
 
 /**
  * Will handle requests to the '/resultater' route
@@ -28,7 +28,6 @@ const handleResultatPostRequest = (request, response) => {
     console.log('\n');
 
     if (requestBodyIsValid(body)) {
-      console.log('was valid');
       handleRequestBody(body, response);
     } else if (!(requestBodyIsValid(body))) {
       response.writeHead(400, { 'Content-Type': 'text/txt' });
@@ -40,15 +39,19 @@ const handleResultatPostRequest = (request, response) => {
 
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
-  for (const opgave of body) {
-    if (!(opgave.hasOwnProperty('id') && opgave.hasOwnProperty('actualAnswer'))) {
+
+  body.forEach(opgaveSvar => {
+    if (isOpgaveSvarValid(opgaveSvar) && bodyIsValid) {
       bodyIsValid = false;
     }
-    if (typeof opgave.id !== 'number' && typeof opgave.actualAnswer !== 'string') {
-      bodyIsValid = false;
-    }
-  }
-  return bodyIsValid;
+  });
+};
+
+const isOpgaveSvarValid = (opgaveSvar) => {
+  return opgaveSvar.hasOwnProperty('id') &&
+    opgaveSvar.hasOwnProperty('actualAnswer') &&
+    opgaveSvar.hasOwnProperty('id') &&
+    opgaveSvar.hasOwnProperty('actualAnswer');
 };
 
 const handleRequestBody = (requestBody, response) => {
