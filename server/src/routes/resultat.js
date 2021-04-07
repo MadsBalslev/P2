@@ -17,6 +17,7 @@ const handleResultatRequest = (request, response) => {
 /**
  * Enabling utf8 upon request from server.
  * Adding requested data from chunk to body
+ * Parsing JSON format from server to body, and responging request with console.log
  * @param {*} request
  * @param {*} response
  */
@@ -33,7 +34,7 @@ const handleResultatPostRequest = (request, response) => {
     console.log(body);
     console.log('\n');
 
-    if (requestBodyIsValid(body)) {
+    if (requestBodyIsValid(body)) { 
       handleRequestBody(body, response);
     } else if (!(requestBodyIsValid(body))) {
       response.writeHead(400, { 'Content-Type': 'text/txt' });
