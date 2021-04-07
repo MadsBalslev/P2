@@ -1,3 +1,5 @@
+const util = require('util'); 
+
 /**
  * Will handle requests to the '/resultater' route
  * @param {*} request
