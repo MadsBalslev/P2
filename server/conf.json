@@ -1,6 +1,6 @@
 {
   "source": {
-      "include": ["./src", "package.json", "../readme.md"],
+      "include": ["./src", "package.json"],
       "includePattern": ".js$",
       "excludePattern": "(node_modules/|docs)"
   },
@@ -9,8 +9,6 @@
 
   "opts": {
       "encoding": "utf8",
-      "readme": "../readme.md",
-      "destination": "docs/",
       "recurse": true,
       "verbose": true,
       "template": "./node_modules/clean-jsdoc-theme",
