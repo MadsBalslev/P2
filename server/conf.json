@@ -15,7 +15,13 @@
       "verbose": true,
       "template": "./node_modules/clean-jsdoc-theme",
       "theme_opts": {
-          "theme": "dark"
+          "theme": "dark",
+          "menu": [
+            {
+              "title": "Github",
+              "link": "https://github.com/MadsBalslev/P2"
+            }
+          ]
       }
   }
 }
