@@ -19,7 +19,6 @@ jobs:
           config_file: ./server/conf.json
           template: clean-jsdoc-theme
           recurse: true
-          front_page: ../readme.md
           output_dir: ./out
 
       - name: Deploy
