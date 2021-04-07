@@ -13,15 +13,6 @@
       "destination": "./docs",
       "recurse": true,
       "verbose": true,
-      "template": "./node_modules/clean-jsdoc-theme",
-      "theme_opts": {
-          "theme": "dark",
-          "menu": [
-            {
-              "title": "Github",
-              "link": "https://github.com/MadsBalslev/P2"
-            }
-          ]
-      }
+      "template": "./node_modules/minami"
   }
 }
