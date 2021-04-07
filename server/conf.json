@@ -9,7 +9,6 @@
 
   "opts": {
       "encoding": "utf8",
-      "readme": "./README.md",
       "destination": "docs/",
       "recurse": true,
       "verbose": true,
