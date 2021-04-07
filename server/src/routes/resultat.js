@@ -14,6 +14,12 @@ const handleResultatRequest = (request, response) => {
   }
 };
 
+/**
+ * Enabling utf8 upon request from server.
+ * Adding requested data from chunk to body
+ * @param {*} request
+ * @param {*} response
+ */
 const handleResultatPostRequest = (request, response) => {
   let body = '';
   request.setEncoding('utf8');
@@ -37,23 +43,41 @@ const handleResultatPostRequest = (request, response) => {
   });
 };
 
+/**
+ * 
+ * @param {*} body 
+ * @returns 
+ */
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
 
-  body.forEach(opgaveSvar => {
-    if (isOpgaveSvarValid(opgaveSvar) && bodyIsValid) {
+  for (const opgaveSvar of body) {
+    if (!isOpgaveSvarValid(opgaveSvar)) {
       bodyIsValid = false;
+      break;
     }
-  });
+  };
+
+  return bodyIsValid;
 };
 
+/**
+ * 
+ * @param {*} opgaveSvar 
+ * @returns 
+ */
 const isOpgaveSvarValid = (opgaveSvar) => {
   return opgaveSvar.hasOwnProperty('id') &&
     opgaveSvar.hasOwnProperty('actualAnswer') &&
-    opgaveSvar.hasOwnProperty('id') &&
-    opgaveSvar.hasOwnProperty('actualAnswer');
+    typeof opgaveSvar.id === 'number' &&
+    typeof opgaveSvar.actualAnswer === 'string';
 };
 
+/**
+ * 
+ * @param {*} requestBody 
+ * @param {*} response 
+ */
 const handleRequestBody = (requestBody, response) => {
 
 };
