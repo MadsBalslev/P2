@@ -17,7 +17,7 @@ jobs:
         with:
           source_dir: /server/src
           config_file: /server/conf.json
-          template: clean-jsdoc-theme
+          template: minami
           recurse: true
 
       - name: Deploy
