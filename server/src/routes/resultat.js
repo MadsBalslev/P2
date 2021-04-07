@@ -31,12 +31,16 @@ const handleResultatPostRequest = (request, response) => {
 
   request.on('end', () => {
     body = JSON.parse(body);
-    if (requestBodyIsValid(body)) {
-      handleRequestBody(body, response);
-    } else if (!(requestBodyIsValid(body))) {
-      helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
-    }
+    handleBody(body, response);
   });
+};
+
+const handleBody = (body, response) => {
+  if (requestBodyIsValid(body)) {
+    handleRequestBody(body, response);
+  } else if (!(requestBodyIsValid(body))) {
+    helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
+  }
 };
 
 /**
@@ -74,8 +78,8 @@ const isOpgaveSvarValid = (opgaveSvar) => {
  * @param {*} requestBody
  * @param {*} response
  */
-const handleRequestBody = (requestBody, response) => {
-
+const handleRequestBody = (body, response) => {
+  helper.errorResponse(response, 204, '');
 };
 
 module.exports = handleResultatRequest;
