@@ -19,11 +19,10 @@ jobs:
           config_file: /server/conf.json
           template: clean-jsdoc-theme
           recurse: true
-          output_dir: /out
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: /out
+          publish_dir: /docs
 
