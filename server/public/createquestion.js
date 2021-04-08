@@ -8,10 +8,8 @@ function Run(){
     const form = document.createElement("form");
     let question1 = createQuestion(0, "Hvad er 2 + 2",4);
     createQuestion(1, "Hvad er 3 + 3",6);
-    document.getElementsByTagName("button")[0].addEventListener("click",checkAnswer(0,4));
     console.log(document.getElementsByTagName("Form")[1].innerHTML);
-
-}
+    }
 function createQuestion(questionnumber,questiontext,testAnswer){
     {
         const div = document.createElement("div");
@@ -26,6 +24,9 @@ function createQuestion(questionnumber,questiontext,testAnswer){
         form.appendChild(button);
         div.appendChild(form);
         document.body.appendChild(div);
+        document.getElementsByTagName("button")[questionnumber].onclick = function(){
+            checkAnswer(questionnumber,testAnswer);
+        }
         document.body.getElementsByTagName("button")[questionnumber].innerHTML= "Submit"
         document.getElementsByTagName("p")[questionnumber].innerHTML = questiontext;
 
