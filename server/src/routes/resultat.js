@@ -1,26 +1,25 @@
 const helper = require('../helper');
 
 /**
- * Will handle requests to the '/resultater' route
+ * Will handle requests to the '/result' route
  * @param {*} request
  * @param {*} response
  */
-const handleResultatRequest = (request, response) => {
+const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
-    handleResultatPostRequest(request, response);
+    handleResultPostRequest(request, response);
   } else if (request.method !== 'POST') {
-    throw 'handleResultatRequest did not get a POST request';
+    throw 'handleResultRequest did not get a POST request';
   }
 };
 
 /**
- * Enabling utf8 upon request from server.
  * Adding requested data from chunk to body
- * Parsing JSON format from server to body, and responging request with console.log
+ * Parsing JSON format from server to body, using the Promise (), function to handle error.
  * @param {*} request
  * @param {*} response
  */
-const handleResultatPostRequest = async (request, response) => {
+const handleResultPostRequest = async (request, response) => {
   const body = await getBodyFromRequest(request);
   handleBody(body, response);
 };
@@ -38,7 +37,12 @@ const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
 
   request.on('error', (error) => { rejects(error); });
 });
-
+/**
+ * @param {*} body
+ * @param {*} response
+ * Error message defined. We select our handlebody,-
+   so that none valid requests gets an errormessage.
+ */
 const handleBody = (body, response) => {
   if (requestBodyIsValid(body)) {
     handleRequestBody(body, response);
@@ -48,15 +52,15 @@ const handleBody = (body, response) => {
 };
 
 /**
- *
+ * We iterate the elements of the body array. The Loop will break, if it gets a false value.
  * @param {*} body
  * @returns
  */
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
 
-  for (const opgaveSvar of body) {
-    if (!isOpgaveSvarValid(opgaveSvar)) {
+  for (const actualAnswers of body) {
+    if (!isActualAnswerValid(actualAnswers)) {
       bodyIsValid = false;
       break;
     }
@@ -66,22 +70,79 @@ const requestBodyIsValid = (body) => {
 };
 
 /**
- *
- * @param {*} opgaveSvar
+ * @var isActualSnawerValid
+ * The variable is assigned the properties of the array actualAnswers
+ * @param {*} actualAnswers
  * @returns
  */
-const isOpgaveSvarValid = (opgaveSvar) => opgaveSvar.hasOwnProperty('id')
-  && opgaveSvar.hasOwnProperty('actualAnswer')
-  && typeof opgaveSvar.id === 'number'
-  && typeof opgaveSvar.actualAnswer === 'string';
+const isActualAnswerValid = (actualAnswers) => actualAnswers.hasOwnProperty('id')
+  && actualAnswers.hasOwnProperty('actualAnswer')
+  && typeof actualAnswers.id === 'number'
+  && typeof actualAnswers.actualAnswer === 'string';
 
 /**
- *
+ * Handling structure, so that HandleRequest runs before exercisesFromDatabase
+ * First we insert the value of the parameters in order to run our comparisson, in our function-
+    compareExercisesFromDatabaseWithActualAnswers.
  * @param {*} requestBody
  * @param {*} response
  */
-const handleRequestBody = (body, response) => {
+const handleRequestBody = async (actualAnswers, response) => {
+  const exercisesFromDatabase = await getExercisesFromDatabase();
+  compareExercisesFromDatabaseWithActualAnswers(actualAnswers, exercisesFromDatabase);
+  let resultPage = createResultPage(actualAnswers);
+  //respondWith(resultPage, response);
   helper.errorResponse(response, 204, '');
 };
 
-module.exports = handleResultatRequest;
+// This function should actualy get the object from the database
+const getExercisesFromDatabase = () => {
+  return [
+    {
+      "id": 0,
+      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+      "var1": "19 5",
+      "udtryk": "*",
+      "var2": "11 2",
+      "facit": "219",
+      "point": 15
+    },
+    {
+      "id": 1,
+      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+      "var1": "19 9",
+      "udtryk": "*",
+      "var2": "10 8",
+      "facit": "262",
+      "point": 15
+    },
+    {
+      "id": 2,
+      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+      "var1": "14 4",
+      "udtryk": "*",
+      "var2": "12 5",
+      "facit": "188",
+      "point": 15
+    },
+  ];
+};
+
+const compareExercisesFromDatabaseWithActualAnswers = (actualAnswers, exercisesFromDatabase) => {
+  for (let i = 0; i < actualAnswers.length; i++) {
+    if (actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
+      actualAnswers[i].isCorrect = true;
+    } else if (!actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
+      actualAnswers[i].isCorrect = false;
+    }
+  }
+};
+
+const actualAnswerIsCorrect = (actualAnswer, facit) => {
+  return (actualAnswer === facit);
+};
+
+const createResultPage = (actualAnswers, getExercisesFromDatabase) => { 
+};
+
+module.exports = handleResultRequest;
