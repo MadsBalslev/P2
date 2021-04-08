@@ -128,8 +128,10 @@ const getExercisesFromDatabase = () => {
   ];
 };
 
+
 const compareExercisesFromDatabaseWithActualAnswers = (actualAnswers, exercisesFromDatabase) => {
   for (let i = 0; i < actualAnswers.length; i++) {
+    conosle.log(actualAnswers.concat(facit));
     if (actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
       actualAnswers[i].isCorrect = true;
     } else if (!actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
@@ -142,7 +144,7 @@ const actualAnswerIsCorrect = (actualAnswer, facit) => {
   return (actualAnswer === facit);
 };
 
-const createResultPage = (actualAnswers, getExercisesFromDatabase) => { 
+const createResultPage = (actualAnswers) => {
 };
 
 module.exports = handleResultRequest;
