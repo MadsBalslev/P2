@@ -1,9 +1,8 @@
 const math = require('mathjs');
-const {
-  connectToDB,
-} = require('../../helper');
+const mysql = require('mysql');
+const { dbConnection } = require('../../helper');
 
-const con = connectToDB();
+const con = mysql.createConnection(dbConnection);
 
 con.connect((err) => {
   if (err) {
