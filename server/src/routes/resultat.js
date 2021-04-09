@@ -111,9 +111,6 @@ function ExerciseSuite(exercises) {
   this.exercises = exercises;
 
   this.getExercisesDataFromDatabase = async function getExercisesDataFromDatabase() {
-    for await (exercise of this.exercises) {
-      exercise.getSingleExerciseDataFromDatabase();
-    };
   };
 
   this.evaluateAnswersData = function evaluateAnswersData() {
