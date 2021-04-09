@@ -88,63 +88,94 @@ const isActualAnswerValid = (actualAnswers) => actualAnswers.hasOwnProperty('id'
  * @param {*} response
  */
 const handleRequestBody = async (actualAnswers, response) => {
-  const exercisesFromDatabase = await getExercisesFromDatabase();
-  compareExercisesFromDatabaseWithActualAnswers(actualAnswers, exercisesFromDatabase);
-  let resultPage = createResultPage(actualAnswers);
-  //respondWith(resultPage, response);
-  helper.errorResponse(response, 204, '');
+  const exercises = convertActualAnswersToExercises(actualAnswers);
+  const exerciseSuite = new ExerciseSuite(exercises);
+  exerciseSuite.getExercisesDataFromDatabase();
+  exerciseSuite.evaluateAnswers();
+  const resultPage = new ResultPage(exerciseSuite);
+  resultPage.respondTo(response);
 };
 
-// This function should actualy get the object from the database
-const getExercisesFromDatabase = () => {
-  return [
-    {
-      "id": 0,
-      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-      "var1": "19 5",
-      "udtryk": "*",
-      "var2": "11 2",
-      "facit": "219",
-      "point": 15
-    },
-    {
-      "id": 1,
-      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-      "var1": "19 9",
-      "udtryk": "*",
-      "var2": "10 8",
-      "facit": "262",
-      "point": 15
-    },
-    {
-      "id": 2,
-      "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-      "var1": "14 4",
-      "udtryk": "*",
-      "var2": "12 5",
-      "facit": "188",
-      "point": 15
-    },
-  ];
-};
+function convertActualAnswersToExercises(actualAnswers) {
+  let i = 0;
+  const exercises = [];
+  actualAnswers.forEach(answer => {
+    exercises[i] = new Exercise(answer);
+    i += 1;
+  });
 
+  return exercises;
+}
 
-const compareExercisesFromDatabaseWithActualAnswers = (actualAnswers, exercisesFromDatabase) => {
-  for (let i = 0; i < actualAnswers.length; i++) {
-    conosle.log(actualAnswers.concat(facit));
-    if (actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
-      actualAnswers[i].isCorrect = true;
-    } else if (!actualAnswerIsCorrect(actualAnswers[i].actualAnswer, exercisesFromDatabase[i].facit)) {
-      actualAnswers[i].isCorrect = false;
-    }
-  }
-};
+function ExerciseSuite(exercises) {
+  this.exercises = exercises;
 
-const actualAnswerIsCorrect = (actualAnswer, facit) => {
-  return (actualAnswer === facit);
-};
+  this.getExercisesDataFromDatabase = function getExercisesDataFromDatabase() {
+    this.exercises.forEach((exercise) => {
+      exercise.getSingleExerciseDataFromDatabase();
+    });
+  };
 
-const createResultPage = (actualAnswers) => {
-};
+  this.evaluateAnswers = function evaluateAnswers() {
+    this.exercises.forEach(exercise => {
+      exercise.evaluateSingleAnswer();
+    });
+  };
+}
+
+function Exercise(answer) {
+  this.data = {
+    id: answer.id,
+    actualAnswer: answer.actualAnswer,
+    answerWasCorrect: undefined,
+    tekst: '',
+    facit: '',
+    point: undefined,
+  };
+
+  this.getSingleExerciseDataFromDatabase = function getSingleExerciseDataFromDatabase() {
+
+  };
+
+  this.evaluateSingleAnswer = function evaluateSingleAnswer() {
+
+  };
+}
+
+function ResultPage(ExerciseSuite) {
+  this.page = '';
+  this.respondTo = function respondTo(response) {
+  };
+}
+
+[
+  {
+    "id": 0,
+    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+    "var1": "19 5",
+    "udtryk": "*",
+    "var2": "11 2",
+    "facit": "219",
+    "point": 15
+  },
+  {
+    "id": 1,
+    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+    "var1": "19 9",
+    "udtryk": "*",
+    "var2": "10 8",
+    "facit": "262",
+    "point": 15
+  },
+  {
+    "id": 2,
+    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
+    "var1": "14 4",
+    "udtryk": "*",
+    "var2": "12 5",
+    "facit": "188",
+    "point": 15
+  },
+];
 
 module.exports = handleResultRequest;
