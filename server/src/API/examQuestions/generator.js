@@ -1,12 +1,7 @@
-const mysql = require('mysql');
 const math = require('mathjs');
+const { connectToDB } = require('../../helper');
 
-const con = mysql.createConnection({
-  host: process.env.HOST || '127.0.0.1',
-  user: process.env.USER || 'root',
-  password: process.env.PASSWORD || '',
-  database: process.env.DATABASE || 'test',
-});
+const con = connectToDB();
 
 con.connect((err) => {
   if (err) {
