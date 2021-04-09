@@ -1,5 +1,7 @@
 const math = require('mathjs');
-const { connectToDB } = require('../../helper');
+const {
+  connectToDB,
+} = require('../../helper');
 
 const con = connectToDB();
 
