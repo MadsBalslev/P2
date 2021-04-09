@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const math = require('mathjs');
 
 const con = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
-  database: 'test',
+  host: process.env.HOST || '127.0.0.1',
+  user: process.env.USER || 'root',
+  password: process.env.PASSWORD || '',
+  database: process.env.DATABASE || 'test',
 });
 
 con.connect((err) => {
