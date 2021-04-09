@@ -17,6 +17,7 @@ const createTable = `CREATE TABLE IF NOT EXISTS examquestions (
   udtryk varchar(3) NOT NULL COLLATE utf8_danish_ci,
   var2 varchar(255) NOT NULL COLLATE utf8_danish_ci,
   facit varchar(255) NOT NULL COLLATE utf8_danish_ci,
+  type varchar(255) NOT NULL COLLATE utf8_danish_ci,
   point int NOT NULL,
   PRIMARY KEY (id)
 );`;
