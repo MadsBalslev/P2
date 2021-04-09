@@ -1,17 +1,11 @@
-const {
-  connectToDB,
-} = require('../../helper');
+const mysql = require('mysql');
 
-<<<<<<< HEAD
-const con = connectToDB();
-=======
 const con = mysql.createConnection({
   host: process.env.DB_HOST || '127.0.0.1',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'test',
+  database: process.env.DB || 'test',
 });
->>>>>>> 54b811f8003d40afced04fddb955826d36c02868
 
 con.connect((err) => {
   if (err) {
