@@ -90,8 +90,8 @@ const isActualAnswerValid = (actualAnswers) => actualAnswers.hasOwnProperty('id'
 const handleRequestBody = async (actualAnswers, response) => {
   const exercises = convertActualAnswersToExercises(actualAnswers);
   const exerciseSuite = new ExerciseSuite(exercises);
-  exerciseSuite.getExercisesDataFromDatabase();
-  exerciseSuite.evaluateAnswers();
+  await exerciseSuite.getExercisesDataFromDatabase();
+  exerciseSuite.evaluateAnswersData();
   const resultPage = new ResultPage(exerciseSuite);
   resultPage.respondTo(response);
 };
@@ -99,7 +99,7 @@ const handleRequestBody = async (actualAnswers, response) => {
 function convertActualAnswersToExercises(actualAnswers) {
   let i = 0;
   const exercises = [];
-  actualAnswers.forEach(answer => {
+  actualAnswers.forEach((answer) => {
     exercises[i] = new Exercise(answer);
     i += 1;
   });
@@ -110,14 +110,14 @@ function convertActualAnswersToExercises(actualAnswers) {
 function ExerciseSuite(exercises) {
   this.exercises = exercises;
 
-  this.getExercisesDataFromDatabase = function getExercisesDataFromDatabase() {
+  this.getExercisesDataFromDatabase = async function getExercisesDataFromDatabase() {
     this.exercises.forEach((exercise) => {
       exercise.getSingleExerciseDataFromDatabase();
     });
   };
 
-  this.evaluateAnswers = function evaluateAnswers() {
-    this.exercises.forEach(exercise => {
+  this.evaluateAnswersData = function evaluateAnswersData() {
+    this.exercises.forEach((exercise) => {
       exercise.evaluateSingleAnswer();
     });
   };
@@ -138,13 +138,19 @@ function Exercise(answer) {
   };
 
   this.evaluateSingleAnswer = function evaluateSingleAnswer() {
-
+    if (this.data.actualAnswer === this.data.facit) {
+      this.data.answerWasCorrect = true;
+    } else if (this.data.actualAnswer !== this.data.facit) {
+      this.data.answerWasCorrect = false;
+    }
   };
 }
 
 function ResultPage(ExerciseSuite) {
-  this.page = '';
+  this.page = 'this is a dummy page';
   this.respondTo = function respondTo(response) {
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(this.page);
   };
 }
 
