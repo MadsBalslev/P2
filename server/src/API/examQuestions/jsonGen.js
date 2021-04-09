@@ -37,8 +37,6 @@ const getExamQuestions = () => new Promise((resolve, reject) => {
 const getJSON = async () => {
   const json = await getExamQuestions();
 
-  console.log(json);
-
   return json;
 };
 
