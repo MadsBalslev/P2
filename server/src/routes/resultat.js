@@ -125,9 +125,10 @@ function Exercise(answer) {
     id: answer.id,
     actualAnswer: answer.actualAnswer,
     answerWasCorrect: undefined,
-    tekst: '',
-    facit: '220',
+    tekst: undefined,
+    facit: undefined,
     point: undefined,
+    type: undefined,
   };
 
   this.getSingleExerciseDataFromDatabase = function getSingleExerciseDataFromDatabase() {
@@ -173,49 +174,19 @@ function ResultPage(exerciseSuite) {
     this.page += '</div>';
 
     this.page += '<div class="exerciseData">';
-    this.page += '<h2>Opgave data</h2>';
-    this.page += '<p><b>Emne:</b> Vektorer i 2D </p>';
-    this.page += '<p><b>Points:</b> 15 </p>';
-    this.page += '<p><b>Sværhedsgræd:</b> Svær </p>';
+    this.page += '<h2>Opgave indsigt</h2>';
+    this.page += `<p><b>Emne:</b> ${exercise.data.type}</p>`;
+    this.page += `<p><b>Points:</b> ${exercise.data.point}</p>`;
     this.page += '</div>';
 
     exerciseNumber += 1;
   });
+  this.page += '</body>';
 
   this.respondTo = function respondTo(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(this.page);
   };
 }
-
-[
-  {
-    "id": 0,
-    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-    "var1": "19 5",
-    "udtryk": "*",
-    "var2": "11 2",
-    "facit": "219",
-    "point": 15
-  },
-  {
-    "id": 1,
-    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-    "var1": "19 9",
-    "udtryk": "*",
-    "var2": "10 8",
-    "facit": "262",
-    "point": 15
-  },
-  {
-    "id": 2,
-    "tekst": "Find skalarproduktet af fÃ¸lgende to vektorer",
-    "var1": "14 4",
-    "udtryk": "*",
-    "var2": "12 5",
-    "facit": "188",
-    "point": 15
-  },
-];
 
 module.exports = handleResultRequest;
