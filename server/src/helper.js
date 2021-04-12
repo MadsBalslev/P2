@@ -7,6 +7,9 @@ const dbConnection = {
   database: process.env.DB_NAME || 'test',
 };
 
+const randNum = (range) => Math.floor(Math.random() * range) + 1;
+
 module.exports = {
   dbConnection,
+  randNum,
 };
