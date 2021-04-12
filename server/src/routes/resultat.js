@@ -37,6 +37,7 @@ const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
 
   request.on('error', (error) => { rejects(error); });
 });
+
 /**
  * @param {*} body
  * @param {*} response
