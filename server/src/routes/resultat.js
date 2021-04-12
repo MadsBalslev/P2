@@ -126,12 +126,11 @@ function Exercise(answer) {
     actualAnswer: answer.actualAnswer,
     answerWasCorrect: undefined,
     tekst: '',
-    facit: '',
+    facit: '220',
     point: undefined,
   };
 
   this.getSingleExerciseDataFromDatabase = function getSingleExerciseDataFromDatabase() {
-
   };
 
   this.evaluateSingleAnswer = function evaluateSingleAnswer() {
@@ -143,8 +142,46 @@ function Exercise(answer) {
   };
 }
 
-function ResultPage(ExerciseSuite) {
-  this.page = 'this is a dummy page';
+function ResultPage(exerciseSuite) {
+  this.page = `
+  <!DOCTYPE html>
+  <head>
+    <title>P2 Projekt Resultat Side</title>
+    <link rel='icon' type='image/png' href='./favicon.png' />
+    <meta charset="UTF-8">
+  </head>
+  <body>
+  `;
+
+  let exerciseNumber = 1;
+  exerciseSuite.exercises.forEach((exercise) => {
+    this.page += `<div class="exercise" id="exercise${exerciseNumber}">`;
+    this.page += `<h1>Opgave ${exerciseNumber}</h1>`;
+    this.page += '<div class="exerciseBody">';
+    this.page += `<p>${exercise.data.tekst}</p>`;
+    this.page += '</div>';
+
+    this.page += '<div class="answerBody">';
+    this.page += '<h2> Svar og facit</h2 >';
+    if (exercise.data.answerWasCorrect) {
+      this.page += '<p style="background-color: lightgreen">Dit svar var korrekt</p>';
+    } else if (!exercise.data.answerWasCorrect) {
+      this.page += '<p style="background-color: lightcoral">Dit svar var forkert</p>';
+    }
+    this.page += `<p><b>Korrekte svar:</b> ${exercise.data.facit}</p>`;
+    this.page += `<p><b>Dit svar:</b> ${exercise.data.actualAnswer}</p>`;
+    this.page += '</div>';
+
+    this.page += '<div class="exerciseData">';
+    this.page += '<h2>Opgave data</h2>';
+    this.page += '<p><b>Emne:</b> Vektorer i 2D </p>';
+    this.page += '<p><b>Points:</b> 15 </p>';
+    this.page += '<p><b>Sværhedsgræd:</b> Svær </p>';
+    this.page += '</div>';
+
+    exerciseNumber += 1;
+  });
+
   this.respondTo = function respondTo(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(this.page);
