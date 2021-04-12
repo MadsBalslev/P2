@@ -145,40 +145,39 @@ function Exercise(answer) {
 }
 
 function ResultPage(exerciseSuite) {
-  this.page = `
-  <!DOCTYPE html>
+  this.page = '<!DOCTYPE html>
   <head>
-    <title>P2 Projekt Resultat Side</title>
-    <link rel='icon' type='image/png' href='./favicon.png' />
-    <meta charset="UTF-8">
+  <title>P2 Projekt Resultat Side</title>
+  <link rel='icon' type='image/png' href='./favicon.png' />
+  <meta charset="UTF-8">
   </head>
-  <body>
-  `;
+  <body>`;
 
   let exerciseNumber = 1;
   exerciseSuite.exercises.forEach((exercise) => {
-    this.page += `<div class="exercise" id="exercise${exerciseNumber}">`;
-    this.page += `<h1>Opgave ${exerciseNumber}</h1>`;
-    this.page += '<div class="exerciseBody">';
-    this.page += `<p>${exercise.data.tekst}</p>`;
-    this.page += '</div>';
+    this.page += `<div class="exercise" id="exercise${exerciseNumber}">\n`;
+    this.page += `<h1>Opgave ${exerciseNumber}</h1>\n`;
+    this.page += '<div class="exerciseBody">\n';
+    this.page += `<p>${exercise.data.tekst}</p>\n`;
+    this.page += '</div>\n';
 
-    this.page += '<div class="answerBody">';
-    this.page += '<h2> Svar og facit</h2 >';
+    this.page += '<div class="answerBody">\n';
+    this.page += '<h2> Svar og facit</h2>\n';
     if (exercise.data.answerWasCorrect) {
-      this.page += '<p style="background-color: lightgreen">Dit svar var korrekt</p>';
+      this.page += '<p style="background-color: lightgreen">Dit svar var korrekt</p>\n';
     } else if (!exercise.data.answerWasCorrect) {
-      this.page += '<p style="background-color: lightcoral">Dit svar var forkert</p>';
+      this.page += '<p style="background-color: lightcoral">Dit svar var forkert</p>\n';
     }
-    this.page += `<p><b>Korrekte svar:</b> ${exercise.data.facit}</p>`;
-    this.page += `<p><b>Dit svar:</b> ${exercise.data.actualAnswer}</p>`;
-    this.page += '</div>';
+    this.page += `<p><b>Korrekte svar:</b> ${exercise.data.facit}</p>\n`;
+    this.page += `<p><b>Dit svar:</b> ${exercise.data.actualAnswer}</p>\n`;
+    this.page += '</div>\n';
 
-    this.page += '<div class="exerciseData">';
-    this.page += '<h2>Opgave indsigt</h2>';
-    this.page += `<p><b>Emne:</b> ${exercise.data.type}</p>`;
-    this.page += `<p><b>Points:</b> ${exercise.data.point}</p>`;
-    this.page += '</div>';
+    this.page += '<div class="exerciseData">\n';
+    this.page += '<h2>Opgave indsigt</h2>\n';
+    this.page += `<p><b>Emne:</b> ${exercise.data.type}</p>\n`;
+    this.page += `<p><b>Points:</b> ${exercise.data.point}</p>\n`;
+    this.page += '</div>\n';
+    this.page += '</div>\n';
 
     exerciseNumber += 1;
   });
