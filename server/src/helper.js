@@ -18,6 +18,6 @@ const dbConnection = {
 };
 
 module.exports = { 
-  errorResponse, 
-  dbConnection 
+  errorResponse,
+  dbConnection,
 };
