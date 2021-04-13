@@ -124,8 +124,12 @@ const handleResultRequest = (request, response) => {
  * @param {*} response
  */
 const handleResultPostRequest = async (request, response) => {
-  const body = await getBodyFromRequest(request, response);
-  handleBody(body, response);
+  try {
+    const body = await getBodyFromRequest(request, response);
+    handleBody(body, response);
+  } catch (error) {
+    helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
+  }
 };
 
 const getBodyFromRequest = (request, response) => new Promise((resolve, rejects) => {
@@ -137,11 +141,9 @@ const getBodyFromRequest = (request, response) => new Promise((resolve, rejects)
   request.on('end', () => {
     try {
       body = JSON.parse(body);
-    } catch (error) {
-      helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
-      rejects(error);
-    } finally {
       resolve(body);
+    } catch (error) {
+      rejects(error);
     }
   });
 
