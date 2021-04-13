@@ -5,32 +5,66 @@ document.body.onload = Run;
 
 
 function Run(){
+    questionNumber = 1;
+    let questionAmount = 0;
+    let questionMetaData = [];
+    testAnswers = {};
     const form = document.createElement("form");
-    let question1 = createQuestion(0, "Hvad er 2 + 2",4);
-    createQuestion(1, "Hvad er 3 + 3",6);
-    console.log(document.getElementsByTagName("Form")[1].innerHTML);
+    questionMetaData[questionAmount] = createQuestion(0, "Hvad er 2 + 2",4,0);
+    questionAmount++;
+    questionMetaData[questionAmount] = createQuestion(1, "Hvad er 3 + 3",6,1);
+    questionAmount++;
+    const div = document.createElement("div");
+    let validation =  document.createElement("P")
+    validation.setAttribute("ID","validation");
+    let submitButton = document.createElement("button");
+    submitButton.innerHTML = "Send answers"
+    submitButton.onclick = function(){
+        questionAnswers = getAnswers(questionAmount);
+        console.log(questionAnswers);
     }
-function createQuestion(questionnumber,questiontext,testAnswer){
+    div.appendChild(submitButton);
+    div.appendChild(validation)
+    document.body.appendChild(div);
+    console.log(questionMetaData);
+    }
+
+//Creates a div containing elements for a single question
+function createQuestion(questionnumber,questiontext,questionid){
     {
         const div = document.createElement("div");
-        const form = document.createElement("form");
-        const button = document.createElement("button");
         let question = document.createElement("p");
         let textfield = document.createElement("INPUT");
-        textfield.setAttribute("type", "text");
+        textfield.setAttribute("type", "number");
         textfield.setAttribute("value", "Indtast svar her");
-        form.appendChild(question);
-        form.appendChild(textfield);
-        form.appendChild(button);
-        div.appendChild(form);
+        textfield.setAttribute("required", "1");
+        div.appendChild(question);
+        div.appendChild(textfield);
         document.body.appendChild(div);
-        document.getElementsByTagName("button")[questionnumber].onclick = function(){
-            checkAnswer(questionnumber,testAnswer);
-        }
-        document.body.getElementsByTagName("button")[questionnumber].innerHTML= "Submit"
         document.getElementsByTagName("p")[questionnumber].innerHTML = questiontext;
-
+        let questionMetaData = {
+            questionnumber: questionnumber,
+            questionid: questionid,
+        }
+        return questionMetaData;
+        
     }
+}
+// Gets the input from the inputfields and returns them as an array containing all answers
+function getAnswers(questionAmount){
+    i = 0;
+    questionAnswers = [];
+    while (i<questionAmount){
+        //Checks if inputfield is answered and has valid data
+        let inputObject = document.getElementsByTagName("input")[i];
+        if (!inputObject.checkValidity()){
+            document.getElementById("validation").innerHTML = ("Du mangler at svare på et eller flere spørgsmål");
+            return 0
+        }
+        questionAnswers[i] = document.getElementsByTagName("input")[i].value;
+        i++;
+    }
+    return questionAnswers;
 }
 
 /*
