@@ -10,7 +10,6 @@ function errorResponse(response, code, reason) {
   response.end('\n');
 }
 
-<<<<<<< HEAD
 const dbConnection = {
   host: process.env.DB_HOST || '127.0.0.1',
   user: process.env.DB_USER || 'root',
@@ -23,7 +22,5 @@ const randNum = (range) => Math.floor(Math.random() * range) + 1;
 module.exports = {
   dbConnection,
   randNum,
+  errorResponse,
 };
-=======
-module.exports = { errorResponse };
->>>>>>> f6c8ee4c217ae107a3be3016b106ae8949ce4876

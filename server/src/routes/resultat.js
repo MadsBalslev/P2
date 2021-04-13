@@ -111,16 +111,12 @@ function createPageBodyExerciseBody(exercise) {
  */
 const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
-<<<<<<< HEAD
-    handleResultatPostRequest(request, response);
+    handleResultPostRequest(request, response);
     console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
   } else if (request.method === 'GET') {
     response.end(JSON.stringify(global.globalSet));
-=======
-    handleResultPostRequest(request, response);
   } else if (request.method !== 'POST') {
     throw 'handleResultRequest did not get a POST request';
->>>>>>> f6c8ee4c217ae107a3be3016b106ae8949ce4876
   }
 };
 
@@ -227,12 +223,9 @@ function convertActualAnswersToExercises(actualAnswers) {
     i += 1;
   });
 
-<<<<<<< HEAD
-function handleResultatPostRequest(request, response) {
-  return true;
-=======
   return exercises;
->>>>>>> f6c8ee4c217ae107a3be3016b106ae8949ce4876
 }
 
-module.exports = handleResultRequest;
+module.exports = {
+  handleResultRequest,
+};
