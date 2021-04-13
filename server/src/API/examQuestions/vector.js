@@ -15,26 +15,54 @@ const generateVector = () => {
 
 const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
 
-const vektorAdditionSubtraction = (operator) => {
-  const txt = `Hvad giver følgende to vektorer ${operator === 'add' ? 'lagt sammen' : 'fratrukket hinanden'}?`;
+const vektorAddition = () => {
+  const txt = 'Hvad giver følgende to vektorer lagt sammen?';
   const vectorA = generateVector();
   const vectorB = generateVector();
   const point = 10;
   const type = 'vektor2d';
 
-  const tegn = operator === 'add' ? '+' : '-';
+  const tegn = '+';
 
-  const facit = operator === 'add' ? math.matrix([
+  const facit = math.matrix([
     [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
     [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
-  ]) : math.matrix([
+  ]);
+
+  const taskObj = {
+    exerciseVars: {
+      vectorA: formatVector(vectorA),
+      vectorB: formatVector(vectorB),
+    },
+    facit: formatVector(facit),
+    type,
+    point,
+    txt,
+    tegn,
+  };
+
+  return taskObj;
+};
+
+const vektorSubtraction = () => {
+  const txt = 'Hvad giver følgende to vektorer fratrukket hinanden?';
+  const vectorA = generateVector();
+  const vectorB = generateVector();
+  const point = 10;
+  const type = 'vektor2d';
+
+  const tegn = '-';
+
+  const facit = math.matrix([
     [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
     [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
   ]);
 
   const taskObj = {
-    vectorA: formatVector(vectorA),
-    vectorB: formatVector(vectorB),
+    exerciseVars: {
+      vectorA: formatVector(vectorA),
+      vectorB: formatVector(vectorB),
+    },
     facit: formatVector(facit),
     type,
     point,
@@ -57,9 +85,11 @@ const vektorMultiplication = () => {
   const facit = (math.subset(vectorA, math.index(0, 0)) * math.subset(vectorB, math.index(0, 0))) + (math.subset(vectorA, math.index(1, 0)) * math.subset(vectorB, math.index(1, 0)));
 
   const taskObj = {
-    vectorA: formatVector(vectorA),
-    vectorB: formatVector(vectorB),
-    facit,
+    exerciseVars: {
+      vectorA: formatVector(vectorA),
+      vectorB: formatVector(vectorB),
+    },
+    facit: formatVector(facit),
     type,
     point,
     txt,
@@ -69,7 +99,11 @@ const vektorMultiplication = () => {
   return taskObj;
 };
 
+const numOfTasks = 3;
+
 module.exports = {
-  vektorAdditionSubtraction,
+  vektorAddition,
+  vektorSubtraction,
   vektorMultiplication,
+  numOfTasks,
 };

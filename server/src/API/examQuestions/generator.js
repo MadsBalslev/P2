@@ -1,40 +1,50 @@
 require('dotenv').config();
-const mysql = require('mysql');
+const { randNum } = require('../../helper');
 
-const { dbConnection } = require('../../helper');
 const vectors = require('./vector');
 
-const con = mysql.createConnection(dbConnection);
-
-con.connect((err) => {
-  if (err) {
-    console.log(dbConnection.password, dbConnection.user, dbConnection.database, dbConnection.host);
-    throw err;
+const generateVectorExercise = () => {
+  let result;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      result = vectors.vektorAddition();
+      break;
+    case 2:
+      result = vectors.vektorSubtraction();
+      break;
+    case 3:
+      result = vectors.vektorMultiplication();
+      break;
+    default:
+      break;
   }
-  console.log('Connected!');
-});
+  return result;
+};
 
-const insertTest = 'INSERT INTO examquestions (tekst, var1, udtryk, var2, facit, type, point) VALUES (?, ?, ?, ?, ?, ?, ?)';
+/**
+ * Will generate an exerciseset with the given catagories
+ * @param {Array of strings} cat An array containg the catagories of exercises to be generated
+ * @param {integer} amount The amount of exercises to be generated in each catagory
+ */
+const generateExcerciseSet = (cat, amount) => {
+  const set = [];
 
-const sqlInsert = (queryFormat, tekst, var1, udtryk, var2, facit, type, point) => {
-  con.query(queryFormat, [tekst, var1, udtryk, var2, facit, type, point], (err, query) => {
-    if (err) {
-      throw err;
+  cat.forEach((type) => {
+    for (let i = 0; i < amount; i++) {
+      switch (type) {
+        case 'vektor2d':
+          set.push(generateVectorExercise(amount));
+          break;
+        default:
+          break;
+      }
     }
-    console.log(query);
   });
+
+  return set;
 };
 
-const generateExcercise = (type, amount, subType = null) => {
-  for (let i = 0; i < amount; i++) {
-    const call = type(subType);
-    // eslint-disable-next-line max-len
-    sqlInsert(insertTest, call.txt, call.vectorA, call.tegn, call.vectorB, call.facit, call.type, call.point);
-  }
+module.exports = {
+  generateExcerciseSet,
 };
-
-generateExcercise(vectors.vektorMultiplication, 10);
-generateExcercise(vectors.vektorAdditionSubtraction, 5, 'sub');
-generateExcercise(vectors.vektorAdditionSubtraction, 5, 'add');
-
-con.end();

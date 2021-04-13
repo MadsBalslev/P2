@@ -1,14 +1,4 @@
-const mysql = require('mysql');
-const { dbConnection } = require('../../helper');
-
-const con = mysql.createConnection(dbConnection);
-
-con.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('Connected!');
-});
+const con = require('../db');
 
 const searchForType = (type) => {
   const q = `SELECT * FROM examquestions WHERE type = '${type}';`;
