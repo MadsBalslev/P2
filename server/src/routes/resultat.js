@@ -145,13 +145,27 @@ function Exercise(answer) {
 }
 
 function ResultPage(exerciseSuite) {
-  this.page = '<!DOCTYPE html>
+  this.page = '';
+  this.page += createPageHead();
+  this.page += createPageBody(exerciseSuite);
+
+  this.respondTo = function respondTo(response) {
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(this.page);
+  };
+}
+
+const createPageHead = () => `<!DOCTYPE html>
   <head>
   <title>P2 Projekt Resultat Side</title>
   <link rel='icon' type='image/png' href='./favicon.png' />
   <meta charset="UTF-8">
   </head>
-  <body>`;
+  `;
+
+const createPageBody = (exerciseSuite) => {
+  let pageBody = '';
+  pageBody += '<body>';
 
   let exerciseNumber = 1;
   exerciseSuite.exercises.forEach((exercise) => {
@@ -178,15 +192,11 @@ function ResultPage(exerciseSuite) {
     this.page += `<p><b>Points:</b> ${exercise.data.point}</p>\n`;
     this.page += '</div>\n';
     this.page += '</div>\n';
-
     exerciseNumber += 1;
   });
-  this.page += '</body>';
 
-  this.respondTo = function respondTo(response) {
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(this.page);
-  };
-}
+  pageBody += '</body>';
+  return pageBody;
+};
 
 module.exports = handleResultRequest;
