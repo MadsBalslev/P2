@@ -17,7 +17,7 @@ const dbConnection = {
   database: process.env.DB_NAME || 'test',
 };
 
-module.exports = { 
+module.exports = {
   errorResponse,
   dbConnection,
 };
