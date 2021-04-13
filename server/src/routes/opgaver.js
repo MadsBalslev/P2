@@ -8,7 +8,10 @@ const { generateExcerciseSet } = require('../API/examQuestions/generator.js');
 function handleOpgaverRequest(request, response) {
   if (request.method === 'GET') {
     // response.setHeader('Access-Control-Allow-Origin', '*');
-    const subjects = request.headers.subjects.split(',');
+    let subjects = [];
+    if (request.headers.subjects) {
+      subjects = request.headers.subjects.split(',');
+    }
     const result = generateExcerciseSet(subjects, request.headers.amount);
     response.end(JSON.stringify(result));
   } else if (request.method === 'POST') {

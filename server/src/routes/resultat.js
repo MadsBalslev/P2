@@ -112,9 +112,6 @@ function createPageBodyExerciseBody(exercise) {
 const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
     handleResultPostRequest(request, response);
-    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
-  } else if (request.method === 'GET') {
-    response.end(JSON.stringify(global.globalSet));
   } else if (request.method !== 'POST') {
     throw 'handleResultRequest did not get a POST request';
   }
@@ -128,7 +125,7 @@ const handleResultRequest = (request, response) => {
  */
 const handleResultPostRequest = async (request, response) => {
   try {
-    const body = await getBodyFromRequest(request, response);
+    const body = await getBodyFromRequest(request);
     handleBody(body, response);
   } catch (error) {
     helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
@@ -226,6 +223,4 @@ function convertActualAnswersToExercises(actualAnswers) {
   return exercises;
 }
 
-module.exports = {
-  handleResultRequest,
-};
+module.exports = handleResultRequest;
