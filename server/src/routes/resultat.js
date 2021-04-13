@@ -30,6 +30,7 @@ Exercise.prototype.evaluateSingleAnswer = function evaluateSingleAnswer() {
 };
 
 function ResultPage(exerciseSuite) {
+  this.page += '';
   this.page += createPageHead();
   this.page += createPageBody(exerciseSuite);
 }
@@ -123,19 +124,25 @@ const handleResultRequest = (request, response) => {
  * @param {*} response
  */
 const handleResultPostRequest = async (request, response) => {
-  const body = await getBodyFromRequest(request);
+  const body = await getBodyFromRequest(request, response);
   handleBody(body, response);
 };
 
-const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
+const getBodyFromRequest = (request, response) => new Promise((resolve, rejects) => {
   let body = '';
   request.on('data', (chunk) => {
     body += chunk;
   });
 
   request.on('end', () => {
-    body = JSON.parse(body);
-    resolve(body);
+    try {
+      body = JSON.parse(body);
+    } catch (error) {
+      helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
+      rejects(error);
+    } finally {
+      resolve(body);
+    }
   });
 
   request.on('error', (error) => { rejects(error); });
