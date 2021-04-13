@@ -10,6 +10,7 @@ function errorResponse(response, code, reason) {
   response.end('\n');
 }
 
+<<<<<<< HEAD
 const dbConnection = {
   host: process.env.DB_HOST || '127.0.0.1',
   user: process.env.DB_USER || 'root',
@@ -21,3 +22,6 @@ module.exports = {
   errorResponse,
   dbConnection,
 };
+=======
+module.exports = { errorResponse };
+>>>>>>> parent of 7800afb (Merge branch 'main' into evaluate-answers)
