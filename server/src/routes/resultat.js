@@ -112,6 +112,9 @@ function createPageBodyExerciseBody(exercise) {
 const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
     handleResultPostRequest(request, response);
+    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
+  } else if (request.method === 'GET') {
+    response.end(JSON.stringify(global.globalSet));
   } else if (request.method !== 'POST') {
     throw 'handleResultRequest did not get a POST request';
   }
@@ -223,4 +226,6 @@ function convertActualAnswersToExercises(actualAnswers) {
   return exercises;
 }
 
-module.exports = handleResultRequest;
+module.exports = {
+  handleResultRequest,
+};
