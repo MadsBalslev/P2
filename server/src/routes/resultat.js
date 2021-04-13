@@ -132,7 +132,7 @@ const handleResultPostRequest = async (request, response) => {
   }
 };
 
-const getBodyFromRequest = (request, response) => new Promise((resolve, rejects) => {
+const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
   let body = '';
   request.on('data', (chunk) => {
     body += chunk;
