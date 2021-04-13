@@ -7,6 +7,8 @@ const handleOpgaverRequest = require('./routes/opgaver');
 const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
+global.globalSet = [];
+
 const port = process.env.PORT || 8080;
 
 const server = http.createServer();
@@ -22,8 +24,9 @@ server.on('request', tryHandleRequest);
  */
 function tryHandleRequest(request, response) {
   try {
-    console.log('NEW ' + request.method + ' REQUEST:');
-    console.log(request.headers);
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    // console.log(`NEW ${request.method} REQUEST:`);
+    // console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
     errorResponse(response, 400, error);
