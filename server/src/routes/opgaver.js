@@ -9,7 +9,7 @@ const handleOpgaverRequest = async (request, response) => {
   if (request.method === 'GET') {
     // response.setHeader('Access-Control-Allow-Origin', '*');
     const subjects = request.headers.subjects.split(',');
-    const result = await generateExcerciseSet(subjects, request.headers.amount);
+    const result = await generateExcerciseSet(['vektor2d'], 10);
     response.end(JSON.stringify(result));
   } else if (request.method === 'POST') {
     // response.setHeader('Access-Control-Allow-Origin', '*');

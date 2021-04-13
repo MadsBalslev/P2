@@ -1,5 +1,7 @@
 require('dotenv').config();
-const { randNum } = require('../../helper');
+const {
+  randNum,
+} = require('../../helper');
 
 const vectors = require('./vector');
 
@@ -19,6 +21,7 @@ const generateVectorExercise = () => {
     default:
       break;
   }
+
   return result;
 };
 
@@ -42,8 +45,11 @@ const generateExcerciseSet = (cat, amount) => {
     }
   });
 
+  global.globalSet = set;
   return set;
 };
+
+generateExcerciseSet(['vektor2d', 10]);
 
 module.exports = {
   generateExcerciseSet,

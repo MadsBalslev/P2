@@ -7,13 +7,13 @@ function handleResultatRequest(request, response) {
   if (request.method === 'POST') {
     handleResultatPostRequest(request, response);
     console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
-  } else if (request.method !== 'POST') {
-    throw 'bad request';
+  } else if (request.method === 'GET') {
+    response.end(JSON.stringify(global.globalSet));
   }
 }
 
 function handleResultatPostRequest(request, response) {
-  let lint;
+  return true;
 }
 
 module.exports = handleResultatRequest;

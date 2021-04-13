@@ -7,6 +7,8 @@ const handleOpgaverRequest = require('./routes/opgaver');
 const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
+global.globalSet = [];
+
 const port = process.env.PORT || 8080;
 
 const server = http.createServer();

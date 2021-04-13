@@ -50,7 +50,14 @@ const createintegral = () => {
   return answer;
 };
 
-createintegral();
+const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
+const x = math.parse('x');
+const fm = math.derivative(f, x);
+
+// console.log('f(x) =', f.toString());
+// console.log("f'(x) =", fm.toString());
+
+// createintegral();
 
 module.exports = {
   createintegral,

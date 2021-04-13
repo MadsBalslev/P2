@@ -82,14 +82,14 @@ const vektorMultiplication = () => {
   const type = 'vektor2d';
 
   // eslint-disable-next-line max-len
-  const facit = (math.subset(vectorA, math.index(0, 0)) * math.subset(vectorB, math.index(0, 0))) + (math.subset(vectorA, math.index(1, 0)) * math.subset(vectorB, math.index(1, 0)));
+  const facit = math.dot(vectorA, vectorB);
 
   const taskObj = {
     exerciseVars: {
       vectorA: formatVector(vectorA),
       vectorB: formatVector(vectorB),
     },
-    facit: formatVector(facit),
+    facit,
     type,
     point,
     txt,
@@ -100,6 +100,10 @@ const vektorMultiplication = () => {
 };
 
 const numOfTasks = 3;
+
+// vektorAddition();
+// vektorSubtraction();
+// vektorMultiplication();
 
 module.exports = {
   vektorAddition,
