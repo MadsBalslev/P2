@@ -26,7 +26,7 @@ function tryHandleRequest(request, response) {
     console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
-    errorResponse(response, 400, error);
+    helper.errorResponse(response, 400, error);
   }
 }
 
@@ -66,18 +66,6 @@ function handleBaseRequest(request, response) {
   } else if (request.method !== 'GET') {
     throw 'bad request';
   }
-}
-
-/**
- * Will handle potential errors catched in {@link tryHandleRequest}
- * @param {*} response
- * @param {integer} code the http status code
- * @param {string} reason the error message
- */
-function errorResponse(response, code, reason) {
-  response.writeHead(code, { 'Content-Type': 'text/txt' });
-  response.write(reason);
-  response.end('\n');
 }
 
 /**
