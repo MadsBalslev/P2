@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>API/examQuestions/generator.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,29 +29,75 @@
 
 <div id="main">
     
+    <h1 class="page-title">API/examQuestions/generator.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>require('dotenv').config();
+const {
+  randNum,
+} = require('../../helper');
 
+const vectors = require('./vector');
 
+const generateVectorExercise = () => {
+  let result;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      result = vectors.vektorAddition();
+      break;
+    case 2:
+      result = vectors.vektorSubtraction();
+      break;
+    case 3:
+      result = vectors.vektorMultiplication();
+      break;
+    default:
+      break;
+  }
 
+  return result;
+};
 
+/**
+ * Will generate an exerciseset with the given catagories
+ * @param {Array} cat An array containg the catagories of exercises to be generated
+ * @param {integer} amount The amount of exercises to be generated in each catagory
+ */
+const generateExcerciseSet = (cat, amount) => {
+  const set = [];
 
+  cat.forEach((type) => {
+    for (let i = 0; i &lt; amount; i++) {
+      switch (type) {
+        case 'vektor2d':
+          set.push(generateVectorExercise(amount));
+          break;
+        default:
+          break;
+      }
+    }
+  });
 
+  global.globalSet = set;
+  return set;
+};
 
+generateExcerciseSet(['vektor2d', 10]);
 
-
-    
-
-
-    <section class="readme">
-        <article><h1>This is our crap project</h1></article>
+module.exports = {
+  generateExcerciseSet,
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

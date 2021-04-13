@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>API/examQuestions/createTable.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,29 +29,44 @@
 
 <div id="main">
     
+    <h1 class="page-title">API/examQuestions/createTable.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const con = require('../db');
 
+/**
+ * Checks if the given table is already in DB and if not creates it
+ * @param {string} table Tablename to check if already exits or else create
+ */
+const checkTable = (table) => {
+  const createTable = `CREATE TABLE IF NOT EXISTS ${table} (
+    id int NOT NULL AUTO_INCREMENT,
+    tekst varchar(255) NOT NULL COLLATE utf8_danish_ci,
+    var1 varchar(255) NOT NULL COLLATE utf8_danish_ci,
+    udtryk varchar(3) NOT NULL COLLATE utf8_danish_ci,
+    var2 varchar(255) NOT NULL COLLATE utf8_danish_ci,
+    facit varchar(255) NOT NULL COLLATE utf8_danish_ci,
+    type varchar(255) NOT NULL COLLATE utf8_danish_ci,
+    point int NOT NULL,
+    PRIMARY KEY (id)
+  );`;
 
+  con.query(createTable, (err) => {
+    if (err) console.log(err);
+  });
+};
 
-
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>This is our crap project</h1></article>
+module.exports = { checkTable };
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultatRequest">handleResultatRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkTable">checkTable</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateExcerciseSet">generateExcerciseSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBody">handleBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequestBody">handleRequestBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultPostRequest">handleResultPostRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultRequest">handleResultRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#isActualSnawerValid">isActualSnawerValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#requestBodyIsValid">requestBodyIsValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
 </nav>
 
 <div id="main">
@@ -39,25 +39,237 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Will handle requests to the '/resultater' route
+            <pre class="prettyprint source linenums"><code>const helper = require('../helper');
+
+function ExerciseSuite(exercises) {
+  this.exercises = exercises;
+}
+
+ExerciseSuite.prototype.evaluateAnswersData = function evaluateAnswersData() {
+  this.exercises.forEach((exercise) => {
+    exercise.evaluateSingleAnswer();
+  });
+};
+
+function Exercise(answer) {
+  this.id = answer.id;
+  this.number = answer.questionNumber;
+  this.answer = answer.questionAnswers;
+  this.correct = undefined;
+  this.text = answer.txt;
+  this.facit = answer.facit;
+  this.point = answer.point;
+  this.type = answer.type;
+}
+
+Exercise.prototype.evaluateSingleAnswer = function evaluateSingleAnswer() {
+  if (this.answer === this.facit) {
+    this.correct = true;
+  } else if (this.answer !== this.facit) {
+    this.correct = false;
+  }
+};
+
+function ResultPage(exerciseSuite) {
+  this.page += '';
+  this.page += createPageHead();
+  this.page += createPageBody(exerciseSuite);
+}
+
+ResultPage.prototype.respondTo = function respondTo(response) {
+  response.writeHead(200, { 'Content-Type': 'text/html' });
+  response.end(this.page);
+};
+
+const createPageHead = () => `&lt;!DOCTYPE html>
+  &lt;head>
+  &lt;title>P2 Projekt Resultat Side&lt;/title>
+  &lt;link rel='icon' type='image/png' href='./favicon.png' />
+  &lt;meta charset="UTF-8">
+  &lt;/head>
+  `;
+
+const createPageBody = (exerciseSuite) => {
+  let pageBody = '';
+  pageBody += '&lt;body>';
+
+  exerciseSuite.exercises.forEach((exercise) => {
+    pageBody += createPageBodyExercise(exercise);
+  });
+
+  pageBody += '&lt;/body>';
+  return pageBody;
+};
+
+function createPageBodyExercise(exercise) {
+  let pageBody = '';
+  pageBody += `&lt;div class="exercise" id="exercise${exercise.number}">\n`;
+  pageBody += `&lt;h1>Opgave ${exercise.number}&lt;/h1>\n`;
+  pageBody += createPageBodyExerciseBody(exercise);
+  pageBody += createPageBodyAnswerBody(exercise);
+  pageBody += createPageBodyExerciseData(exercise);
+  return pageBody;
+}
+
+function createPageBodyExerciseData(exercise) {
+  let pageBody = '';
+  pageBody += '&lt;div class="exerciseData">\n';
+  pageBody += '&lt;h2>Opgave indsigt&lt;/h2>\n';
+  pageBody += `&lt;p>&lt;b>Emne:&lt;/b> ${exercise.type}&lt;/p>\n`;
+  pageBody += `&lt;p>&lt;b>Points:&lt;/b> ${exercise.point}&lt;/p>\n`;
+  pageBody += '&lt;/div>\n';
+  pageBody += '&lt;/div>\n';
+  return pageBody;
+}
+
+function createPageBodyAnswerBody(exercise) {
+  let pageBody = '';
+  pageBody += '&lt;div class="answerBody">\n';
+  pageBody += '&lt;h2> Svar og facit&lt;/h2>\n';
+  if (exercise.correct) {
+    pageBody += '&lt;p style="background-color: lightgreen">Dit svar var korrekt&lt;/p>\n';
+  } else if (!exercise.correct) {
+    pageBody += '&lt;p style="background-color: lightcoral">Dit svar var forkert&lt;/p>\n';
+  }
+  pageBody += `&lt;p>&lt;b>Korrekte svar:&lt;/b> ${exercise.facit}&lt;/p>\n`;
+  pageBody += `&lt;p>&lt;b>Dit svar:&lt;/b> ${exercise.answer}&lt;/p>\n`;
+  pageBody += '&lt;/div>\n';
+  return pageBody;
+}
+
+function createPageBodyExerciseBody(exercise) {
+  let pageBody = '';
+  pageBody += '&lt;div class="exerciseBody">\n';
+  pageBody += `&lt;p>${exercise.text}&lt;/p>\n`;
+  pageBody += '&lt;/div>\n';
+  return pageBody;
+}
+
+/**
+ * Will handle requests to the '/result' route
  * @param {*} request
  * @param {*} response
  */
-function handleResultatRequest(request, response) {
+const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
-    handleResultatPostRequest(request, response);
+    handleResultPostRequest(request, response);
     console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
+  } else if (request.method === 'GET') {
+    response.end(JSON.stringify(global.globalSet));
   } else if (request.method !== 'POST') {
-    throw 'bad request';
+    throw 'handleResultRequest did not get a POST request';
   }
+};
+
+/**
+ * Adding requested data from chunk to body
+ * Parsing JSON format from server to body, using the Promise (), function to handle error.
+ * @param {*} request
+ * @param {*} response
+ */
+const handleResultPostRequest = async (request, response) => {
+  try {
+    const body = await getBodyFromRequest(request, response);
+    handleBody(body, response);
+  } catch (error) {
+    helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
+  }
+};
+
+const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
+  let body = '';
+  request.on('data', (chunk) => {
+    body += chunk;
+  });
+
+  request.on('end', () => {
+    try {
+      body = JSON.parse(body);
+      resolve(body);
+    } catch (error) {
+      rejects(error);
+    }
+  });
+
+  request.on('error', (error) => { rejects(error); });
+});
+
+/**
+ * @param {*} body
+ * @param {*} response
+ * Error message defined. We select our handlebody,-
+   so that none valid requests gets an errormessage.
+ */
+const handleBody = (body, response) => {
+  if (requestBodyIsValid(body)) {
+    handleRequestBody(body, response);
+  } else if (!(requestBodyIsValid(body))) {
+    helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
+  }
+};
+
+/**
+ * We iterate the elements of the body array. The Loop will break, if it gets a false value.
+ * @param {*} body
+ * @returns ?
+ */
+const requestBodyIsValid = (body) => {
+  let bodyIsValid = true;
+
+  for (const actualAnswers of body) {
+    if (!isActualAnswerValid(actualAnswers)) {
+      bodyIsValid = false;
+      break;
+    }
+  }
+
+  return bodyIsValid;
+};
+
+/**
+ * @var isActualSnawerValid
+ * The variable is assigned the properties of the array actualAnswers
+ * @param {*} actualAnswers
+ * @returns ?
+ */
+const isActualAnswerValid = (actualAnswer) => actualAnswer.hasOwnProperty('exerciseVars')
+  &amp;&amp; actualAnswer.hasOwnProperty('facit')
+  &amp;&amp; actualAnswer.hasOwnProperty('type')
+  &amp;&amp; actualAnswer.hasOwnProperty('point')
+  &amp;&amp; actualAnswer.hasOwnProperty('txt')
+  &amp;&amp; actualAnswer.hasOwnProperty('tegn')
+  &amp;&amp; actualAnswer.hasOwnProperty('questionAnswers')
+  &amp;&amp; actualAnswer.hasOwnProperty('questionNumber')
+
+/**
+ * Handling structure, so that HandleRequest runs before exercisesFromDatabase
+ * First we insert the value of the parameters in order to run our comparisson, in our function-
+    compareExercisesFromDatabaseWithActualAnswers.
+ * @param {*} requestBody
+ * @param {*} response
+ */
+const handleRequestBody = (actualAnswers, response) => {
+  const exercises = convertActualAnswersToExercises(actualAnswers);
+  const exerciseSuite = new ExerciseSuite(exercises);
+  exerciseSuite.evaluateAnswersData();
+  const resultPage = new ResultPage(exerciseSuite);
+  resultPage.respondTo(response);
+};
+
+function convertActualAnswersToExercises(actualAnswers) {
+  let i = 0;
+  const exercises = [];
+  actualAnswers.forEach((answer) => {
+    exercises[i] = new Exercise(answer);
+    i += 1;
+  });
+
+  return exercises;
 }
 
-function handleResultatPostRequest(request, response) {
-  let lint;
-}
-
-module.exports = handleResultatRequest;
+module.exports = {
+  handleResultRequest,
+};
 </code></pre>
         </article>
     </section>
@@ -70,7 +282,7 @@ module.exports = handleResultatRequest;
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 09 2021 12:33:36 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Apr 13 2021 13:11:50 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

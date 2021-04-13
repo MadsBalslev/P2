@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>helper.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,29 +29,45 @@
 
 <div id="main">
     
+    <h1 class="page-title">helper.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Will handle potential errors catched in {@link tryHandleRequest}
+ * @param {*} response
+ * @param {integer} code the http status code
+ * @param {string} reason the error message
+ */
+function errorResponse(response, code, reason) {
+  response.writeHead(code, { 'Content-Type': 'text/txt' });
+  response.write(reason);
+  response.end('\n');
+}
 
+const dbConnection = {
+  host: process.env.DB_HOST || '127.0.0.1',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'test',
+};
 
+const randNum = (range) => Math.floor(Math.random() * range) + 1;
 
-
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>This is our crap project</h1></article>
+module.exports = {
+  dbConnection,
+  randNum,
+  errorResponse,
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

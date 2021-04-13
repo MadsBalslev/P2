@@ -7,6 +7,8 @@ const handleOpgaverRequest = require('./routes/opgaver');
 const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
+global.globalSet = [];
+
 const port = process.env.PORT || 8080;
 
 const server = http.createServer();
@@ -22,11 +24,12 @@ server.on('request', tryHandleRequest);
  */
 function tryHandleRequest(request, response) {
   try {
-    console.log(`NEW ${request.method} REQUEST:`);
-    console.log(request.headers);
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    // console.log(`NEW ${request.method} REQUEST:`);
+    // console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
-    errorResponse(response, 400, error);
+    helper.errorResponse(response, 400, error);
   }
 }
 
@@ -66,18 +69,6 @@ function handleBaseRequest(request, response) {
   } else if (request.method !== 'GET') {
     throw 'bad request';
   }
-}
-
-/**
- * Will handle potential errors catched in {@link tryHandleRequest}
- * @param {*} response
- * @param {integer} code the http status code
- * @param {string} reason the error message
- */
-function errorResponse(response, code, reason) {
-  response.writeHead(code, { 'Content-Type': 'text/txt' });
-  response.write(reason);
-  response.end('\n');
 }
 
 /**

@@ -1,8 +1,8 @@
 node_modules/
 coverage/
 *.env
-my.cnf
 
+my.cnf
 # Logs
 logs
 *.log

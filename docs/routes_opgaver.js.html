@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultatRequest">handleResultatRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkTable">checkTable</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateExcerciseSet">generateExcerciseSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBody">handleBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequestBody">handleRequestBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultPostRequest">handleResultPostRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultRequest">handleResultRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#isActualSnawerValid">isActualSnawerValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#requestBodyIsValid">requestBodyIsValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
 </nav>
 
 <div id="main">
@@ -39,27 +39,26 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const getJSON = require('../API/examQuestions/jsonGen');
+            <pre class="prettyprint source linenums"><code>const { generateExcerciseSet } = require('../API/examQuestions/generator.js');
 
 /**
  * Will handle requests to the '/opgaver' route
  * @param {*} request
  * @param {*} response
  */
-const handleOpgaverRequest = async (request, response) => {
+function handleOpgaverRequest(request, response) {
   if (request.method === 'GET') {
-    response.setHeader('Access-Control-Allow-Origin', '*');
-    // hent opgave fra db
-    const result = await getJSON.getJSON();
+    // response.setHeader('Access-Control-Allow-Origin', '*');
+    const subjects = request.headers.subjects.split(',');
+    const result = generateExcerciseSet(subjects, request.headers.amount);
     response.end(JSON.stringify(result));
   } else if (request.method === 'POST') {
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    // response.setHeader('Access-Control-Allow-Origin', '*');
     // compare answer to assignment id
   } else if (request.method !== 'GET' &amp;&amp; request.method !== 'POST') {
-    response.setHeader('Access-Control-Allow-Origin', '*');
     throw 'bad request';
   }
-};
+}
 
 module.exports = handleOpgaverRequest;
 </code></pre>
@@ -74,7 +73,7 @@ module.exports = handleOpgaverRequest;
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 09 2021 12:33:36 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Apr 13 2021 13:11:50 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

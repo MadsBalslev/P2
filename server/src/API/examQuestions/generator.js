@@ -1,111 +1,56 @@
 require('dotenv').config();
-const math = require('mathjs');
-const mysql = require('mysql');
 const {
-  dbConnection,
+  randNum,
 } = require('../../helper');
 
-const con = mysql.createConnection(dbConnection);
+const vectors = require('./vector');
 
-con.connect((err) => {
-  if (err) {
-    console.log(dbConnection.password, dbConnection.user, dbConnection.database, dbConnection.host);
-    throw err;
+const generateVectorExercise = () => {
+  let result;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      result = vectors.vektorAddition();
+      break;
+    case 2:
+      result = vectors.vektorSubtraction();
+      break;
+    case 3:
+      result = vectors.vektorMultiplication();
+      break;
+    default:
+      break;
   }
-  console.log('Connected!');
-});
 
-const randNum = (range) => Math.floor(Math.random() * range) + 1;
-
-const generateVector = () => {
-  const a1 = randNum(15) + 5;
-  const a2 = randNum(12);
-
-  const v = math.matrix([
-    [a1],
-    [a2],
-  ]);
-
-  return v;
+  return result;
 };
 
-const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
+/**
+ * Will generate an exerciseset with the given catagories
+ * @param {Array} cat An array containg the catagories of exercises to be generated
+ * @param {integer} amount The amount of exercises to be generated in each catagory
+ */
+const generateExcerciseSet = (cat, amount) => {
+  const set = [];
 
-const vektorAdditionSubtraction = (operator) => {
-  const txt = `Hvad giver følgende to vektorer ${operator === 'add' ? 'lagt sammen' : 'fratrukket hinanden'}?`;
-  const vectorA = generateVector();
-  const vectorB = generateVector();
-  const point = 10;
-  const type = 'vektor2d';
-
-  const tegn = operator === 'add' ? '+' : '-';
-
-  const facit = operator === 'add' ? math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
-  ]) : math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
-  ]);
-
-  const taskObj = {
-    vectorA: formatVector(vectorA),
-    vectorB: formatVector(vectorB),
-    facit: formatVector(facit),
-    type,
-    point,
-    txt,
-    tegn,
-  };
-
-  return taskObj;
-};
-
-const vektorMultiplication = () => {
-  const txt = 'Find skalarproduktet af følgende to vektorer';
-  const vectorA = generateVector();
-  const vectorB = generateVector();
-  const tegn = '*';
-  const point = 15;
-  const type = 'vektor2d';
-
-  // eslint-disable-next-line max-len
-  const facit = (math.subset(vectorA, math.index(0, 0)) * math.subset(vectorB, math.index(0, 0))) + (math.subset(vectorA, math.index(1, 0)) * math.subset(vectorB, math.index(1, 0)));
-
-  const taskObj = {
-    vectorA: formatVector(vectorA),
-    vectorB: formatVector(vectorB),
-    facit,
-    type,
-    point,
-    txt,
-    tegn,
-  };
-
-  return taskObj;
-};
-
-const insertTest = 'INSERT INTO examquestions (tekst, var1, udtryk, var2, facit, type, point) VALUES (?, ?, ?, ?, ?, ?, ?)';
-
-const sqlInsert = (queryFormat, tekst, var1, udtryk, var2, facit, type, point) => {
-  con.query(queryFormat, [tekst, var1, udtryk, var2, facit, type, point], (err, query) => {
-    if (err) {
-      throw err;
+  cat.forEach((type) => {
+    for (let i = 0; i < amount; i++) {
+      switch (type) {
+        case 'vektor2d':
+          set.push(generateVectorExercise(amount));
+          break;
+        default:
+          break;
+      }
     }
-    console.log(query);
   });
+
+  global.globalSet = set;
+  return set;
 };
 
-const generateExcercise = (type, amount, subType = null) => {
-  for (let i = 0; i < amount; i++) {
-    const call = type(subType);
-    // eslint-disable-next-line max-len
-    sqlInsert(insertTest, call.txt, call.vectorA, call.tegn, call.vectorB, call.facit, call.type, call.point);
-  }
+generateExcerciseSet(['vektor2d', 10]);
+
+module.exports = {
+  generateExcerciseSet,
 };
-
-generateExcercise(vektorMultiplication, 10);
-generateExcercise(vektorAdditionSubtraction, 5, 'sub');
-generateExcercise(vektorAdditionSubtraction, 5, 'add');
-
-con.end();

@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultatRequest">handleResultatRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkTable">checkTable</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateExcerciseSet">generateExcerciseSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBody">handleBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequestBody">handleRequestBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultPostRequest">handleResultPostRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultRequest">handleResultRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#isActualSnawerValid">isActualSnawerValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#requestBodyIsValid">requestBodyIsValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
 </nav>
 
 <div id="main">
@@ -48,6 +48,8 @@ const handleOpgaverRequest = require('./routes/opgaver');
 const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
+global.globalSet = [];
+
 const port = process.env.PORT || 8080;
 
 const server = http.createServer();
@@ -63,11 +65,12 @@ server.on('request', tryHandleRequest);
  */
 function tryHandleRequest(request, response) {
   try {
-    console.log(`NEW ${request.method} REQUEST:`);
-    console.log(request.headers);
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    // console.log(`NEW ${request.method} REQUEST:`);
+    // console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
-    errorResponse(response, 400, error);
+    helper.errorResponse(response, 400, error);
   }
 }
 
@@ -110,18 +113,6 @@ function handleBaseRequest(request, response) {
 }
 
 /**
- * Will handle potential errors catched in {@link tryHandleRequest}
- * @param {*} response
- * @param {integer} code the http status code
- * @param {string} reason the error message
- */
-function errorResponse(response, code, reason) {
-  response.writeHead(code, { 'Content-Type': 'text/txt' });
-  response.write(reason);
-  response.end('\n');
-}
-
-/**
  * Will respond with a HTML file provided
  * @param {string} file Path to the HTML file to respond with
  * @param {string} fileType type of file
@@ -149,7 +140,7 @@ server.listen(port, () => {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 09 2021 12:33:36 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Apr 13 2021 13:11:50 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
