@@ -170,7 +170,7 @@ const handleBody = (body, response) => {
 /**
  * We iterate the elements of the body array. The Loop will break, if it gets a false value.
  * @param {*} body
- * @returns
+ * @returns ?
  */
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
@@ -189,7 +189,7 @@ const requestBodyIsValid = (body) => {
  * @var isActualSnawerValid
  * The variable is assigned the properties of the array actualAnswers
  * @param {*} actualAnswers
- * @returns
+ * @returns ?
  */
 const isActualAnswerValid = (actualAnswer) => actualAnswer.hasOwnProperty('exerciseVars')
   && actualAnswer.hasOwnProperty('facit')
