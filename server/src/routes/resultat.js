@@ -4,9 +4,6 @@ function ExerciseSuite(exercises) {
   this.exercises = exercises;
 }
 
-ExerciseSuite.prototype.getExercisesDataFromDatabase = async function getExercisesDataFromDatabase() {
-};
-
 ExerciseSuite.prototype.evaluateAnswersData = function evaluateAnswersData() {
   this.exercises.forEach((exercise) => {
     exercise.evaluateSingleAnswer();
@@ -16,22 +13,19 @@ ExerciseSuite.prototype.evaluateAnswersData = function evaluateAnswersData() {
 function Exercise(answer) {
   this.id = answer.id;
   this.number = answer.questionNumber;
-  this.actualAnswer = answer.actualAnswer;
-  this.answterWasCorrect = undefined;
-  this.tekst = undefined;
-  this.facit = undefined;
-  this.point = undefined;
-  this.type = undefined;
+  this.answer = answer.questionAnswers;
+  this.correct = undefined;
+  this.text = answer.txt;
+  this.facit = answer.facit;
+  this.point = answer.point;
+  this.type = answer.type;
 }
 
-Exercise.prototype.getSingleExerciseDataFromDatabase = function getSingleExerciseDataFromDatabase() {
-};
-
 Exercise.prototype.evaluateSingleAnswer = function evaluateSingleAnswer() {
-  if (this.actualAnswer === this.facit) {
-    this.answerWasCorrect = true;
-  } else if (this.actualAnswer !== this.facit) {
-    this.answerWasCorrect = false;
+  if (this.answer === this.facit) {
+    this.correct = true;
+  } else if (this.answer !== this.facit) {
+    this.correct = false;
   }
 };
 
@@ -90,13 +84,13 @@ function createPageBodyAnswerBody(exercise) {
   let pageBody = '';
   pageBody += '<div class="answerBody">\n';
   pageBody += '<h2> Svar og facit</h2>\n';
-  if (exercise.answerWasCorrect) {
+  if (exercise.correct) {
     pageBody += '<p style="background-color: lightgreen">Dit svar var korrekt</p>\n';
-  } else if (!exercise.answerWasCorrect) {
+  } else if (!exercise.correct) {
     pageBody += '<p style="background-color: lightcoral">Dit svar var forkert</p>\n';
   }
   pageBody += `<p><b>Korrekte svar:</b> ${exercise.facit}</p>\n`;
-  pageBody += `<p><b>Dit svar:</b> ${exercise.actualAnswer}</p>\n`;
+  pageBody += `<p><b>Dit svar:</b> ${exercise.answer}</p>\n`;
   pageBody += '</div>\n';
   return pageBody;
 }
@@ -104,7 +98,7 @@ function createPageBodyAnswerBody(exercise) {
 function createPageBodyExerciseBody(exercise) {
   let pageBody = '';
   pageBody += '<div class="exerciseBody">\n';
-  pageBody += `<p>${exercise.tekst}</p>\n`;
+  pageBody += `<p>${exercise.text}</p>\n`;
   pageBody += '</div>\n';
   return pageBody;
 }
@@ -185,10 +179,14 @@ const requestBodyIsValid = (body) => {
  * @param {*} actualAnswers
  * @returns
  */
-const isActualAnswerValid = (actualAnswers) => actualAnswers.hasOwnProperty('id')
-  && actualAnswers.hasOwnProperty('actualAnswer')
-  && typeof actualAnswers.id === 'number'
-  && typeof actualAnswers.actualAnswer === 'string';
+const isActualAnswerValid = (actualAnswer) => actualAnswer.hasOwnProperty('exerciseVars')
+  && actualAnswer.hasOwnProperty('facit')
+  && actualAnswer.hasOwnProperty('type')
+  && actualAnswer.hasOwnProperty('point')
+  && actualAnswer.hasOwnProperty('txt')
+  && actualAnswer.hasOwnProperty('tegn')
+  && actualAnswer.hasOwnProperty('questionAnswers')
+  && actualAnswer.hasOwnProperty('questionNumber')
 
 /**
  * Handling structure, so that HandleRequest runs before exercisesFromDatabase
@@ -197,10 +195,9 @@ const isActualAnswerValid = (actualAnswers) => actualAnswers.hasOwnProperty('id'
  * @param {*} requestBody
  * @param {*} response
  */
-const handleRequestBody = async (actualAnswers, response) => {
+const handleRequestBody = (actualAnswers, response) => {
   const exercises = convertActualAnswersToExercises(actualAnswers);
   const exerciseSuite = new ExerciseSuite(exercises);
-  await exerciseSuite.getExercisesDataFromDatabase();
   exerciseSuite.evaluateAnswersData();
   const resultPage = new ResultPage(exerciseSuite);
   resultPage.respondTo(response);
