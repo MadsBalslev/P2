@@ -112,9 +112,6 @@ function createPageBodyExerciseBody(exercise) {
 const handleResultRequest = (request, response) => {
   if (request.method === 'POST') {
     handleResultPostRequest(request, response);
-    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress);
-  } else if (request.method === 'GET') {
-    response.end(JSON.stringify(global.globalSet));
   } else if (request.method !== 'POST') {
     throw 'handleResultRequest did not get a POST request';
   }
@@ -128,7 +125,7 @@ const handleResultRequest = (request, response) => {
  */
 const handleResultPostRequest = async (request, response) => {
   try {
-    const body = await getBodyFromRequest(request, response);
+    const body = await getBodyFromRequest(request);
     handleBody(body, response);
   } catch (error) {
     helper.errorResponse(response, 400, 'handleRequestBody did not get valid body');
@@ -170,7 +167,7 @@ const handleBody = (body, response) => {
 /**
  * We iterate the elements of the body array. The Loop will break, if it gets a false value.
  * @param {*} body
- * @returns
+ * @returns ?
  */
 const requestBodyIsValid = (body) => {
   let bodyIsValid = true;
@@ -189,7 +186,7 @@ const requestBodyIsValid = (body) => {
  * @var isActualSnawerValid
  * The variable is assigned the properties of the array actualAnswers
  * @param {*} actualAnswers
- * @returns
+ * @returns ?
  */
 const isActualAnswerValid = (actualAnswer) => actualAnswer.hasOwnProperty('exerciseVars')
   && actualAnswer.hasOwnProperty('facit')
@@ -226,6 +223,4 @@ function convertActualAnswersToExercises(actualAnswers) {
   return exercises;
 }
 
-module.exports = {
-  handleResultRequest,
-};
+module.exports = handleResultRequest;

@@ -6,6 +6,7 @@ const fs = require('fs');
 const handleOpgaverRequest = require('./routes/opgaver');
 const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
+const { cos } = require('mathjs');
 
 global.globalSet = [];
 
@@ -29,7 +30,8 @@ function tryHandleRequest(request, response) {
     // console.log(request.headers);
     handleRequest(request, response);
   } catch (error) {
-    helper.errorResponse(response, 400, error);
+    console.log(error);
+    helper.errorResponse(response, 400, 'error at tryHandleRequest');
   }
 }
 
