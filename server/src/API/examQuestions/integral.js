@@ -7,7 +7,7 @@ const createPowerIntegral = () => {
   // (Ax^3 +- Bx^2 +- C)dx
 
   const txt = 'Udregn det følgende ubestemte integral.';
-  const type = 'integral';
+  const type = 'integralregning';
   const point = 10;
 
   let B;
@@ -32,7 +32,7 @@ const createPowerIntegral = () => {
 // Trigonomisk Integral
 const createTrigonometricIntegral = () => {
   const txt = 'Udregn det følgende ubestemte integral.';
-  const type = 'integral';
+  const type = 'integralregning';
   const point = 15;
 
   const A = randNum(12) + 2;
