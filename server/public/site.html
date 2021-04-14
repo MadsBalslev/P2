@@ -4,19 +4,23 @@
     <title>P2 Projekt</title>
     <link rel='icon' type='image/png' href='./favicon.png' />
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="site.css" rel="stylesheet">
 </head>
 
 <body>
     <form id='form' action='./opgaver'>
-        <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
 
+        <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br><br>
+        
+        <div class="typevælger">
         <select id='eksamenssætTypeVælger' name='eksamenssætType'>
             <option value='generisk'>Generisk</option>
             <option value='emneBestemt'>Emne bestemt</option>
             <option value='personlig'>Personlig</option>
-        </select><br><br>
+        </select><br></div><br>
         
-       
         <div id='emneVælger' hidden>
             <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
             <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
@@ -69,6 +73,7 @@
         </div><br>
         
         <input type='submit' value='Indsend'>
+        
     </form>
 </body>
 </body>
