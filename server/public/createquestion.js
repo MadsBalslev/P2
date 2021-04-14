@@ -69,3 +69,15 @@ function getAnswers(questionAmount) {
     }
     return questionAnswers;
 }
+
+/*
+const div1 = document.createElement("div");
+    let question = document.createElement("H1");
+    let textfield = document.createElement("INPUT");
+    textfield.setAttribute("type", "text");
+    textfield.setAttribute("value", "Indtast svar her");
+    div1.appendChild(question);
+    div1.appendChild(textfield);
+    document.body.appendChild(div1);
+    document.getElementsByTagName("H1")[0].innerHTML = "Hvad er 2 + 2";
+*/
