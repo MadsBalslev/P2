@@ -102,6 +102,7 @@
         buildExercisePage(exerciseSet);
     });
 
+
     const getExerciseSetFromServer = (event) => {
         return new Promise((resolve, reject) => {
             exerciseAmount = document.querySelector('#amount').value;
@@ -135,20 +136,62 @@
     };
 
     const buildExercisePage = (exerciseSet) => {
-        document.body.innerHTML = ''; // <-- clears the page
+        document.body.innerHTML = '';
+
+        const exerciseForm = document.createElement("form");
+        exerciseForm.setAttribute('id', 'exerciseForm');
 
         let i = 1;
         exerciseSet.forEach(exercise => {
-            exercise.questionNumber = i;
-            document.body.innerHTML += `<div id="exercise${exercise.questionNumber}">`;
-            document.body.innerHTML += `<h1>Opgave ${exercise.questionNumber}`;
-            document.body.innerHTML += `<p>${exercise.txt}</p><br>`;
+            const exerciseDiv = document.createElement("div");
 
-            exercise.exerciseVars.forEach(exerciseVar => {
-                document.body.innerHTML += `<p>${exercise.exerciseVars}</p>`;
+            const questionHeader = document.createElement('h1');
+            questionHeader.innerHTML = `Spørgsmål ${i}`;
+            exercise.questionNumber = i;
+
+            const questionText = document.createElement("p");
+            questionText.innerHTML = exercise.txt;
+
+            exerciseDiv.appendChild(questionHeader);
+            exerciseDiv.appendChild(questionText);
+
+            for (const variable in exercise.exerciseVars) {
+                let temp = document.createElement("p")
+                temp.innerHTML = exercise.exerciseVars[variable];
+                exerciseDiv.appendChild(temp);
+            }
+
+            const textField = document.createElement("input");
+            textField.setAttribute("required", "1");
+            textField.setAttribute("id", `exercise${i}`)
+
+            exerciseDiv.appendChild(textField);
+            exerciseForm.appendChild(exerciseDiv)
+
+            i++;
+        });
+        const submitButton = document.createElement("input");
+        submitButton.setAttribute("type", `submit`)
+        submitButton.setAttribute("value", `kontroller dine svar`)
+        exerciseForm.appendChild(submitButton);
+        document.body.appendChild(exerciseForm);
+
+
+        document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            exerciseSet.forEach(exercise => {
+                exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
             });
-            document.body.innerHTML += `</div>`;
-            i += 1;
+
+            fetch('http://localhost:8080/resultat', {
+                method: 'POST',
+                header: {
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(exerciseSet),
+            })
+            .then(response => response.text())
+            .then(resultPage => document.body.innerHTML = resultPage);
         });
     };
 
