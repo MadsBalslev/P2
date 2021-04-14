@@ -70,7 +70,7 @@ const generateExcerciseSet = (cat, amount) => {
 };
 
 generateExcerciseSet(['vektor2d', 10]);
-generateExcerciseSet(['integral', 10]);
+// generateExcerciseSet(['integral', 10]);
 
 module.exports = {
   generateExcerciseSet,

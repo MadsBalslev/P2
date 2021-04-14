@@ -96,6 +96,8 @@ const vektorMultiplication = () => {
     tegn,
   };
 
+  console.log(taskObj)
+
   return taskObj;
 };
 
@@ -103,7 +105,7 @@ const numOfTasks = 3;
 
 // vektorAddition();
 // vektorSubtraction();
-// vektorMultiplication();
+vektorMultiplication();
 
 module.exports = {
   vektorAddition,

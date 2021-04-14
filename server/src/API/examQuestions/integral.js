@@ -23,10 +23,18 @@ const createPowerIntegral = () => {
   const integral = `${A}x^3+${B}x^2+${C}x`;
   const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
 
-  const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
+  const taskObj = {
+    exerciseVars: { integral },
+    facit: integralFacit,
+    type,
+    point,
+    txt,
+  }
 
-  console.log(answer);
-  return answer;
+//  const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
+
+  console.log(taskObj);
+  return taskObj;
 };
 
 // Trigonomisk Integral
@@ -54,13 +62,21 @@ const createTrigonometricIntegral = () => {
   }
   else { integralFacit = `${A}sin(${B}x)/${B}+K`; }
   
-  const pIntegral = math.parse(integral);
-  const pFacit = math.parse(integralFacit);
+//  const pIntegral = math.parse(integral);
+//  const pFacit = math.parse(integralFacit);
 
-  const answer = { txt: txt, formula: pIntegral.toString(), facit: pFacit.toString(), type: type, point: point };
+  const taskObj = {
+    exerciseVars: { integral },
+    facit: integralFacit,
+    type,
+    point,
+    txt,
+  };
 
-  console.log(answer);
-  return answer;
+//  const answer = { txt: txt, formula: pIntegral.toString(), facit: pFacit.toString(), type: type, point: point };
+
+  console.log(taskObj);
+  return taskObj;
 }
 
 
@@ -72,12 +88,10 @@ const fm = math.derivative(f, x);
 // console.log('f(x) =', f.toString());
 // console.log("f'(x) =", fm.toString());
 
-// createintegral();
-
 const numOfTasks = 2;
 
-// createPowerIntegral();
-// createTrigonometricIntegral();
+createPowerIntegral();
+createTrigonometricIntegral();
 
 module.exports = {
   createPowerIntegral,
