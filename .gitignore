@@ -2,7 +2,6 @@ node_modules/
 coverage/
 *.env
 
-my.cnf
 # Logs
 logs
 *.log
@@ -119,6 +118,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# misc
-.vscode/
