@@ -56,7 +56,7 @@ const generateExcerciseSet = (cat, amount) => {
         case 'vektor2d':
           set.push(generateVectorExercise(amount));
           break;
-        case 'integral':
+        case 'integralregning':
           set.push(generateIntegralExercise(amount));
           break;
         default:
@@ -70,7 +70,7 @@ const generateExcerciseSet = (cat, amount) => {
 };
 
 generateExcerciseSet(['vektor2d', 10]);
-// generateExcerciseSet(['integral', 10]);
+generateExcerciseSet(['integralregning', 10]);
 
 module.exports = {
   generateExcerciseSet,
