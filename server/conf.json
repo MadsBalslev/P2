@@ -1,6 +1,5 @@
 {
   "source": {
-      "include": ["./src", "package.json", "../readme.md"],
       "includePattern": ".js$",
       "excludePattern": "(node_modules/|docs)"
   },
@@ -9,13 +8,10 @@
 
   "opts": {
       "encoding": "utf8",
-      "readme": "../readme.md",
-      "destination": "docs/",
+      "readme": "./readme.md",
+      "destination": "./docs",
       "recurse": true,
       "verbose": true,
-      "template": "./node_modules/clean-jsdoc-theme",
-      "theme_opts": {
-          "theme": "dark"
-      }
+      "template": "./node_modules/minami"
   }
 }
