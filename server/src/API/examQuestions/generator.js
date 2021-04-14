@@ -4,6 +4,7 @@ const {
 } = require('../../helper');
 
 const vectors = require('./vector');
+const integrals = require('./integral');
 
 const generateVectorExercise = () => {
   let result;
@@ -25,6 +26,22 @@ const generateVectorExercise = () => {
   return result;
 };
 
+const generateIntegralExercise = () => {
+  let result;
+  const rand = randNum(integrals.numOfTasks);
+  switch (rand) {
+    case 1:
+      result = integrals.createPowerIntegral();
+      break;
+    case 2:
+      result = integrals.createTrigonometricIntegral();
+      break;
+    default:
+      break;
+  }
+  return result;
+};
+
 /**
  * Will generate an exerciseset with the given catagories
  * @param {string[]} cat An array containg the catagories of exercises to be generated
@@ -39,6 +56,9 @@ const generateExcerciseSet = (cat, amount) => {
         case 'vektor2d':
           set.push(generateVectorExercise(amount));
           break;
+        case 'integral':
+          set.push(generateIntegralExercise(amount));
+          break;
         default:
           break;
       }
@@ -50,6 +70,7 @@ const generateExcerciseSet = (cat, amount) => {
 };
 
 generateExcerciseSet(['vektor2d', 10]);
+generateExcerciseSet(['integral', 10]);
 
 module.exports = {
   generateExcerciseSet,
