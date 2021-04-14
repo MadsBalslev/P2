@@ -27,7 +27,7 @@ const generateVectorExercise = () => {
 
 /**
  * Will generate an exerciseset with the given catagories
- * @param {Array} cat An array containg the catagories of exercises to be generated
+ * @param {string[]} cat An array containg the catagories of exercises to be generated
  * @param {integer} amount The amount of exercises to be generated in each catagory
  */
 const generateExcerciseSet = (cat, amount) => {
