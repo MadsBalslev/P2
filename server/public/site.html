@@ -10,36 +10,39 @@
     <form id='form' action='./opgaver'>
         <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
 
+        <label for='exerciseAmount'></label>
+
+        <!--
         <select id='eksamenssætTypeVælger' name='eksamenssætType'>
             <option value='generisk'>Generisk</option>
             <option value='emneBestemt'>Emne bestemt</option>
             <option value='personlig'>Personlig</option>
         </select><br><br>
-        
-       
-        <div id='emneVælger' hidden>
+        -->
+
+        <div id='emneVælger'>
             <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
             <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
             <label for="andengradspolynomiumOgLigning">Andengradspolynomium og -ligning</label><br>
 
             <input type="checkbox" id="talOgRegnearter" name="talOgRegnearter" value="true">
             <label for="talOgRegnearter">Tal og regnearter</label><br>
-            
+
             <input type="checkbox" id="ligninger" name="ligninger" value="true">
             <label for="ligninger">Ligninger</label><br>
-            
+
             <input type="checkbox" id="trigonometri" name="trigonometri" value="true">
             <label for="trigonometri">Trigonometri</label><br>
-            
+
             <input type="checkbox" id="funktioner" name="funktioner" value="true">
             <label for="funktioner">Funktioner</label><br>
-            
+
             <input type="checkbox" id="geometri" name="geometri" value="true">
             <label for="geometri">Geometri</label><br>
-          
+
             <input type="checkbox" id="differebtialregning" name="differebtialregning" value="true">
             <label for="differebtialregning">Differentialregning</label><br>
-            
+
             <input type="checkbox" id="sandsynlighedOgKombinatorik" name="sandsynlighedOgKombinatorik" value="true">
             <label for="sandsynlighedOgKombinatorik">Sandsynlighed</label><br>
 
@@ -49,7 +52,7 @@
             <input type="checkbox" id="regression" name="regression" value="true">
             <label for="regression">Regression</label><br>
 
-            <input type="checkbox" id="vektorerI2d" name="vektorerI2d" value="true">
+            <input type="checkbox" id="vektor2d" name="vektorerI2d" value="true">
             <label for="vektorerI2d">Vektorer i 2D</label><br>
 
             <input type="checkbox" id="vektorerI3d" name="vektorerI3d" value="true">
@@ -67,28 +70,88 @@
             <input type="checkbox" id="funktionerAfToVariable" name="funktionerAfToVariable" value="true">
             <label for="funktionerAfToVariable">Funktioner af to variable</label><br>
         </div><br>
-        
+
+        <label for="amount">Hvor mange opgaver vil du lave?</label>
+        <input type="number" id="amount">
+        <br>
+
         <input type='submit' value='Indsend'>
     </form>
 </body>
 </body>
 
+<!--
 <script>
-    let eksamnessætTypeVælger = document.querySelector(`#eksamenssætTypeVælger`);
-    let emneVælgerLabel = document.querySelector(`#emneVælgerLabel`);
-    let emneVælger = document.querySelector(`#emneVælger`);
+    const eksamnessætTypeVælger = document.querySelector('#eksamenssætTypeVælger');
+    const emneVælger = document.querySelector('#emneVælger');
 
-    eksamnessætTypeVælger.addEventListener(`input`, (event) => {
-        if (eksamnessætTypeVælger.value === `emneBestemt`) {
-            emneVælger.removeAttribute(`hidden`);
-        } else if (eksamnessætTypeVælger.value !== `emneBestemt`) {
-            emneVælger.setAttribute(`hidden`, ``);
+    eksamnessætTypeVælger.addEventListener('input', () => {
+        if (eksamnessætTypeVælger.value === 'emneBestemt') {
+            emneVælger.removeAttribute('hidden');
+        } else if (eksamnessætTypeVælger.value !== 'emneBestemt') {
+            emneVælger.setAttribute('hidden', '');
         }
     });
 </script>
+-->
+<script>
+    document.querySelector('#form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const exerciseSet = await getExerciseSetFromServer(event);
+        console.log(exerciseSet);
+        buildExercisePage(exerciseSet);
+    });
+
+    const getExerciseSetFromServer = (event) => {
+        return new Promise((resolve, reject) => {
+            exerciseAmount = document.querySelector('#amount').value;
+            exerciseSubjects = getExerciseSubjects();
+            console.log(exerciseSubjects);
+
+            fetch('http://localhost:8080/opgaver', {
+                method: 'GET',
+                headers: {
+                    subjects: exerciseSubjects,
+                    amount: exerciseAmount
+                }
+            })
+                .then(response => response.json())
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    };
+
+    const getExerciseSubjects = () => {
+        let elements = document.querySelector('#emneVælger').children;
+        let exerciseSubjects = '';
+
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].checked) {
+                exerciseSubjects += `${elements[i].id}, `
+            }
+        }
+
+        return exerciseSubjects;
+    };
+
+    const buildExercisePage = (exerciseSet) => {
+        document.body.innerHTML = ''; // <-- clears the page
+
+        let i = 1;
+        exerciseSet.forEach(exercise => {
+            exercise.questionNumber = i;
+            document.body.innerHTML += `<div id="exercise${exercise.questionNumber}">`;
+            document.body.innerHTML += `<h1>Opgave ${exercise.questionNumber}`;
+            document.body.innerHTML += `<p>${exercise.txt}</p><br>`;
+
+            exercise.exerciseVars.forEach(exerciseVar => {
+                document.body.innerHTML += `<p>${exercise.exerciseVars}</p>`;
+            });
+            document.body.innerHTML += `</div>`;
+            i += 1;
+        });
+    };
+
+</script>
+
 </html>
-
-
-
-
-
