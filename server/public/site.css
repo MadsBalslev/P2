@@ -50,10 +50,11 @@
     cursor: pointer;
     margin: 15px;
     box-shadow: 0 0 10px 2px;
-    transition: 1s;
+    transition: 0.6s;
   }
   input[type="submit"]:hover{
     color: black;
+    transform: scale(1.1);
   }
 
   .Afventer {
