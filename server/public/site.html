@@ -139,43 +139,69 @@
     };
 
     const buildExercisePage = (exerciseSet) => {
-        document.body.innerHTML = '';
+        clearDom();
+        const exerciseForm = createExerciseForm();
+        addExercisesToExerciseForm(exerciseForm, exerciseSet);
+        addButtonToExerciseForm(exerciseForm, exerciseSet);
+        document.body.appendChild(exerciseForm);
+        giveFormAction(exerciseSet);
+    };
 
+    function clearDom() {
+        document.body.innerHTML = '';
+    }
+
+    function createExerciseForm() {
         const exerciseForm = document.createElement("form");
         exerciseForm.setAttribute('id', 'exerciseForm');
+        return exerciseForm;
+    }
 
+    function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
         let i = 1;
-        exerciseSet.forEach(exercise => {
-            const exerciseDiv = document.createElement("div");
-
-            const questionHeader = document.createElement('h1');
-            questionHeader.innerHTML = `Spørgsmål ${i}`;
-            exercise.questionNumber = i;
-
-            const questionText = document.createElement("p");
-            questionText.innerHTML = exercise.txt;
-
-            exerciseDiv.appendChild(questionHeader);
-            exerciseDiv.appendChild(questionText);
-
-
-
-            const textField = document.createElement("input");
-            textField.setAttribute("required", "1");
-            textField.setAttribute("id", `exercise${i}`)
-
-            exerciseDiv.appendChild(textField);
-            exerciseForm.appendChild(exerciseDiv)
-
-            i++;
+        exerciseSet.forEach((exercise) => {
+            i = addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
         });
+    }
+
+    function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
+        const exerciseDiv = document.createElement("div");
+        addExerciseHeader(i, exercise, exerciseDiv);
+        addExerciseText(exercise, exerciseDiv);
+        addExerciseInputField(i, exerciseDiv);
+        exerciseForm.appendChild(exerciseDiv);
+        i += 1;
+        return i;
+    }
+
+    function addExerciseHeader(i, exercise, exerciseDiv) {
+        const exerciseHeader = document.createElement('h1');
+        exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+        exercise.questionNumber = i;
+        exerciseDiv.appendChild(exerciseHeader);
+    }
+
+    function addExerciseText(exercise, exerciseDiv) {
+        const questionText = document.createElement("p");
+        questionText.innerHTML = exercise.txt;
+        exerciseDiv.appendChild(questionText);
+    }
+
+    function addExerciseInputField(i, exerciseDiv) {
+        const textField = document.createElement("input");
+        textField.setAttribute("required", "1");
+        textField.setAttribute("id", `exercise${i}`);
+        exerciseDiv.appendChild(textField);
+    }
+
+    function addButtonToExerciseForm(exerciseForm, exerciseSet) {
         const submitButton = document.createElement("input");
-        submitButton.setAttribute("type", `submit`)
-        submitButton.setAttribute("value", `kontroller dine svar`)
+        submitButton.setAttribute("type", `submit`);
+        submitButton.setAttribute("value", `kontroller dine svar`);
         exerciseForm.appendChild(submitButton);
-        document.body.appendChild(exerciseForm);
+    }
 
-
+    function giveFormAction(exerciseSet) {
         document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
             event.preventDefault();
             exerciseSet.forEach(exercise => {
@@ -185,15 +211,14 @@
             fetch('http://localhost:8080/resultat', {
                 method: 'POST',
                 header: {
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
                 },
                 body: JSON.stringify(exerciseSet),
             })
                 .then(response => response.text())
                 .then(resultPage => document.body.innerHTML = resultPage);
         });
-    };
-
+    }
 </script>
 
 </html>
