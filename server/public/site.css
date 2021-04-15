@@ -57,6 +57,10 @@
     transform: scale(1.1);
   }
 
+  input[type="checkbox"]:hover{
+    transform: scaleX(1.2);
+  }
+
   .Afventer {
     display: flex;
     justify-content: center;
