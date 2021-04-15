@@ -107,7 +107,6 @@
         return new Promise((resolve, reject) => {
             exerciseAmount = document.querySelector('#amount').value;
             exerciseSubjects = getExerciseSubjects();
-            console.log(exerciseSubjects);
 
             fetch('http://localhost:8080/opgaver', {
                 method: 'GET',
