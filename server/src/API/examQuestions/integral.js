@@ -29,8 +29,8 @@ const createPowerIntegral = () => {
     type,
     point,
     txt,
-    tegn,
-  }
+    tegn: '',
+  };
 
 //  const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
 
@@ -72,7 +72,7 @@ const createTrigonometricIntegral = () => {
     type,
     point,
     txt,
-    tegn,
+    tegn: '',
   };
 
 //  const answer = { txt: txt, formula: pIntegral.toString(), facit: pFacit.toString(), type: type, point: point };
