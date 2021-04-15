@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form id='form' action='./opgaver'>
+    <form id='form'>
         <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
 
         <label for='exerciseAmount'></label>
@@ -98,7 +98,6 @@
     document.querySelector('#form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const exerciseSet = await getExerciseSetFromServer(event);
-        console.log(exerciseSet);
         buildExercisePage(exerciseSet);
     });
 
@@ -124,14 +123,19 @@
     const getExerciseSubjects = () => {
         let elements = document.querySelector('#emneVælger').children;
         let exerciseSubjects = '';
-
-        for (let i = 0; i < elements.length; i++) {
-            if (elements[i].checked) {
-                exerciseSubjects += `${elements[i].id},`
-            }
-        }
+        [...elements].forEach(element => {
+            exerciseSubjects += getCheckedExerciseSubject(element);
+        });
 
         return exerciseSubjects;
+    };
+
+    const getCheckedExerciseSubject = (element) => {
+        if (element.checked) {
+            return `${element.id},`;
+        } else {
+            return '';
+        }
     };
 
     const buildExercisePage = (exerciseSet) => {
@@ -154,11 +158,7 @@
             exerciseDiv.appendChild(questionHeader);
             exerciseDiv.appendChild(questionText);
 
-            for (const variable in exercise.exerciseVars) {
-                let temp = document.createElement("p")
-                temp.innerHTML = exercise.exerciseVars[variable];
-                exerciseDiv.appendChild(temp);
-            }
+
 
             const textField = document.createElement("input");
             textField.setAttribute("required", "1");
@@ -189,8 +189,8 @@
                 },
                 body: JSON.stringify(exerciseSet),
             })
-            .then(response => response.text())
-            .then(resultPage => document.body.innerHTML = resultPage);
+                .then(response => response.text())
+                .then(resultPage => document.body.innerHTML = resultPage);
         });
     };
 
