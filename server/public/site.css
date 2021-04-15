@@ -6,8 +6,8 @@
   
   :root {
     --hue-neutral: 180;
-    --hue-wrong: 0;
-    --hue-correct: 145;
+    --hue-wrong: #ff0000;
+    --hue-correct: #61ff9e;
   }
   
   body {
