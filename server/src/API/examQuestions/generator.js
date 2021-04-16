@@ -11,7 +11,7 @@ const generateVectorExercise = () => {
   const rand = randNum(vectors.numOfTasks);
   switch (rand) {
     case 1:
-      result = vectors.vektorAddition();
+      result = new vectors.VektorAdditionExercise();
       break;
     case 2:
       result = vectors.vektorSubtraction();

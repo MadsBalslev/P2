@@ -15,30 +15,20 @@ const generateVector = () => {
 
 const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
 
-const createVektorAdditionExercise = () => {
-  const txt = 'Hvad giver følgende to vektorer lagt sammen?';
-  const vectorA = generateVector();
-  const vectorB = generateVector();
-  const point = 10;
-  const type = 'vektor2d';
+function VektorAdditionExercise() {
+  const mathMatrixVectorA = generateVector();
+  const mathMatrixVectorB = generateVector();
+  const mathMatirxFacit = getVektorAdditionFacit(mathMatrixVectorA, mathMatrixVectorA);
 
-  const tegn = '+';
-
-  const facit = getVektorAdditionFacit(vectorA, vectorB);
-
-  const taskObj = {
-    exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
-    },
-    facit: formatVector(facit),
-    type,
-    point,
-    txt,
-    tegn,
+  this.exerciseVars = {
+    vectorA: formatVector(mathMatrixVectorA),
+    vectorB: formatVector(mathMatrixVectorB),
   };
-
-  return taskObj;
+  this.facit = mathMatirxFacit;
+  this.type = 'vektor2d';
+  this.point = 10;
+  this.txt = 'Hvad giver følgende to vektorer lagt sammen?';
+  this.tegn = '+';
 };
 
 function getVektorAdditionFacit(vectorA, vectorB) {
@@ -118,7 +108,7 @@ const numOfTasks = 3;
 createVektorMultiplicationExercise();
 
 module.exports = {
-  vektorAddition: createVektorAdditionExercise,
+  VektorAdditionExercise,
   getVektorAdditionFacit,
   vektorSubtraction: CreateVektorSubtractionExercise,
   getVektorSubtractionFacit,
