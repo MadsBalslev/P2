@@ -67,7 +67,7 @@
 </head>
 
 <body>
-    <form id='form' action='./opgaver'>
+    <form id='form'>
         <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
 
         <label for='exerciseAmount'></label>
@@ -160,7 +160,6 @@
     document.querySelector('#form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const exerciseSet = await getExerciseSetFromServer(event);
-        console.log(exerciseSet);
         buildExercisePage(exerciseSet);
     });
 
@@ -169,7 +168,6 @@
         return new Promise((resolve, reject) => {
             exerciseAmount = document.querySelector('#amount').value;
             exerciseSubjects = getExerciseSubjects();
-            console.log(exerciseSubjects);
 
             fetch(`${base_url}/opgaver`, {
                     method: 'GET',
@@ -187,58 +185,85 @@
     const getExerciseSubjects = () => {
         let elements = document.querySelector('#emneVælger').children;
         let exerciseSubjects = '';
-
-        for (let i = 0; i < elements.length; i++) {
-            if (elements[i].checked) {
-                exerciseSubjects += `${elements[i].id},`
-            }
-        }
+        [...elements].forEach(element => {
+            exerciseSubjects += getCheckedExerciseSubject(element);
+        });
 
         return exerciseSubjects;
     };
 
-    const buildExercisePage = (exerciseSet) => {
-        document.body.innerHTML = '';
+    const getCheckedExerciseSubject = (element) => {
+        if (element.checked) {
+            return `${element.id},`;
+        } else {
+            return '';
+        }
+    };
 
+    const buildExercisePage = (exerciseSet) => {
+        clearDom();
+        const exerciseForm = createExerciseForm();
+        addExercisesToExerciseForm(exerciseForm, exerciseSet);
+        addButtonToExerciseForm(exerciseForm, exerciseSet);
+        document.body.appendChild(exerciseForm);
+        giveFormAction(exerciseSet);
+    };
+
+    function clearDom() {
+        document.body.innerHTML = '';
+    }
+
+    function createExerciseForm() {
         const exerciseForm = document.createElement("form");
         exerciseForm.setAttribute('id', 'exerciseForm');
+        return exerciseForm;
+    }
 
+    function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
         let i = 1;
-        exerciseSet.forEach(exercise => {
-            const exerciseDiv = document.createElement("div");
-
-            const questionHeader = document.createElement('h1');
-            questionHeader.innerHTML = `Spørgsmål ${i}`;
-            exercise.questionNumber = i;
-
-            const questionText = document.createElement("p");
-            questionText.innerHTML = exercise.txt;
-
-            exerciseDiv.appendChild(questionHeader);
-            exerciseDiv.appendChild(questionText);
-
-            for (const variable in exercise.exerciseVars) {
-                let temp = document.createElement("p")
-                temp.innerHTML = exercise.exerciseVars[variable];
-                exerciseDiv.appendChild(temp);
-            }
-
-            const textField = document.createElement("input");
-            textField.setAttribute("required", "1");
-            textField.setAttribute("id", `exercise${i}`)
-
-            exerciseDiv.appendChild(textField);
-            exerciseForm.appendChild(exerciseDiv)
-
-            i++;
+        exerciseSet.forEach((exercise) => {
+            i = addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
         });
+    }
+
+    function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
+        const exerciseDiv = document.createElement("div");
+        addExerciseHeader(i, exercise, exerciseDiv);
+        addExerciseText(exercise, exerciseDiv);
+        addExerciseInputField(i, exerciseDiv);
+        exerciseForm.appendChild(exerciseDiv);
+        i += 1;
+        return i;
+    }
+
+    function addExerciseHeader(i, exercise, exerciseDiv) {
+        const exerciseHeader = document.createElement('h1');
+        exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+        exercise.questionNumber = i;
+        exerciseDiv.appendChild(exerciseHeader);
+    }
+
+    function addExerciseText(exercise, exerciseDiv) {
+        const questionText = document.createElement("p");
+        questionText.innerHTML = exercise.txt;
+        exerciseDiv.appendChild(questionText);
+    }
+
+    function addExerciseInputField(i, exerciseDiv) {
+        const textField = document.createElement("input");
+        textField.setAttribute("required", "1");
+        textField.setAttribute("id", `exercise${i}`);
+        exerciseDiv.appendChild(textField);
+    }
+
+    function addButtonToExerciseForm(exerciseForm) {
         const submitButton = document.createElement("input");
-        submitButton.setAttribute("type", `submit`)
-        submitButton.setAttribute("value", `kontroller dine svar`)
+        submitButton.setAttribute("type", `submit`);
+        submitButton.setAttribute("value", `kontroller dine svar`);
         exerciseForm.appendChild(submitButton);
-        document.body.appendChild(exerciseForm);
+    }
 
-
+    function giveFormAction(exerciseSet) {
         document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
             event.preventDefault();
             exerciseSet.forEach(exercise => {
