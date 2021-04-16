@@ -15,7 +15,7 @@ const generateVector = () => {
 
 const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
 
-const vektorAddition = () => {
+const createVektorAdditionExercise = () => {
   const txt = 'Hvad giver følgende to vektorer lagt sammen?';
   const vectorA = generateVector();
   const vectorB = generateVector();
@@ -24,10 +24,7 @@ const vektorAddition = () => {
 
   const tegn = '+';
 
-  const facit = math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
-  ]);
+  const facit = getVektorAdditionFacit(vectorA, vectorB);
 
   const taskObj = {
     exerciseVars: {
@@ -44,7 +41,14 @@ const vektorAddition = () => {
   return taskObj;
 };
 
-const vektorSubtraction = () => {
+function getVektorAdditionFacit(vectorA, vectorB) {
+  return math.matrix([
+    [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
+    [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
+  ]);
+}
+
+const CreateVektorSubtractionExercise = () => {
   const txt = 'Hvad giver følgende to vektorer fratrukket hinanden?';
   const vectorA = generateVector();
   const vectorB = generateVector();
@@ -53,10 +57,7 @@ const vektorSubtraction = () => {
 
   const tegn = '-';
 
-  const facit = math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
-  ]);
+  const facit = getVektorSubtractionFacit(vectorA, vectorB);
 
   const taskObj = {
     exerciseVars: {
@@ -73,7 +74,14 @@ const vektorSubtraction = () => {
   return taskObj;
 };
 
-const vektorMultiplication = () => {
+function getVektorSubtractionFacit(vectorA, vectorB) {
+  return math.matrix([
+    [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
+    [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
+  ]);
+}
+
+const createVektorMultiplicationExercise = () => {
   const txt = 'Find skalarproduktet af følgende to vektorer';
   const vectorA = generateVector();
   const vectorB = generateVector();
@@ -82,7 +90,7 @@ const vektorMultiplication = () => {
   const type = 'vektor2d';
 
   // eslint-disable-next-line max-len
-  const facit = math.dot(vectorA, vectorB);
+  const facit = getVektorMultiplicationFacit(vectorA, vectorB);
 
   const taskObj = {
     exerciseVars: {
@@ -96,20 +104,25 @@ const vektorMultiplication = () => {
     tegn,
   };
 
-  console.log(taskObj)
-
   return taskObj;
 };
+
+function getVektorMultiplicationFacit(vectorA, vectorB) {
+  return math.dot(vectorA, vectorB);
+}
 
 const numOfTasks = 3;
 
 // vektorAddition();
 // vektorSubtraction();
-vektorMultiplication();
+createVektorMultiplicationExercise();
 
 module.exports = {
-  vektorAddition,
-  vektorSubtraction,
-  vektorMultiplication,
+  vektorAddition: createVektorAdditionExercise,
+  getVektorAdditionFacit,
+  vektorSubtraction: CreateVektorSubtractionExercise,
+  getVektorSubtractionFacit,
+  vektorMultiplication: createVektorMultiplicationExercise,
+  getVektorMultiplicationFacit,
   numOfTasks,
 };
