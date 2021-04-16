@@ -1,7 +1,7 @@
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
-const generateVector = () => {
+const generateRandom2dVector = () => {
   const a1 = randNum(15) + 5;
   const a2 = randNum(12);
 
@@ -16,20 +16,20 @@ const generateVector = () => {
 const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
 
 function VektorAdditionExercise() {
-  const mathMatrixVectorA = generateVector();
-  const mathMatrixVectorB = generateVector();
+  const mathMatrixVectorA = generateRandom2dVector();
+  const mathMatrixVectorB = generateRandom2dVector();
   const mathMatirxFacit = getVektorAdditionFacit(mathMatrixVectorA, mathMatrixVectorA);
 
   this.exerciseVars = {
     vectorA: formatVector(mathMatrixVectorA),
     vectorB: formatVector(mathMatrixVectorB),
   };
-  this.facit = mathMatirxFacit;
+  this.facit = formatVector(mathMatirxFacit);
   this.type = 'vektor2d';
   this.point = 10;
   this.txt = 'Hvad giver følgende to vektorer lagt sammen?';
   this.tegn = '+';
-};
+}
 
 function getVektorAdditionFacit(vectorA, vectorB) {
   return math.matrix([
@@ -38,31 +38,21 @@ function getVektorAdditionFacit(vectorA, vectorB) {
   ]);
 }
 
-const CreateVektorSubtractionExercise = () => {
-  const txt = 'Hvad giver følgende to vektorer fratrukket hinanden?';
-  const vectorA = generateVector();
-  const vectorB = generateVector();
-  const point = 10;
-  const type = 'vektor2d';
+function VektorSubtractionExercise() {
+  const mathMatrixVectorA = generateRandom2dVector();
+  const mathMatrixVectorB = generateRandom2dVector();
+  const mathMatirxFacit = getVektorSubtractionFacit(mathMatrixVectorA, mathMatrixVectorA);
 
-  const tegn = '-';
-
-  const facit = getVektorSubtractionFacit(vectorA, vectorB);
-
-  const taskObj = {
-    exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
-    },
-    facit: formatVector(facit),
-    type,
-    point,
-    txt,
-    tegn,
+  this.exerciseVars = {
+    vectorA: formatVector(mathMatrixVectorA),
+    vectorB: formatVector(mathMatrixVectorB),
   };
-
-  return taskObj;
-};
+  this.facit = formatVector(mathMatirxFacit);
+  this.type = 'vektor2d';
+  this.point = 10;
+  this.txt = 'Hvad giver følgende to vektorer fratrukket hinanden?';
+  this.tegn = '-';
+}
 
 function getVektorSubtractionFacit(vectorA, vectorB) {
   return math.matrix([
@@ -71,31 +61,21 @@ function getVektorSubtractionFacit(vectorA, vectorB) {
   ]);
 }
 
-const createVektorMultiplicationExercise = () => {
-  const txt = 'Find skalarproduktet af følgende to vektorer';
-  const vectorA = generateVector();
-  const vectorB = generateVector();
-  const tegn = '*';
-  const point = 15;
-  const type = 'vektor2d';
+function VektorMultiplicationExercise() {
+  const mathMatrixVectorA = generateRandom2dVector();
+  const mathMatrixVectorB = generateRandom2dVector();
+  const mathMatirxFacit = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorA);
 
-  // eslint-disable-next-line max-len
-  const facit = getVektorMultiplicationFacit(vectorA, vectorB);
-
-  const taskObj = {
-    exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
-    },
-    facit,
-    type,
-    point,
-    txt,
-    tegn,
+  this.exerciseVars = {
+    vectorA: formatVector(mathMatrixVectorA),
+    vectorB: formatVector(mathMatrixVectorB),
   };
-
-  return taskObj;
-};
+  this.facit = formatVector(mathMatirxFacit);
+  this.type = 'vektor2d';
+  this.point = 10;
+  this.txt = 'Find skalarproduktet af følgende to vektorer?';
+  this.tegn = '*';
+}
 
 function getVektorMultiplicationFacit(vectorA, vectorB) {
   return math.dot(vectorA, vectorB);
@@ -103,16 +83,12 @@ function getVektorMultiplicationFacit(vectorA, vectorB) {
 
 const numOfTasks = 3;
 
-// vektorAddition();
-// vektorSubtraction();
-createVektorMultiplicationExercise();
-
 module.exports = {
   VektorAdditionExercise,
   getVektorAdditionFacit,
-  vektorSubtraction: CreateVektorSubtractionExercise,
+  VektorSubtractionExercise,
   getVektorSubtractionFacit,
-  vektorMultiplication: createVektorMultiplicationExercise,
+  VektorMultiplicationExercise,
   getVektorMultiplicationFacit,
   numOfTasks,
 };

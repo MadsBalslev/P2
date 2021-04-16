@@ -14,10 +14,10 @@ const generateVectorExercise = () => {
       result = new vectors.VektorAdditionExercise();
       break;
     case 2:
-      result = vectors.vektorSubtraction();
+      result = new vectors.VektorSubtractionExercise();
       break;
     case 3:
-      result = vectors.vektorMultiplication();
+      result = new vectors.VektorMultiplicationExercise();
       break;
     default:
       break;
