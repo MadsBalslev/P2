@@ -44,15 +44,15 @@ const generateIntegralExercise = () => {
 
 /**
  * Will generate an exerciseset with the given catagories
- * @param {string[]} cat An array containg the catagories of exercises to be generated
+ * @param {string[]} categories An array containg the catagories of exercises to be generated
  * @param {integer} amount The amount of exercises to be generated in each catagory
  */
-const generateExcerciseSet = (cat, amount) => {
+const generateExcerciseSet = (categories, amount) => {
   const set = [];
 
-  cat.forEach((type) => {
+  categories.forEach((catagory) => {
     for (let i = 0; i < amount; i++) {
-      switch (type) {
+      switch (catagory) {
         case 'vektor2d':
           set.push(generateVectorExercise(amount));
           break;
@@ -68,9 +68,6 @@ const generateExcerciseSet = (cat, amount) => {
   global.globalSet = set;
   return set;
 };
-
-generateExcerciseSet(['vektor2d', 10]);
-generateExcerciseSet(['integralregning', 10]);
 
 module.exports = {
   generateExcerciseSet,
