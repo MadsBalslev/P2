@@ -36,7 +36,6 @@ const createPowerIntegral = () => {
 
   // const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
 
-  console.log(taskObj);
   return taskObj;
 };
 
@@ -88,7 +87,6 @@ const createTrigonometricIntegral = () => {
   // const answer = { txt: txt, formula: pIntegral.toString(),
   // facit: pFacit.toString(), type: type, point: point };
 
-  console.log(taskObj);
   return taskObj;
 };
 

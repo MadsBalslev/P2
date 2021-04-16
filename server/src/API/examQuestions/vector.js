@@ -64,13 +64,13 @@ function getVektorSubtractionFacit(vectorA, vectorB) {
 function VektorMultiplicationExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
-  const mathMatirxFacit = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorA);
+  const facitNumber = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorA);
 
   this.exerciseVars = {
     vectorA: formatVector(mathMatrixVectorA),
     vectorB: formatVector(mathMatrixVectorB),
   };
-  this.facit = formatVector(mathMatirxFacit);
+  this.facit = facitNumber;
   this.type = 'vektor2d';
   this.point = 10;
   this.txt = 'Find skalarproduktet af følgende to vektorer?';
