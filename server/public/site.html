@@ -1,9 +1,69 @@
 <!DOCTYPE html>
-
 <head>
     <title>P2 Projekt</title>
     <link rel='icon' type='image/png' href='./favicon.png' />
     <meta charset="UTF-8">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-size: 18px;
+        }
+
+        :root {
+            --hue-neutral: 180;
+            --hue-wrong: #ff0000;
+            --hue-correct: #61ff9e;
+        }
+
+        body {
+            --hue: var(--hue-neutral);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: hsl(var(--hue), 100%, 25%);
+        }
+
+        input[type="submit"] {
+            --hue: var(--hue-neutral);
+            border: 1px solid hsl(var(--hue), 100%, 100%);
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 10px;
+            color: hsl(var(--hue), 30%, 40%);
+            cursor: pointer;
+            margin: 80px;
+            margin-top: 65px;
+            box-shadow: 0 0 10px 2px;
+            transition: 0.6s;
+        }
+
+        input[type="submit"]:hover {
+            color: black;
+            transform: scale(1.1);
+        }
+
+        input[type="checkbox"] {
+            position: relative;
+        }
+
+        input[type="checkbox"]:hover {
+            transform: scaleX(1.2);
+        }
+
+        input[type="number"] {
+            position: relative;
+            border-width: 1px;
+            width: 4rem;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,7 +133,7 @@
 
         <label for="amount">Hvor mange opgaver vil du lave?</label>
         <input type="number" id="amount">
-        <br>
+        <br><br>
 
         <input type='submit' value='Indsend'>
     </form>
@@ -95,6 +155,8 @@
 </script>
 -->
 <script>
+    const base_url = window.location.href;
+
     document.querySelector('#form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const exerciseSet = await getExerciseSetFromServer(event);
@@ -107,13 +169,13 @@
             exerciseAmount = document.querySelector('#amount').value;
             exerciseSubjects = getExerciseSubjects();
 
-            fetch('http://localhost:8080/opgaver', {
-                method: 'GET',
-                headers: {
-                    subjects: exerciseSubjects,
-                    amount: exerciseAmount
-                }
-            })
+            fetch(`${base_url}/opgaver`, {
+                    method: 'GET',
+                    headers: {
+                        subjects: exerciseSubjects,
+                        amount: exerciseAmount
+                    }
+                })
                 .then(response => response.json())
                 .then(data => resolve(data))
                 .catch(error => reject(error));
@@ -205,20 +267,21 @@
         document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
             event.preventDefault();
             exerciseSet.forEach(exercise => {
-                exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
+                exercise.questionAnswers = document.querySelector(
+                    `#exercise${exercise.questionNumber}`).value;
             });
 
-            fetch('http://localhost:8080/resultat', {
-                method: 'POST',
-                header: {
-                    'content-Type': 'application/json',
-                },
-                body: JSON.stringify(exerciseSet),
-            })
+            fetch(`${base_url}/resultat`, {
+                    method: 'POST',
+                    header: {
+                        'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(exerciseSet),
+                })
                 .then(response => response.text())
                 .then(resultPage => document.body.innerHTML = resultPage);
         });
-    }
+    };
 </script>
 
 </html>

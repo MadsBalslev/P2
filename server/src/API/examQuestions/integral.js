@@ -24,7 +24,9 @@ const createPowerIntegral = () => {
   const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
 
   const taskObj = {
-    exerciseVars: { integral },
+    exerciseVars: {
+      integral,
+    },
     facit: integralFacit,
     type,
     point,
@@ -32,7 +34,7 @@ const createPowerIntegral = () => {
     tegn: '',
   };
 
-//  const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
+  // const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
 
   console.log(taskObj);
   return taskObj;
@@ -46,28 +48,36 @@ const createTrigonometricIntegral = () => {
 
   const A = randNum(12) + 2;
   let B = randNum(7);
-  if (B % 2 === 0) {B++;}
+  if (B % 2 === 0) {
+    B++;
+  }
   let into;
 
   const integral = `${A}cos(${B}x)`;
   let integralFacit;
 
-  if (A === B) { integralFacit = `sin(${B}x)+K`; }
-  else if (A === 1) { integralFacit = `sin(${B}x)/(${B}+K`; }
-  else if (B === 1) { integralFacit = `${A}sin(x)+K`; }
-  else if (A % B === 0) {
+  if (A === B) {
+    integralFacit = `sin(${B}x)+K`;
+  } else if (A === 1) {
+    integralFacit = `sin(${B}x)/(${B}+K`;
+  } else if (B === 1) {
+    integralFacit = `${A}sin(x)+K`;
+  } else if (A % B === 0) {
     into = A / B;
-    B = B % A;
+    B %= A;
 
-    integralFacit = `${into}sin(${B}x)+K`; 
+    integralFacit = `${into}sin(${B}x)+K`;
+  } else {
+    integralFacit = `${A}sin(${B}x)/${B}+K`;
   }
-  else { integralFacit = `${A}sin(${B}x)/${B}+K`; }
-  
-//  const pIntegral = math.parse(integral);
-//  const pFacit = math.parse(integralFacit);
+
+  //  const pIntegral = math.parse(integral);
+  //  const pFacit = math.parse(integralFacit);
 
   const taskObj = {
-    exerciseVars: { integral },
+    exerciseVars: {
+      integral,
+    },
     facit: integralFacit,
     type,
     point,
@@ -75,17 +85,16 @@ const createTrigonometricIntegral = () => {
     tegn: '',
   };
 
-//  const answer = { txt: txt, formula: pIntegral.toString(), facit: pFacit.toString(), type: type, point: point };
+  // const answer = { txt: txt, formula: pIntegral.toString(),
+  // facit: pFacit.toString(), type: type, point: point };
 
   console.log(taskObj);
   return taskObj;
-}
+};
 
-
-
-const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
-const x = math.parse('x');
-const fm = math.derivative(f, x);
+// const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
+// const x = math.parse('x');
+// const fm = math.derivative(f, x);
 
 // console.log('f(x) =', f.toString());
 // console.log("f'(x) =", fm.toString());
