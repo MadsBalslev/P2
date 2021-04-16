@@ -22,15 +22,15 @@ function Exercise(answer) {
 }
 
 Exercise.prototype.evaluateSingleAnswer = function evaluateSingleAnswer() {
-  if (this.answer === this.facit) {
+  if (this.answer == this.facit) {
     this.correct = true;
-  } else if (this.answer !== this.facit) {
+  } else if (this.answer != this.facit) {
     this.correct = false;
   }
 };
 
 function ResultPage(exerciseSuite) {
-  this.page += '';
+  this.page = '';
   this.page += createPageHead();
   this.page += createPageBody(exerciseSuite);
 }
@@ -110,6 +110,7 @@ function createPageBodyExerciseBody(exercise) {
  * @param {*} response
  */
 const handleResultRequest = (request, response) => {
+  console.log('handleResultRequest was called');
   if (request.method === 'POST') {
     handleResultPostRequest(request, response);
   } else if (request.method !== 'POST') {
@@ -124,6 +125,7 @@ const handleResultRequest = (request, response) => {
  * @param {*} response
  */
 const handleResultPostRequest = async (request, response) => {
+  console.log('handleResultPostRequest was called');
   try {
     const body = await getBodyFromRequest(request);
     handleBody(body, response);
@@ -157,6 +159,7 @@ const getBodyFromRequest = (request) => new Promise((resolve, rejects) => {
    so that none valid requests gets an errormessage.
  */
 const handleBody = (body, response) => {
+  console.log(body);
   if (requestBodyIsValid(body)) {
     handleRequestBody(body, response);
   } else if (!(requestBodyIsValid(body))) {
