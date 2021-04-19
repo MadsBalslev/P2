@@ -1,11 +1,6 @@
-const { cos } = require('mathjs');
-const math = require('mathjs');
 const { randNum } = require('../../helper');
 
-// Power Rule Integration
-const createPowerIntegral = () => {
-  // (Ax^3 +- Bx^2 +- C)dx
-
+const createPowerIntegralExercise = () => {
   const txt = 'Udregn det følgende ubestemte integral.';
   const type = 'integralregning';
   const point = 10;
@@ -30,8 +25,6 @@ const createPowerIntegral = () => {
     tegn: '',
   };
 
-  // const answer = { txt: txt, formula: integral, facit: integralFacit, type: type, point: point };
-
   return taskObj;
 };
 
@@ -44,8 +37,7 @@ const getPowerIntegralFacit = (A, B, C) => {
   return integralFacit;
 };
 
-// Trigonomisk Integral
-const createTrigonometricIntegral = () => {
+const createTrigonometricIntegralExercise = () => {
   const txt = 'Udregn det følgende ubestemte integral.';
   const type = 'integralregning';
   const point = 15;
@@ -59,9 +51,6 @@ const createTrigonometricIntegral = () => {
 
   const integralFacit = getTrigonometricIntegralFacit(A, B);
 
-  //  const pIntegral = math.parse(integral);
-  //  const pFacit = math.parse(integralFacit);
-
   const taskObj = {
     exerciseVars: {
       integral,
@@ -72,9 +61,6 @@ const createTrigonometricIntegral = () => {
     txt,
     tegn: '',
   };
-
-  // const answer = { txt: txt, formula: pIntegral.toString(),
-  // facit: pFacit.toString(), type: type, point: point };
 
   return taskObj;
 };
@@ -101,6 +87,7 @@ const getTrigonometricIntegralFacit = (A, B) => {
   return integralFacit;
 };
 
+// m.i.s
 // const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
 // const x = math.parse('x');
 // const fm = math.derivative(f, x);
@@ -110,13 +97,10 @@ const getTrigonometricIntegralFacit = (A, B) => {
 
 const numOfTasks = 2;
 
-createPowerIntegral();
-createTrigonometricIntegral();
-
 module.exports = {
-  createPowerIntegral,
+  createPowerIntegral: createPowerIntegralExercise,
   getPowerIntegralFacit,
-  createTrigonometricIntegral,
+  createTrigonometricIntegral: createTrigonometricIntegralExercise,
   getTrigonometricIntegralFacit,
   numOfTasks,
 };

@@ -31,12 +31,10 @@ function VektorAdditionExercise() {
   this.tegn = '+';
 }
 
-function getVektorAdditionFacit(vectorA, vectorB) {
-  return math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
-  ]);
-}
+const getVektorAdditionFacit = (vectorA, vectorB) => math.matrix([
+  [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
+  [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
+]);
 
 function VektorSubtractionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
@@ -54,12 +52,10 @@ function VektorSubtractionExercise() {
   this.tegn = '-';
 }
 
-function getVektorSubtractionFacit(vectorA, vectorB) {
-  return math.matrix([
-    [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
-    [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
-  ]);
-}
+const getVektorSubtractionFacit = (vectorA, vectorB) => math.matrix([
+  [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
+  [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
+]);
 
 function VektorMultiplicationExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
@@ -77,9 +73,7 @@ function VektorMultiplicationExercise() {
   this.tegn = '*';
 }
 
-function getVektorMultiplicationFacit(vectorA, vectorB) {
-  return math.dot(vectorA, vectorB);
-}
+const getVektorMultiplicationFacit = (vectorA, vectorB) => math.dot(vectorA, vectorB);
 
 const numOfTasks = 3;
 
