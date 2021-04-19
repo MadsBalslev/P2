@@ -15,13 +15,9 @@ const createPowerIntegral = () => {
 
   const A = randNum(40);
   const C = randNum(70);
-
-  const facitA = (A / 4);
-  const facitB = (B / 3);
-  const facitC = (C / 2);
-
   const integral = `${A}x^3+${B}x^2+${C}x`;
-  const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
+
+  const integralFacit = getPowerIntegralFacit(A, B, C);
 
   const taskObj = {
     exerciseVars: {
@@ -39,6 +35,15 @@ const createPowerIntegral = () => {
   return taskObj;
 };
 
+function getPowerIntegralFacit(A, B, C) {
+  const facitA = (A / 4);
+  const facitB = (B / 3);
+  const facitC = (C / 2);
+
+  const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
+  return integralFacit;
+}
+
 // Trigonomisk Integral
 const createTrigonometricIntegral = () => {
   const txt = 'Udregn det følgende ubestemte integral.';
@@ -50,25 +55,9 @@ const createTrigonometricIntegral = () => {
   if (B % 2 === 0) {
     B++;
   }
-  let into;
-
   const integral = `${A}cos(${B}x)`;
-  let integralFacit;
 
-  if (A === B) {
-    integralFacit = `sin(${B}x)+K`;
-  } else if (A === 1) {
-    integralFacit = `sin(${B}x)/(${B}+K`;
-  } else if (B === 1) {
-    integralFacit = `${A}sin(x)+K`;
-  } else if (A % B === 0) {
-    into = A / B;
-    B %= A;
-
-    integralFacit = `${into}sin(${B}x)+K`;
-  } else {
-    integralFacit = `${A}sin(${B}x)/${B}+K`;
-  }
+  const integralFacit = getTrigonometricIntegralFacit(A, B);
 
   //  const pIntegral = math.parse(integral);
   //  const pFacit = math.parse(integralFacit);
@@ -90,6 +79,28 @@ const createTrigonometricIntegral = () => {
   return taskObj;
 };
 
+function getTrigonometricIntegralFacit(A, B) {
+  let integralFacit;
+  let into;
+  if (A === B) {
+    integralFacit = `sin(${B}x)+K`;
+  } else if (A === 1) {
+    integralFacit = `sin(${B}x)/(${B}+K`;
+  } else if (B === 1) {
+    integralFacit = `${A}sin(x)+K`;
+  } else if (A % B === 0) {
+    into = A / B;
+
+    B %= A;
+
+    integralFacit = `${into}sin(${B}x)+K`;
+  } else {
+    integralFacit = `${A}sin(${B}x)/${B}+K`;
+  }
+
+  return integralFacit;
+}
+
 // const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
 // const x = math.parse('x');
 // const fm = math.derivative(f, x);
@@ -104,6 +115,8 @@ createTrigonometricIntegral();
 
 module.exports = {
   createPowerIntegral,
+  getPowerIntegralFacit,
   createTrigonometricIntegral,
+  getTrigonometricIntegralFacit,
   numOfTasks,
 };
