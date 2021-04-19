@@ -1,5 +1,3 @@
-const { cos } = require('mathjs');
-const math = require('mathjs');
 const { randNum } = require('../../helper');
 
 // Power Rule Integration
