@@ -35,14 +35,14 @@ const createPowerIntegral = () => {
   return taskObj;
 };
 
-function getPowerIntegralFacit(A, B, C) {
+const getPowerIntegralFacit = (A, B, C) => {
   const facitA = (A / 4);
   const facitB = (B / 3);
   const facitC = (C / 2);
 
   const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
   return integralFacit;
-}
+};
 
 // Trigonomisk Integral
 const createTrigonometricIntegral = () => {
@@ -79,7 +79,7 @@ const createTrigonometricIntegral = () => {
   return taskObj;
 };
 
-function getTrigonometricIntegralFacit(A, B) {
+const getTrigonometricIntegralFacit = (A, B) => {
   let integralFacit;
   let into;
   if (A === B) {
@@ -99,7 +99,7 @@ function getTrigonometricIntegralFacit(A, B) {
   }
 
   return integralFacit;
-}
+};
 
 // const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
 // const x = math.parse('x');

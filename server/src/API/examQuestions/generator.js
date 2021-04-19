@@ -6,42 +6,6 @@ const {
 const vectors = require('./vector');
 const integrals = require('./integral');
 
-const generateVectorExercise = () => {
-  let result;
-  const rand = randNum(vectors.numOfTasks);
-  switch (rand) {
-    case 1:
-      result = new vectors.VektorAdditionExercise();
-      break;
-    case 2:
-      result = new vectors.VektorSubtractionExercise();
-      break;
-    case 3:
-      result = new vectors.VektorMultiplicationExercise();
-      break;
-    default:
-      break;
-  }
-
-  return result;
-};
-
-const generateIntegralExercise = () => {
-  let result;
-  const rand = randNum(integrals.numOfTasks);
-  switch (rand) {
-    case 1:
-      result = integrals.createPowerIntegral();
-      break;
-    case 2:
-      result = integrals.createTrigonometricIntegral();
-      break;
-    default:
-      break;
-  }
-  return result;
-};
-
 /**
  * Will generate an exerciseset with the given catagories
  * @param {string[]} categories An array containg the catagories of exercises to be generated
@@ -67,6 +31,42 @@ const generateExcerciseSet = (categories, amount) => {
 
   global.globalSet = set;
   return set;
+};
+
+const generateVectorExercise = () => {
+  let exercise;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vectors.VektorAdditionExercise();
+      break;
+    case 2:
+      exercise = new vectors.VektorSubtractionExercise();
+      break;
+    case 3:
+      exercise = new vectors.VektorMultiplicationExercise();
+      break;
+    default:
+      break;
+  }
+
+  return exercise;
+};
+
+const generateIntegralExercise = () => {
+  let exercise;
+  const rand = randNum(integrals.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = integrals.createPowerIntegral();
+      break;
+    case 2:
+      exercise = integrals.createTrigonometricIntegral();
+      break;
+    default:
+      break;
+  }
+  return exercise;
 };
 
 module.exports = {
