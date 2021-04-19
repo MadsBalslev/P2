@@ -160,6 +160,7 @@
 </script>
 -->
 <script>
+  /* eslint-disable no-undef */
   const baseUrl = window.location.href;
 
   document.querySelector('#form').addEventListener('submit', async (event) => {
@@ -168,7 +169,7 @@
     buildExercisePage(exerciseSet);
   });
 
-  const getExerciseSetFromServer = (event) => new Promise((resolve, reject) => {
+  const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
     const exerciseAmount = document.querySelector('#amount').value;
     const exerciseSubjects = getExerciseSubjects();
 
@@ -249,6 +250,7 @@
   const addExerciseHeader = (i, exercise, exerciseDiv) => {
     const exerciseHeader = document.createElement('h1');
     exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+    // eslint-disable-next-line no-param-reassign
     exercise.questionNumber = i;
     exerciseDiv.appendChild(exerciseHeader);
   };
@@ -288,6 +290,7 @@
     document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
       event.preventDefault();
       exerciseSet.forEach((exercise) => {
+        // eslint-disable-next-line no-param-reassign
         exercise.questionAnswers = document.querySelector(
           `#exercise${exercise.questionNumber}`,
         ).value;
@@ -306,6 +309,8 @@
   };
 </script>
 <script>
+  /* eslint-disable no-undef */
+  // eslint-disable-next-line no-unused-vars
   const convert = (input, output) => {
     MathJax.texReset();
     const options = MathJax.getMetricsFor(output);
