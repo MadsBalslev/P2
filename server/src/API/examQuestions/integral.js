@@ -68,6 +68,7 @@ const createTrigonometricIntegralExercise = () => {
 const getTrigonometricIntegralFacit = (A, B) => {
   let integralFacit;
   let into;
+  let tempB;
   if (A === B) {
     integralFacit = `sin(${B}x)+K`;
   } else if (A === 1) {
@@ -77,9 +78,9 @@ const getTrigonometricIntegralFacit = (A, B) => {
   } else if (A % B === 0) {
     into = A / B;
 
-    B %= A;
+    tempB %= B % A;
 
-    integralFacit = `${into}sin(${B}x)+K`;
+    integralFacit = `${into}sin(${tempB}x)+K`;
   } else {
     integralFacit = `${A}sin(${B}x)/${B}+K`;
   }
