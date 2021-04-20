@@ -19,6 +19,11 @@ function handleOpgaverGetRequest(request, response) {
   response.end(JSON.stringify(result));
 }
 
+/**
+ * Takes the selected subjects as input, and splits the string with a comma.
+ * @param {*} subjectsString 
+ * @returns 
+ */
 function subjectsStringToArray(subjectsString) {
   let subjects = [];
   if (subjectsString) {

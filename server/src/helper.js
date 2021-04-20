@@ -10,6 +10,11 @@ const errorResponse = (response, code, reason) => {
   response.end('\n');
 };
 
+/**
+ * Takes an integer as an input and returns a number within that range from 0.
+ * @param {integer} range 
+ * @returns {integer}
+ */
 const randNum = (range) => Math.floor(Math.random() * range) + 1;
 
 module.exports = {

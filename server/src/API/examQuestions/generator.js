@@ -33,7 +33,10 @@ const generateExcerciseSet = (categories, amount) => {
   global.globalSet = set;
   return set;
 };
-
+/**
+ * This function randomly generates a vector exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateVectorExercise = () => {
   let exercise;
   const rand = randNum(vectors.numOfTasks);
@@ -54,6 +57,10 @@ const generateVectorExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates a undefined integral exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateIntegralExercise = () => {
   let exercise;
   const rand = randNum(integrals.numOfTasks);
