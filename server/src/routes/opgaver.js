@@ -22,7 +22,7 @@ function handleOpgaverGetRequest(request, response) {
 /**
  * Takes the selected subjects as input, and splits the string with a comma.
  * @param {*} subjectsString
- * @returns
+ * @returns {str[]} An array of subjects
  */
 function subjectsStringToArray(subjectsString) {
   let subjects = [];
