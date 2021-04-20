@@ -3,7 +3,6 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const handleOpgaverRequest = require('./routes/opgaver');
-const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 
 global.globalSet = [];
