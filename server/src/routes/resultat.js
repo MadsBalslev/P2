@@ -198,7 +198,7 @@ const isActualAnswerValid = (actualAnswer) => actualAnswer.hasOwnProperty('exerc
   && actualAnswer.hasOwnProperty('txt')
   && actualAnswer.hasOwnProperty('tegn')
   && actualAnswer.hasOwnProperty('questionAnswers')
-  && actualAnswer.hasOwnProperty('questionNumber')
+  && actualAnswer.hasOwnProperty('questionNumber');
 
 /**
  * Handling structure, so that HandleRequest runs before exercisesFromDatabase
