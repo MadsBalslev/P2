@@ -59,10 +59,10 @@ const generateIntegralExercise = () => {
   const rand = randNum(integrals.numOfTasks);
   switch (rand) {
     case 1:
-      exercise = integrals.createPowerIntegral();
+      exercise = new integrals.PowerIntegralExercise();
       break;
     case 2:
-      exercise = integrals.createTrigonometricIntegral();
+      exercise = new integrals.TrigonometricIntegralExercise();
       break;
     default:
       break;

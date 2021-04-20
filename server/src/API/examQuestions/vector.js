@@ -68,7 +68,7 @@ function VektorMultiplicationExercise() {
     vectorA: formatVector(mathMatrixVectorA),
     vectorB: formatVector(mathMatrixVectorB),
   };
-  this.facit = toString(facitNumber);
+  this.facit = facitNumber.toString();
   this.type = 'vektor2d';
   this.point = 10;
   this.txt = 'Find skalarproduktet af følgende to vektorer?';

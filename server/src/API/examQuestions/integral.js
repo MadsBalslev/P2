@@ -1,32 +1,22 @@
 const { randNum } = require('../../helper');
 
-const createPowerIntegralExercise = () => {
-  const txt = 'Udregn det følgende ubestemte integral.';
-  const type = 'integralregning';
-  const point = 10;
+function PowerIntegralExercise() {
+  const { A, B, C } = generateVariablesForPowerIntegralExercise();
+  this.txt = 'Udregn det følgende ubestemte integral.';
+  this.type = 'integralregning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { integral: `${A}x^3+${B}x^2+${C}x` };
+  this.facit = getPowerIntegralFacit(A, B, C);
+}
 
+function generateVariablesForPowerIntegralExercise() {
   let B;
   while (B % 3 !== 0) B = randNum(40);
-
   const A = randNum(40);
   const C = randNum(70);
-  const integral = `${A}x^3+${B}x^2+${C}x`;
-
-  const integralFacit = getPowerIntegralFacit(A, B, C);
-
-  const taskObj = {
-    exerciseVars: {
-      integral,
-    },
-    facit: integralFacit,
-    type,
-    point,
-    txt,
-    tegn: '',
-  };
-
-  return taskObj;
-};
+  return { A, B, C };
+}
 
 const getPowerIntegralFacit = (A, B, C) => {
   const facitA = (A / 4);
@@ -37,38 +27,30 @@ const getPowerIntegralFacit = (A, B, C) => {
   return integralFacit;
 };
 
-const createTrigonometricIntegralExercise = () => {
-  const txt = 'Udregn det følgende ubestemte integral.';
-  const type = 'integralregning';
-  const point = 15;
+function TrigonometricIntegralExercise() {
+  const { A, B } = generateVariablesForTrigonometricIntergralExercise();
+  this.txt = 'Udregn det følgende ubestemte integral.';
+  this.type = 'integralregning';
+  this.point = 15;
+  this.tegn = '';
+  this.exerciseVars = { integral: `${A}cos(${B}x)` };
+  this.facit = getTrigonometricIntegralFacit(A, B);
+}
 
+function generateVariablesForTrigonometricIntergralExercise() {
   const A = randNum(12) + 2;
   let B = randNum(7);
   if (B % 2 === 0) {
     B++;
   }
-  const integral = `${A}cos(${B}x)`;
-
-  const integralFacit = getTrigonometricIntegralFacit(A, B);
-
-  const taskObj = {
-    exerciseVars: {
-      integral,
-    },
-    facit: integralFacit,
-    type,
-    point,
-    txt,
-    tegn: '',
-  };
-
-  return taskObj;
-};
+  return { A, B };
+}
 
 const getTrigonometricIntegralFacit = (A, B) => {
   let integralFacit;
   let into;
   let tempB;
+
   if (A === B) {
     integralFacit = `sin(${B}x)+K`;
   } else if (A === 1) {
@@ -77,9 +59,7 @@ const getTrigonometricIntegralFacit = (A, B) => {
     integralFacit = `${A}sin(x)+K`;
   } else if (A % B === 0) {
     into = A / B;
-
-    tempB %= B % A;
-
+    tempB = B % A;
     integralFacit = `${into}sin(${tempB}x)+K`;
   } else {
     integralFacit = `${A}sin(${B}x)/${B}+K`;
@@ -99,9 +79,9 @@ const getTrigonometricIntegralFacit = (A, B) => {
 const numOfTasks = 2;
 
 module.exports = {
-  createPowerIntegral: createPowerIntegralExercise,
+  PowerIntegralExercise,
   getPowerIntegralFacit,
-  createTrigonometricIntegral: createTrigonometricIntegralExercise,
+  TrigonometricIntegralExercise,
   getTrigonometricIntegralFacit,
   numOfTasks,
 };
