@@ -1,5 +1,10 @@
 const { randNum } = require('../../helper');
 
+/**
+ * Represents a power integral exercise.
+ * @constructor
+ * @exports
+ */
 function PowerIntegralExercise() {
   const { A, B, C } = generateVariablesForPowerIntegralExercise();
   this.txt = 'Udregn det følgende ubestemte integral.';
@@ -10,6 +15,10 @@ function PowerIntegralExercise() {
   this.facit = getPowerIntegralFacit(A, B, C);
 }
 
+/**
+ * @returns three random numbers A, B, C where 0 ≤ A ≤ 40, 0 ≤ B ≤ 40 and 3 !divides B,
+ * 0 ≤ C ≤ 70.
+ */
 function generateVariablesForPowerIntegralExercise() {
   let B;
   while (B % 3 !== 0) B = randNum(40);
@@ -18,6 +27,14 @@ function generateVariablesForPowerIntegralExercise() {
   return { A, B, C };
 }
 
+/**
+ * Calculates the facit for a powerIntegralExercise.
+ * @param {number} A
+ * @param {number} B
+ * @param {number} C
+ * @returns facit for a powerIntegralExercise.
+ * @exports
+ */
 const getPowerIntegralFacit = (A, B, C) => {
   const facitA = (A / 4);
   const facitB = (B / 3);
@@ -27,6 +44,11 @@ const getPowerIntegralFacit = (A, B, C) => {
   return integralFacit;
 };
 
+/**
+ * Represents a trigonometric integral exercise.
+ * @constructor
+ * @exports
+ */
 function TrigonometricIntegralExercise() {
   const { A, B } = generateVariablesForTrigonometricIntergralExercise();
   this.txt = 'Udregn det følgende ubestemte integral.';
@@ -37,6 +59,9 @@ function TrigonometricIntegralExercise() {
   this.facit = getTrigonometricIntegralFacit(A, B);
 }
 
+/**
+ * @returns two random numbers A, B.
+ */
 function generateVariablesForTrigonometricIntergralExercise() {
   const A = randNum(12) + 2;
   let B = randNum(7);
@@ -46,6 +71,13 @@ function generateVariablesForTrigonometricIntergralExercise() {
   return { A, B };
 }
 
+/**
+ * Calculates the facit for a TrigonometricIntegralExercise.
+ * @param {number} A
+ * @param {number} B
+ * @returns facit for a TrigonometricIntegralExercise.
+ * @exports
+ */
 const getTrigonometricIntegralFacit = (A, B) => {
   let integralFacit;
   let into;
@@ -76,6 +108,10 @@ const getTrigonometricIntegralFacit = (A, B) => {
 // console.log('f(x) =', f.toString());
 // console.log("f'(x) =", fm.toString());
 
+/**
+ * Number of integral exercises.
+ * @exports
+ */
 const numOfTasks = 2;
 
 module.exports = {
