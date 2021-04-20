@@ -4,7 +4,7 @@
   <title>P2 Projekt</title>
   <link rel='icon' type='image/png' href='./favicon.png' />
   <meta charset="UTF-8">
-  <!-- <style>
+  <style>
         *,
         *::before,
         *::after {
@@ -64,24 +64,13 @@
             width: 4rem;
             border-radius: 4px;
         }
-    </style> -->
+    </style>
 </head>
 
 <body>
   <form id='form'>
     <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
-
     <label for='exerciseAmount'></label>
-
-    <!--
-        <select id='eksamenssætTypeVælger' name='eksamenssætType'>
-            <option value='generisk'>Generisk</option>
-            <option value='emneBestemt'>Emne bestemt</option>
-            <option value='personlig'>Personlig</option>
-        </select><br><br>
-        -->
-    
-    <!-- Makes several tick boxes to choose what kind of exercise you want to be generated -->
     <div id='emneVælger'>
       <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
       <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
@@ -141,242 +130,269 @@
 
     <input type='submit' value='Indsend'>
   </form>
-</body>
-</body>
+  <script>
+    /* eslint-disable no-undef */
+    const convert = (input, output) => {
+      MathJax.texReset();
+      const options = MathJax.getMetricsFor(output);
+      MathJax.tex2svgPromise(input, options).then((node) => {
+        output.appendChild(node);
+        MathJax.startup.document.clear();
+        MathJax.startup.document.updateDocument();
+      }).catch((err) => {
+        output.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err
+          .message));
+      }).then(() => {});
+    };
 
-<!--
-<script>
-    const eksamnessætTypeVælger = document.querySelector('#eksamenssætTypeVælger');
-    const emneVælger = document.querySelector('#emneVælger');
+    const baseUrl = window.location.href;
 
-    eksamnessætTypeVælger.addEventListener('input', () => {
-        if (eksamnessætTypeVælger.value === 'emneBestemt') {
-            emneVælger.removeAttribute('hidden');
-        } else if (eksamnessætTypeVælger.value !== 'emneBestemt') {
-            emneVælger.setAttribute('hidden', '');
-        }
-    });
-</script>
--->
-<script>
-  const base_url = window.location.href;
-
-  /* Function for clicking submit, and generating exercises from the server */
-  document.querySelector('#form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const exerciseSet = await getExerciseSetFromServer(event);
-    buildExercisePage(exerciseSet);
-  });
-
- /**
- * Gets the generated exercise set from the server.
- * @param event
- * @returns New promise for a resolve or reject.
- */
-
-  const getExerciseSetFromServer = (event) => {
-    return new Promise((resolve, reject) => {
-      exerciseAmount = document.querySelector('#amount').value;
-      exerciseSubjects = getExerciseSubjects();
-
-      fetch(`${base_url}opgaver`, {
-        method: 'GET',
-        headers: {
-          subjects: exerciseSubjects,
-          amount: exerciseAmount
-        }
-      })
-        .then(response => response.json())
-        .then(data => resolve(data))
-        .catch(error => reject(error));
-    });
-  };
-
-/**
- * Gets the exercises from the checkboxes.
- * @returns The exercise subjects
- */
-
-  const getExerciseSubjects = () => {
-    let elements = document.querySelector('#emneVælger').children;
-    let exerciseSubjects = '';
-    [...elements].forEach(element => {
-      exerciseSubjects += getCheckedExerciseSubject(element);
-    });
-
-    return exerciseSubjects;
-  };
-
-/**
- * Gets the checked off subjects from check boxes.
- * @param element
- * @returns The chosen exercise subject element ids
- */
-
-  const getCheckedExerciseSubject = (element) => {
-    if (element.checked) {
-      return `${element.id},`;
-    } else {
-      return '';
-    }
-  };
-
- /**
- * Builds a page for the generated exercise set.
- * @param exerciseSet
- */
-
-  const buildExercisePage = (exerciseSet) => {
-    clearDom();
-    const exerciseForm = createExerciseForm();
-    addExercisesToExerciseForm(exerciseForm, exerciseSet);
-    addButtonToExerciseForm(exerciseForm, exerciseSet);
-    document.body.appendChild(exerciseForm);
-    giveFormAction(exerciseSet);
-  };
-
-/**
- * Clears the document
- */
-
-  function clearDom() {
-    document.body.innerHTML = '';
-  }
-
- /**
- * Function for making an exercise form.
- * @returns A exercise form
- */
-
-  function createExerciseForm() {
-    const exerciseForm = document.createElement("form");
-    exerciseForm.setAttribute('id', 'exerciseForm');
-    return exerciseForm;
-  }
-
-/**
- * Function for adding an exercise to the exercise form.
- * @param exerciseForm
- * @param exerciseSet
- */
-
-  function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
-    let i = 1;
-    exerciseSet.forEach((exercise) => {
-      i = addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
-    });
-  }
-
-/**
- * Function for adding a single exercise to a exercise form.
- * @param i
- * @param exercise
- * @param exerciseForm
- * @returns the index of the exercise
- */
-
-  function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
-    const exerciseDiv = document.createElement("div");
-    addExerciseHeader(i, exercise, exerciseDiv);
-    addExerciseText(exercise, exerciseDiv);
-    addExerciseInputField(i, exerciseDiv);
-    exerciseForm.appendChild(exerciseDiv);
-    i += 1;
-    return i;
-  }
-
-/**
- * Function for adding header of the exercise.
- * @param i
- * @param exercise
- * @param exerciseDiv
- */
-
-  function addExerciseHeader(i, exercise, exerciseDiv) {
-    const exerciseHeader = document.createElement('h1');
-    exerciseHeader.innerHTML = `Spørgsmål ${i}`;
-    exercise.questionNumber = i;
-    exerciseDiv.appendChild(exerciseHeader);
-  }
-
-/**
- * Function from adding text from the exercise.
- * @param exercise
- * @param exerciseDiv
- */
-
-  function addExerciseText(exercise, exerciseDiv) {
-    const questionText = document.createElement("p");
-    questionText.innerHTML = exercise.txt;
-    exerciseDiv.appendChild(questionText);
-  }
-
-/**
- * Function for adding a input field for the exercise.
- * @param i
- * @param exerciseDiv
- */
-
-  function addExerciseInputField(i, exerciseDiv) {
-    const textField = document.createElement("input");
-    textField.setAttribute("required", "1");
-    textField.setAttribute("id", `exercise${i}`);
-    exerciseDiv.appendChild(textField);
-  }
-
-/**
- * Function for adding a submit button for the exercise form.
- * @param exerciseForm
- */
-
-  function addButtonToExerciseForm(exerciseForm) {
-    const submitButton = document.createElement("input");
-    submitButton.setAttribute("type", `submit`);
-    submitButton.setAttribute("value", `kontroller dine svar`);
-    exerciseForm.appendChild(submitButton);
-  }
-
-/**
- * Function that makes the submit button to get answers for the exercises.
- * @param exerciseSet
- */
-
-  function giveFormAction(exerciseSet) {
-    document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
+    document.querySelector('#form').addEventListener('submit', async (event) => {
       event.preventDefault();
-      getExerciseAnswers(exerciseSet);
-      postExerciseSetToResultat(exerciseSet);
+      const exerciseSet = await getExerciseSetFromServer(event);
+      buildExercisePage(exerciseSet);
     });
-  };
 
-/**
- * Function for getting the exercise answers
- * @param exerciseSet
- */
+    /**
+     * Gets the generated exercise set from the server.
+     * @param event
+     * @returns New promise for a resolve or reject.
+     */
+    const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
+      const exerciseAmount = document.querySelector('#amount').value;
+      const exerciseSubjects = getExerciseSubjects();
 
-  function getExerciseAnswers(exerciseSet) {
-    exerciseSet.forEach(exercise => {
-      exercise.questionAnswers = document.querySelector(
-        `#exercise${exercise.questionNumber}`).value;
+      fetch(`${baseUrl}opgaver`, {
+          method: 'GET',
+          headers: {
+            subjects: exerciseSubjects,
+            amount: exerciseAmount,
+          },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          resolve(data);
+          // console.log(data);
+        })
+        .catch((error) => reject(error));
     });
-  }
 
-/**
- * Function for posting the results on the page
- * @param exerciseSet
- */
+    /**
+     * Gets the exercises from the checkboxes.
+     * @returns {str} The exercise subjects
+     */
+    const getExerciseSubjects = () => {
+      const elements = document.querySelector('#emneVælger').children;
+      let exerciseSubjects = '';
+      [...elements].forEach((element) => {
+        exerciseSubjects += getCheckedExerciseSubject(element);
+      });
 
-  function postExerciseSetToResultat(exerciseSet) {
-    fetch(`${base_url}resultat`, {
-      method: 'POST',
-      header: {
-        'content-Type': 'application/json'
-      },
-      body: JSON.stringify(exerciseSet),
-    })
-      .then(response => response.text())
-      .then(resultPage => document.body.innerHTML = resultPage);
-  }
-</script>
+      return exerciseSubjects;
+    };
+
+    /**
+     * Gets the checked off subjects from check boxes.
+     * @param element
+     * @returns {str} The chosen exercise subject element ids
+     */
+    const getCheckedExerciseSubject = (element) => {
+      if (element.checked) {
+        return `${element.id},`;
+      }
+      return '';
+    };
+
+    /**
+     * Builds a page for the generated exercise set.
+     * @param {obj[]} exerciseSet
+     */
+    const buildExercisePage = (exerciseSet) => {
+      clearDom();
+      const exerciseForm = createExerciseForm();
+
+      addExercisesToExerciseForm(exerciseForm, exerciseSet);
+      addButtonToExerciseForm(exerciseForm, exerciseSet);
+
+      document.body.appendChild(exerciseForm);
+
+      giveFormAction(exerciseSet);
+    };
+
+    /**
+     * Clears the document
+     */
+    const clearDom = () => {
+      document.body.innerHTML = '';
+    };
+
+    /**
+     * Function for making an exercise form.
+     * @returns {*} An exercise form
+     */
+    const createExerciseForm = () => {
+      const exerciseForm = document.createElement('form');
+      exerciseForm.setAttribute('id', 'exerciseForm');
+      return exerciseForm;
+    };
+
+    /**
+     * Function for adding an exercise to the exercise form.
+     * @param {*} exerciseForm
+     * @param {obj[]} exerciseSet
+     */
+    const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
+      let i = 1;
+      exerciseSet.forEach((exercise) => {
+        addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
+        i++;
+      });
+    };
+
+    /**
+     * Function for adding a single exercise to a exercise form.
+     * @param {number} i
+     * @param {{}} exercise
+     * @param {*} exerciseForm
+     */
+    const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
+      const exerciseDiv = document.createElement('div');
+      exerciseDiv.setAttribute('class', 'exercise');
+
+      addExerciseHeader(i, exercise, exerciseDiv);
+      addExerciseText(exercise, exerciseDiv);
+      addExerciseVars(exercise, exerciseDiv);
+      addExerciseInputField(i, exerciseDiv);
+
+      exerciseForm.appendChild(exerciseDiv);
+    };
+
+    /**
+     * Function for adding header of the exercise.
+     * @param {number} i
+     * @param {{}} exercise
+     * @param {*} exerciseDiv
+     */
+    const addExerciseHeader = (i, exercise, exerciseDiv) => {
+      const exerciseHeader = document.createElement('h1');
+      exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+      // eslint-disable-next-line no-param-reassign
+      exercise.questionNumber = i;
+      exerciseDiv.appendChild(exerciseHeader);
+    };
+
+    /**
+     * Function from adding text from the exercise.
+     * @param {{}} exercise
+     * @param {*} exerciseDiv
+     */
+    const addExerciseText = (exercise, exerciseDiv) => {
+      const questionText = document.createElement('p');
+      questionText.innerHTML = exercise.txt;
+      exerciseDiv.appendChild(questionText);
+    };
+
+    /**
+     * Function from adding variables from the exercise.
+     * @param {{}} exercise
+     * @param {*} exerciseDiv
+     */
+    const addExerciseVars = (exercise, exerciseDiv) => {
+      const exerciseVars = Object.values(exercise.exerciseVars);
+
+      exerciseVars.forEach((eVar) => {
+        const questionText = document.createElement('p');
+        questionText.setAttribute('class', 'mathTex');
+        convert(eVar, questionText);
+        exerciseDiv.appendChild(questionText);
+      });
+    };
+
+    /**
+     * Function for adding a input field for the exercise.
+     * @param {number} i
+     * @param {*} exerciseDiv
+     */
+    const addExerciseInputField = (i, exerciseDiv) => {
+      const textField = document.createElement('input');
+      textField.setAttribute('required', '1');
+      textField.setAttribute('id', `exercise${i}`);
+      exerciseDiv.appendChild(textField);
+    };
+
+    /**
+     * Function for adding a submit button for the exercise form.
+     * @param {*} exerciseForm
+     */
+    const addButtonToExerciseForm = (exerciseForm) => {
+      const submitButton = document.createElement('input');
+      submitButton.setAttribute('type', 'submit');
+      submitButton.setAttribute('value', 'kontroller dine svar');
+      exerciseForm.appendChild(submitButton);
+    };
+
+    /**
+     * Function that makes the submit button to get answers for the exercises.
+     * @param {*} exerciseSet
+     */
+    const giveFormAction = (exerciseSet) => {
+      document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        exerciseSet.forEach(exercise => {
+          exercise.questionAnswers = document.querySelector(
+            `#exercise${exercise.questionNumber}`).value;
+        });
+        generateResultPage(exerciseSet);
+      });
+    };
+
+    const generateResultPage = (exerciseSet) => {
+      clearDom();
+      checkAnswer(exerciseSet);
+      console.log(exerciseSet);
+
+    }
+
+    const checkAnswer = (exerciseSet) => {
+      let userPoints = 0;
+      let totalPoints = 0;
+
+      exerciseSet.forEach(exerciseSet => {
+        let userAnswerValue = null;
+        totalPoints = totalPoints + exerciseSet.point;
+        /* Det her burde være sin egen funktion senere */
+        if (exerciseSet.questionAnswers == exerciseSet.facit) {
+          userAnswerValue = true;
+          userPoints = userPoints + exerciseSet.point;
+        } else userAnswerValue = false;
+        console.log(userAnswerValue);
+
+        const div = document.createElement("div");
+        const questionText = document.createElement("p");
+        questionText.innerHTML = (exerciseSet.txt) + ("<br />") + ("Spørgsmålstype: " + exerciseSet.type);
+
+        const yourAnswer = document.createElement("p");
+        yourAnswer.innerHTML = `Dit svar: ${exerciseSet.questionAnswers}`;
+        if (userAnswerValue == true) {
+          yourAnswer.style.backgroundColor = "green";
+          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Rigtigt");
+        } else {
+          yourAnswer.style.backgroundColor = "red";
+          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exerciseSet.facit;
+        }
+
+        div.style.display = "block";
+
+        div.appendChild(questionText);
+        div.append(yourAnswer);
+        document.body.appendChild(div);
+        console.log(userPoints);
+        console.log(totalPoints);
+
+
+      });
+    }
+  </script>
+</body>
 
 </html>
