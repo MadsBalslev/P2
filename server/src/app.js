@@ -28,7 +28,7 @@ function tryHandleRequest(request, response) {
   } catch (error) {
     helper.errorResponse(response, 400, 'error at tryHandleRequest');
   }
-};
+}
 
 const logRequest = (request) => {
   console.log(`NEW ${request.method} REQUEST`);

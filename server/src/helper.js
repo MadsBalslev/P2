@@ -12,7 +12,7 @@ const errorResponse = (response, code, reason) => {
 
 /**
  * Takes an integer as an input and returns a number within that range from 0.
- * @param {integer} range 
+ * @param {integer} range
  * @returns {integer}
  */
 const randNum = (range) => Math.floor(Math.random() * range) + 1;

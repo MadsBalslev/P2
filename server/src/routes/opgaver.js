@@ -21,8 +21,8 @@ function handleOpgaverGetRequest(request, response) {
 
 /**
  * Takes the selected subjects as input, and splits the string with a comma.
- * @param {*} subjectsString 
- * @returns 
+ * @param {*} subjectsString
+ * @returns
  */
 function subjectsStringToArray(subjectsString) {
   let subjects = [];

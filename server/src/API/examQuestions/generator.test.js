@@ -1,4 +1,5 @@
 const { generateExcerciseSet } = require('./generator');
+
 const empty = '';
 
 test('generateExerciseSet', () => {
