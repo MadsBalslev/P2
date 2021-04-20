@@ -81,6 +81,7 @@
         </select><br><br>
         -->
 
+        <!-- Makes several tick boxes to choose what kind of exercise you want to be generated -->
         <div id='emneVælger'>
             <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
             <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
@@ -132,6 +133,8 @@
             <label for="funktionerAfToVariable">Funktioner af to variable</label><br>
         </div><br>
 
+        <!-- The amount of exercises you would to be generated and the button for submitting-->
+
         <label for="amount">Hvor mange opgaver vil du lave?</label>
         <input type="number" id="amount">
         <br><br>
@@ -158,12 +161,13 @@
 <script>
     const base_url = window.location.href;
 
+    /* Function for clicking submit, and generating exercises from the server */
     document.querySelector('#form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const exerciseSet = await getExerciseSetFromServer(event);
         buildExercisePage(exerciseSet);
     });
-
+    /* Making new promise for the server to generate exercises from the chosen subjects */
     const getExerciseSetFromServer = (event) => {
         return new Promise((resolve, reject) => {
             exerciseAmount = document.querySelector('#amount').value;
@@ -181,7 +185,7 @@
                 .catch(error => reject(error));
         });
     };
-
+    /* Function for chosing subjects on the website */
     const getExerciseSubjects = () => {
         let elements = document.querySelector('#emneVælger').children;
         let exerciseSubjects = '';
@@ -192,6 +196,7 @@
         return exerciseSubjects;
     };
 
+    /* Checks if subject is checked if not then return nothing */
     const getCheckedExerciseSubject = (element) => {
         if (element.checked) {
             return `${element.id},`;
@@ -200,6 +205,7 @@
         }
     };
 
+    /* Function for building a page for exercises */
     const buildExercisePage = (exerciseSet) => {
         clearDom();
         const exerciseForm = createExerciseForm();
@@ -213,6 +219,7 @@
         document.body.innerHTML = '';
     }
 
+    /* Functions for making a form for a exercise and adding exercise to form */
     function createExerciseForm() {
         const exerciseForm = document.createElement("form");
         exerciseForm.setAttribute('id', 'exerciseForm');
@@ -226,6 +233,7 @@
         });
     }
 
+    /* Function to add single exercise to the form */
     function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
         const exerciseDiv = document.createElement("div");
         addExerciseHeader(i, exercise, exerciseDiv);
@@ -236,6 +244,8 @@
         return i;
     }
 
+    /* These functions are for making a exercise appear and have action when submitting */
+    /* Add header */
     function addExerciseHeader(i, exercise, exerciseDiv) {
         const exerciseHeader = document.createElement('h1');
         exerciseHeader.innerHTML = `Spørgsmål ${i}`;
@@ -243,12 +253,14 @@
         exerciseDiv.appendChild(exerciseHeader);
     }
 
+    /* Add text */
     function addExerciseText(exercise, exerciseDiv) {
         const questionText = document.createElement("p");
         questionText.innerHTML = exercise.txt;
         exerciseDiv.appendChild(questionText);
     }
 
+    /* Add input field */ 
     function addExerciseInputField(i, exerciseDiv) {
         const textField = document.createElement("input");
         textField.setAttribute("required", "1");
@@ -256,12 +268,14 @@
         exerciseDiv.appendChild(textField);
     }
 
+    /* Add submit button */
     function addButtonToExerciseForm(exerciseForm) {
         const submitButton = document.createElement("input");
         submitButton.setAttribute("type", `submit`);
         submitButton.setAttribute("value", `kontroller dine svar`);
         exerciseForm.appendChild(submitButton);
     }
+
 
     function giveFormAction(exerciseSet) {
         document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
@@ -271,6 +285,7 @@
         });
     };
 
+    /* Gets answers from submitting and checks the answer */
     function getExerciseAnswers(exerciseSet) {
         exerciseSet.forEach(exercise => {
             exercise.questionAnswers = document.querySelector(
@@ -278,6 +293,7 @@
         });
     }
 
+    /* Checks result*/
     function postExerciseSetToResultat(exerciseSet) {
         fetch(`${base_url}resultat`, {
             method: 'POST',
