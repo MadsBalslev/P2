@@ -4,7 +4,6 @@ const path = require('path');
 const url = require('url');
 const fs = require('fs');
 const handleOpgaverRequest = require('./routes/opgaver');
-const handleResultatRequest = require('./routes/resultat');
 const helper = require('./helper');
 const { cos } = require('mathjs');
 

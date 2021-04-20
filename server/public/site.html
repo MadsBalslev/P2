@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <head>
     <title>P2 Projekt</title>
     <link rel='icon' type='image/png' href='./favicon.png' />
     <meta charset="UTF-8">
-    <style>
+    <!-- <style>
         *,
         *::before,
         *::after {
@@ -11,13 +12,13 @@
             font-family: sans-serif;
             font-size: 18px;
         }
-
-        :root {
+        
+         :root {
             --hue-neutral: 180;
             --hue-wrong: #ff0000;
             --hue-correct: #61ff9e;
         }
-
+        
         body {
             --hue: var(--hue-neutral);
             padding: 0;
@@ -29,7 +30,7 @@
             align-items: center;
             background-color: hsl(var(--hue), 100%, 25%);
         }
-
+        
         input[type="submit"] {
             --hue: var(--hue-neutral);
             border: 1px solid hsl(var(--hue), 100%, 100%);
@@ -43,27 +44,28 @@
             box-shadow: 0 0 10px 2px;
             transition: 0.6s;
         }
-
+        
         input[type="submit"]:hover {
             color: black;
             transform: scale(1.1);
         }
-
+        
         input[type="checkbox"] {
             position: relative;
         }
-
+        
         input[type="checkbox"]:hover {
             transform: scaleX(1.2);
         }
-
+        
         input[type="number"] {
             position: relative;
             border-width: 1px;
             width: 4rem;
             border-radius: 4px;
         }
-    </style>
+    </style> -->
+
 </head>
 
 <body>
@@ -154,15 +156,19 @@
     });
 </script>
 -->
+
 <script>
     const base_url = window.location.href;
-
-    document.querySelector('#form').addEventListener('submit', async (event) => {
+    
+    document.querySelector('#form').addEventListener('submit', async(event) => {
         event.preventDefault();
         const exerciseSet = await getExerciseSetFromServer(event);
         buildExercisePage(exerciseSet);
     });
-
+    
+    const clearDom = () => {
+        document.body.innerHTML = '';
+    }
 
     const getExerciseSetFromServer = (event) => {
         return new Promise((resolve, reject) => {
@@ -209,24 +215,20 @@
         giveFormAction(exerciseSet);
     };
 
-    function clearDom() {
-        document.body.innerHTML = '';
-    }
-
-    function createExerciseForm() {
+    const createExerciseForm = () => {
         const exerciseForm = document.createElement("form");
         exerciseForm.setAttribute('id', 'exerciseForm');
         return exerciseForm;
     }
 
-    function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
+    const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
         let i = 1;
         exerciseSet.forEach((exercise) => {
             i = addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
         });
     }
 
-    function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
+    const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
         const exerciseDiv = document.createElement("div");
         addExerciseHeader(i, exercise, exerciseDiv);
         addExerciseText(exercise, exerciseDiv);
@@ -236,52 +238,92 @@
         return i;
     }
 
-    function addExerciseHeader(i, exercise, exerciseDiv) {
+    const addExerciseHeader = (i, exercise, exerciseDiv) => {
         const exerciseHeader = document.createElement('h1');
         exerciseHeader.innerHTML = `Spørgsmål ${i}`;
         exercise.questionNumber = i;
         exerciseDiv.appendChild(exerciseHeader);
     }
 
-    function addExerciseText(exercise, exerciseDiv) {
+    const addExerciseText = (exercise, exerciseDiv) => {
         const questionText = document.createElement("p");
         questionText.innerHTML = exercise.txt;
         exerciseDiv.appendChild(questionText);
     }
 
-    function addExerciseInputField(i, exerciseDiv) {
+    const addExerciseInputField = (i, exerciseDiv) => {
         const textField = document.createElement("input");
         textField.setAttribute("required", "1");
         textField.setAttribute("id", `exercise${i}`);
         exerciseDiv.appendChild(textField);
     }
 
-    function addButtonToExerciseForm(exerciseForm) {
+    const addButtonToExerciseForm = (exerciseForm) => {
         const submitButton = document.createElement("input");
         submitButton.setAttribute("type", `submit`);
         submitButton.setAttribute("value", `kontroller dine svar`);
         exerciseForm.appendChild(submitButton);
     }
 
-    function giveFormAction(exerciseSet) {
+    const giveFormAction = (exerciseSet) => {
         document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
             event.preventDefault();
             exerciseSet.forEach(exercise => {
                 exercise.questionAnswers = document.querySelector(
                     `#exercise${exercise.questionNumber}`).value;
             });
-
-            fetch(`${base_url}resultat`, {
-                    method: 'POST',
-                    header: {
-                        'content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(exerciseSet),
-                })
-                .then(response => response.text())
-                .then(resultPage => document.body.innerHTML = resultPage);
+            generateResultPage(exerciseSet);
         });
     };
+
+    const generateResultPage = (exerciseSet) => {
+        clearDom();
+        checkAnswer(exerciseSet);
+        console.log(exerciseSet);
+
+    }
+
+    const checkAnswer = (exerciseSet) => {
+        let userPoints = 0;
+        let totalPoints = 0;
+
+        exerciseSet.forEach(exerciseSet => {
+            let userAnswerValue = null;
+            totalPoints = totalPoints + exerciseSet.point;
+            /* Det her burde være sin egen funktion senere */
+            if (exerciseSet.questionAnswers == exerciseSet.facit){
+                 userAnswerValue = true;
+                 userPoints = userPoints + exerciseSet.point;
+            }
+            else userAnswerValue = false;
+            console.log(userAnswerValue);
+            
+            const div = document.createElement("div");
+            const questionText = document.createElement("p");
+            questionText.innerHTML = (exerciseSet.txt)+ ("<br />") + ("Spørgsmålstype: " + exerciseSet.type);
+
+            const yourAnswer = document.createElement("p");
+            yourAnswer.innerHTML = `Dit svar: ${exerciseSet.questionAnswers}`;
+            if (userAnswerValue == true) {
+                yourAnswer.style.backgroundColor = "green";
+                yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Rigtigt");
+            }
+            else {
+                yourAnswer.style.backgroundColor = "red";
+                yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exerciseSet.facit;
+            }
+
+            div.style.display = "block";
+           
+            div.appendChild(questionText);
+            div.append (yourAnswer);
+            document.body.appendChild(div);
+            console.log(userPoints);
+            console.log(totalPoints);
+
+
+        });
+    }
 </script>
 
 </html>
