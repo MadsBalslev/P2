@@ -64,6 +64,11 @@
       width: 4rem;
       border-radius: 4px;
     }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
   </style>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -351,47 +356,47 @@
     const generateResultPage = (exerciseSet) => {
       clearDom();
       checkAnswer(exerciseSet);
-      console.log(exerciseSet);
-
     }
 
     const checkAnswer = (exerciseSet) => {
       let userPoints = 0;
       let totalPoints = 0;
 
-      exerciseSet.forEach(exerciseSet => {
+      const container = document.createElement("div");
+      container.setAttribute('class', 'container');
+
+      exerciseSet.forEach(exercise => {
         let userAnswerValue = null;
-        totalPoints = totalPoints + exerciseSet.point;
+        totalPoints = totalPoints + exercise.point;
         /* Det her burde være sin egen funktion senere */
-        if (exerciseSet.questionAnswers == exerciseSet.facit) {
+        if (exercise.questionAnswers == exercise.facit) {
           userAnswerValue = true;
-          userPoints = userPoints + exerciseSet.point;
+          userPoints = userPoints + exercise.point;
         } else userAnswerValue = false;
-        console.log(userAnswerValue);
 
         const div = document.createElement("div");
         const questionText = document.createElement("p");
-        questionText.innerHTML = (exerciseSet.txt) + ("<br />") + ("Spørgsmålstype: " + exerciseSet.type);
-
         const yourAnswer = document.createElement("p");
-        yourAnswer.innerHTML = `Dit svar: ${exerciseSet.questionAnswers}`;
+
+        div.setAttribute('class', 'answer');
+
+        questionText.innerHTML = (exercise.txt) + ("<br />") + ("Spørgsmålstype: " + exercise.type);
+        yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers}`;
+
         if (userAnswerValue == true) {
           yourAnswer.style.backgroundColor = "green";
           yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Rigtigt");
         } else {
           yourAnswer.style.backgroundColor = "red";
-          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exerciseSet.facit;
+          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exercise.facit;
         }
 
-        div.style.display = "block";
 
         div.appendChild(questionText);
+        addExerciseVars(exercise, div);
         div.append(yourAnswer);
-        document.body.appendChild(div);
-        console.log(userPoints);
-        console.log(totalPoints);
-
-
+        container.appendChild(div);
+        document.body.appendChild(container);
       });
     }
   </script>
