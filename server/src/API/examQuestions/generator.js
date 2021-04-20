@@ -6,53 +6,18 @@ const {
 const vectors = require('./vector');
 const integrals = require('./integral');
 
-const generateVectorExercise = () => {
-  let result;
-  const rand = randNum(vectors.numOfTasks);
-  switch (rand) {
-    case 1:
-      result = vectors.vektorAddition();
-      break;
-    case 2:
-      result = vectors.vektorSubtraction();
-      break;
-    case 3:
-      result = vectors.vektorMultiplication();
-      break;
-    default:
-      break;
-  }
-
-  return result;
-};
-
-const generateIntegralExercise = () => {
-  let result;
-  const rand = randNum(integrals.numOfTasks);
-  switch (rand) {
-    case 1:
-      result = integrals.createPowerIntegral();
-      break;
-    case 2:
-      result = integrals.createTrigonometricIntegral();
-      break;
-    default:
-      break;
-  }
-  return result;
-};
-
 /**
  * Will generate an exerciseset with the given catagories
- * @param {string[]} cat An array containg the catagories of exercises to be generated
+ * @param {string[]} categories An array containg the catagories of exercises to be generated
  * @param {integer} amount The amount of exercises to be generated in each catagory
+ * @return {any[]} The function returns a generated excercise set as an array, based on the two input parameters.
  */
-const generateExcerciseSet = (cat, amount) => {
+const generateExcerciseSet = (categories, amount) => {
   const set = [];
 
-  cat.forEach((type) => {
+  categories.forEach((catagory) => {
     for (let i = 0; i < amount; i++) {
-      switch (type) {
+      switch (catagory) {
         case 'vektor2d':
           set.push(generateVectorExercise(amount));
           break;
@@ -69,8 +34,49 @@ const generateExcerciseSet = (cat, amount) => {
   return set;
 };
 
-generateExcerciseSet(['vektor2d', 10]);
-generateExcerciseSet(['integralregning', 10]);
+/**
+ * This function randomly generates a vector exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+const generateVectorExercise = () => {
+  let exercise;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vectors.VektorAdditionExercise();
+      break;
+    case 2:
+      exercise = new vectors.VektorSubtractionExercise();
+      break;
+    case 3:
+      exercise = new vectors.VektorMultiplicationExercise();
+      break;
+    default:
+      break;
+  }
+
+  return exercise;
+};
+
+/**
+ * This function randomly generates a undefined integral exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+const generateIntegralExercise = () => {
+  let exercise;
+  const rand = randNum(integrals.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new integrals.PowerIntegralExercise();
+      break;
+    case 2:
+      exercise = new integrals.TrigonometricIntegralExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
 
 module.exports = {
   generateExcerciseSet,
