@@ -10,7 +10,7 @@ test('getPowerIntegralFacit', () => {
   const FacitB = B / 3;
   const FacitC = C / 2;
 
-  const integralExpect = `${FacitA}x^4+${FacitB}x^3+${FacitC}x^2+K`;
+  const integralExpect = `f(x) = ${FacitA}x^4+${FacitB}x^3+${FacitC}x^2+K`;
 
   expect(integral.getPowerIntegralFacit(A, B, C)).toEqual(integralExpect);
 });
@@ -21,7 +21,7 @@ test('getTrigonometricIntegralFacit', () => {
 
   const into = A / B;
 
-  const integralExpect = `${into}sin(${B}x)+K`;
+  const integralExpect = `f(x) = ${into}sin(${B}x)+K`;
 
   expect(integral.getTrigonometricIntegralFacit(A, B)).toEqual(integralExpect);
 });
