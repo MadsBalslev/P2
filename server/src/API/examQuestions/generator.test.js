@@ -2,7 +2,7 @@ const { generateExcerciseSet } = require('./generator');
 const empty = '';
 
 test('generateExerciseSet', () => {
-  const amount = 30;
+  const amount = 10;
   const categories = [
     'andengradspolynomiumOgLigning',
     'talOgegnearter',
