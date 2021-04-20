@@ -40,7 +40,7 @@ const getPowerIntegralFacit = (A, B, C) => {
   const facitB = (B / 3);
   const facitC = (C / 2);
 
-  const integralFacit = `f(x) = ${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
+  const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
   return integralFacit;
 };
 
@@ -84,17 +84,17 @@ const getTrigonometricIntegralFacit = (A, B) => {
   let tempB;
 
   if (A === B) {
-    integralFacit = `f(x) = sin(${B}x)+K`;
+    integralFacit = `sin(${B}x)+K`;
   } else if (A === 1) {
-    integralFacit = `f(x) = sin(${B}x)/(${B}+K`;
+    integralFacit = `sin(${B}x)/(${B}+K`;
   } else if (B === 1) {
-    integralFacit = `f(x) = ${A}sin(x)+K`;
+    integralFacit = `${A}sin(x)+K`;
   } else if (A % B === 0) {
     into = A / B;
     tempB = B % A;
-    integralFacit = `f(x) = ${into}sin(${tempB}x)+K`;
+    integralFacit = `${into}sin(${tempB}x)+K`;
   } else {
-    integralFacit = `f(x) = ${A}sin(${B}x)/${B}+K`;
+    integralFacit = `${A}sin(${B}x)/${B}+K`;
   }
 
   return integralFacit;
