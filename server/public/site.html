@@ -167,7 +167,13 @@
     const exerciseSet = await getExerciseSetFromServer(event);
     buildExercisePage(exerciseSet);
   });
-  /* Making new promise for the server to generate exercises from the chosen subjects */
+
+ /**
+ * Gets the generated exercise set from the server.
+ * @param event
+ * @returns New promise for a resolve or reject.
+ */
+
   const getExerciseSetFromServer = (event) => {
     return new Promise((resolve, reject) => {
       exerciseAmount = document.querySelector('#amount').value;
@@ -185,7 +191,12 @@
         .catch(error => reject(error));
     });
   };
-  /* Function for chosing subjects on the website */
+
+/**
+ * Gets the exercises from the checkboxes.
+ * @returns The exercise subjects
+ */
+
   const getExerciseSubjects = () => {
     let elements = document.querySelector('#emneVælger').children;
     let exerciseSubjects = '';
@@ -196,7 +207,12 @@
     return exerciseSubjects;
   };
 
-  /* Checks if subject is checked if not then return nothing */
+/**
+ * Gets the checked off subjects from check boxes.
+ * @param element
+ * @returns The chosen exercise subject element ids
+ */
+
   const getCheckedExerciseSubject = (element) => {
     if (element.checked) {
       return `${element.id},`;
@@ -205,7 +221,11 @@
     }
   };
 
-  /* Function for building a page for exercises */
+ /**
+ * Builds a page for the generated exercise set.
+ * @param exerciseSet
+ */
+
   const buildExercisePage = (exerciseSet) => {
     clearDom();
     const exerciseForm = createExerciseForm();
@@ -215,16 +235,30 @@
     giveFormAction(exerciseSet);
   };
 
+/**
+ * Clears the document
+ */
+
   function clearDom() {
     document.body.innerHTML = '';
   }
 
-  /* Functions for making a form for a exercise and adding exercise to form */
+ /**
+ * Function for making an exercise form.
+ * @returns A exercise form
+ */
+
   function createExerciseForm() {
     const exerciseForm = document.createElement("form");
     exerciseForm.setAttribute('id', 'exerciseForm');
     return exerciseForm;
   }
+
+/**
+ * Function for adding an exercise to the exercise form.
+ * @param exerciseForm
+ * @param exerciseSet
+ */
 
   function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
     let i = 1;
@@ -233,7 +267,14 @@
     });
   }
 
-  /* Function to add single exercise to the form */
+/**
+ * Function for adding a single exercise to a exercise form.
+ * @param i
+ * @param exercise
+ * @param exerciseForm
+ * @returns the index of the exercise
+ */
+
   function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
     const exerciseDiv = document.createElement("div");
     addExerciseHeader(i, exercise, exerciseDiv);
@@ -244,8 +285,13 @@
     return i;
   }
 
-  /* These functions are for making a exercise appear and have action when submitting */
-  /* Add header */
+/**
+ * Function for adding header of the exercise.
+ * @param i
+ * @param exercise
+ * @param exerciseDiv
+ */
+
   function addExerciseHeader(i, exercise, exerciseDiv) {
     const exerciseHeader = document.createElement('h1');
     exerciseHeader.innerHTML = `Spørgsmål ${i}`;
@@ -253,14 +299,24 @@
     exerciseDiv.appendChild(exerciseHeader);
   }
 
-  /* Add text */
+/**
+ * Function from adding text from the exercise.
+ * @param exercise
+ * @param exerciseDiv
+ */
+
   function addExerciseText(exercise, exerciseDiv) {
     const questionText = document.createElement("p");
     questionText.innerHTML = exercise.txt;
     exerciseDiv.appendChild(questionText);
   }
 
-  /* Add input field */
+/**
+ * Function for adding a input field for the exercise.
+ * @param i
+ * @param exerciseDiv
+ */
+
   function addExerciseInputField(i, exerciseDiv) {
     const textField = document.createElement("input");
     textField.setAttribute("required", "1");
@@ -268,7 +324,11 @@
     exerciseDiv.appendChild(textField);
   }
 
-  /* Add submit button */
+/**
+ * Function for adding a submit button for the exercise form.
+ * @param exerciseForm
+ */
+
   function addButtonToExerciseForm(exerciseForm) {
     const submitButton = document.createElement("input");
     submitButton.setAttribute("type", `submit`);
@@ -276,6 +336,10 @@
     exerciseForm.appendChild(submitButton);
   }
 
+/**
+ * Function that makes the submit button to get answers for the exercises.
+ * @param exerciseSet
+ */
 
   function giveFormAction(exerciseSet) {
     document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
@@ -285,7 +349,11 @@
     });
   };
 
-  /* Gets answers from submitting and checks the answer */
+/**
+ * Function for getting the exercise answers
+ * @param exerciseSet
+ */
+
   function getExerciseAnswers(exerciseSet) {
     exerciseSet.forEach(exercise => {
       exercise.questionAnswers = document.querySelector(
@@ -293,7 +361,11 @@
     });
   }
 
-  /* Checks result*/
+/**
+ * Function for posting the results on the page
+ * @param exerciseSet
+ */
+
   function postExerciseSetToResultat(exerciseSet) {
     fetch(`${base_url}resultat`, {
       method: 'POST',
