@@ -1,5 +1,3 @@
-const { cos } = require('mathjs');
-const math = require('mathjs');
 const { randNum } = require('../../helper');
 
 // Power Rule Integration
@@ -20,7 +18,7 @@ const createPowerIntegral = () => {
   const facitB = (B / 3);
   const facitC = (C / 2);
 
-  const integral = `${A}x^3+${B}x^2+${C}x`;
+  const integral = `f(x) = ${A}x^3+${B}x^2+${C}x`;
   const integralFacit = `${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
 
   const taskObj = {
@@ -53,7 +51,7 @@ const createTrigonometricIntegral = () => {
   }
   let into;
 
-  const integral = `${A}cos(${B}x)`;
+  const integral = `f(x) = ${A}cos(${B}x)`;
   let integralFacit;
 
   if (A === B) {
