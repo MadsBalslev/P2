@@ -13,7 +13,7 @@ const generateVector = () => {
   return v;
 };
 
-const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
+const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))}, ${math.subset(vector, math.index(1, 0))}`;
 
 const vektorAddition = () => {
   const txt = 'Hvad giver følgende to vektorer lagt sammen?';
@@ -31,8 +31,8 @@ const vektorAddition = () => {
 
   const taskObj = {
     exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
+      vectorA: `\\vec{a} = < ${formatVector(vectorA)} >`,
+      vectorB: `\\vec{b} = < ${formatVector(vectorB)} >`,
     },
     facit: formatVector(facit),
     type,
@@ -60,8 +60,8 @@ const vektorSubtraction = () => {
 
   const taskObj = {
     exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
+      vectorA: `\\vec{a} = < ${formatVector(vectorA)} >`,
+      vectorB: `\\vec{b} = < ${formatVector(vectorB)} >`,
     },
     facit: formatVector(facit),
     type,
@@ -86,8 +86,8 @@ const vektorMultiplication = () => {
 
   const taskObj = {
     exerciseVars: {
-      vectorA: formatVector(vectorA),
-      vectorB: formatVector(vectorB),
+      vectorA: `\\vec{a} = < ${formatVector(vectorA)} >`,
+      vectorB: `\\vec{b} = < ${formatVector(vectorB)} >`,
     },
     facit,
     type,
@@ -96,7 +96,7 @@ const vektorMultiplication = () => {
     tegn,
   };
 
-  console.log(taskObj)
+  console.log(taskObj);
 
   return taskObj;
 };
