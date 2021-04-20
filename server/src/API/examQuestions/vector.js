@@ -31,6 +31,7 @@ function VektorAdditionExercise() {
   this.tegn = '+';
 }
 
+<<<<<<< HEAD
 function getVektorAdditionFacit(vectorA, vectorB) {
   return math.matrix([
     [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
@@ -38,6 +39,13 @@ function getVektorAdditionFacit(vectorA, vectorB) {
   ]);
 }
 /* Generates two vectors needed for a substraction exercise and calculates the right answer for the exercise */
+=======
+const getVektorAdditionFacit = (vectorA, vectorB) => math.matrix([
+  [math.subset(vectorA, math.index(0, 0)) + math.subset(vectorB, math.index(0, 0))],
+  [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
+]);
+
+>>>>>>> 7e6119b6672fdb579b84f46f0390d0ef5d462200
 function VektorSubtractionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
@@ -54,6 +62,7 @@ function VektorSubtractionExercise() {
   this.tegn = '-';
 }
 
+<<<<<<< HEAD
 /**
  * This functions subtracts two inputted vectors and returns the correct answer as a vector.
  * @param {math.Matrix} vectorA A vector formatted as a string, necessary for calculating output.
@@ -66,6 +75,12 @@ function getVektorSubtractionFacit(vectorA, vectorB) {
     [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
   ]);
 }
+=======
+const getVektorSubtractionFacit = (vectorA, vectorB) => math.matrix([
+  [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
+  [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
+]);
+>>>>>>> 7e6119b6672fdb579b84f46f0390d0ef5d462200
 
 /* This function generates two vectors needed for a multiplication exercise and calculates the right answer for the exercise */
 function VektorMultiplicationExercise() {
@@ -85,10 +100,14 @@ function VektorMultiplicationExercise() {
   this.tegn = '*';
 }
 
+<<<<<<< HEAD
 /* Function we can call with the parameters of two vectors to caluclate the right answer */
 function getVektorMultiplicationFacit(vectorA, vectorB) {
   return math.dot(vectorA, vectorB);
 }
+=======
+const getVektorMultiplicationFacit = (vectorA, vectorB) => math.dot(vectorA, vectorB);
+>>>>>>> 7e6119b6672fdb579b84f46f0390d0ef5d462200
 
 const numOfTasks = 3;
 

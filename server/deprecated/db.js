@@ -1,3 +1,4 @@
+// DEPRECATED CODE
 const mysql = require('mysql');
 const { dbConnection } = require('../helper');
 

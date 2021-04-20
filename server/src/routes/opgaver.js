@@ -7,19 +7,24 @@ const { generateExcerciseSet } = require('../API/examQuestions/generator.js');
  */
 function handleOpgaverRequest(request, response) {
   if (request.method === 'GET') {
-    // response.setHeader('Access-Control-Allow-Origin', '*');
-    let subjects = [];
-    if (request.headers.subjects) {
-      subjects = request.headers.subjects.split(',');
-    }
-    const result = generateExcerciseSet(subjects, request.headers.amount);
-    response.end(JSON.stringify(result));
-  } else if (request.method === 'POST') {
-    // response.setHeader('Access-Control-Allow-Origin', '*');
-    // compare answer to assignment id
-  } else if (request.method !== 'GET' && request.method !== 'POST') {
+    handleOpgaverGetRequest(request, response);
+  } else if (request.method !== 'GET') {
     throw 'bad request';
   }
+}
+
+function handleOpgaverGetRequest(request, response) {
+  const subjects = subjectsStringToArray(request.headers.subjects);
+  const result = generateExcerciseSet(subjects, request.headers.amount);
+  response.end(JSON.stringify(result));
+}
+
+function subjectsStringToArray(subjectsString) {
+  let subjects = [];
+  if (subjectsString) {
+    subjects = subjectsString.split(',');
+  }
+  return subjects;
 }
 
 module.exports = handleOpgaverRequest;
