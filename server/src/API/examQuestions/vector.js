@@ -22,7 +22,7 @@ const generateRandom2dVector = () => {
  * @param {math.Matrix} vector Takes a vector as input and formats it accordingly.
  * @return {string} Formats the vector as a string, and returns it.
  */
-const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))} ${math.subset(vector, math.index(1, 0))}`;
+const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))}, ${math.subset(vector, math.index(1, 0))}`;
 
 /**
  * Represents a vektor addition exercise  .
