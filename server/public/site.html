@@ -4,73 +4,67 @@
   <title>P2 Projekt</title>
   <link rel='icon' type='image/png' href='./favicon.png' />
   <meta charset="UTF-8">
-  <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      font-family: sans-serif;
-      font-size: 18px;
-    }
+  <!-- <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-size: 18px;
+        }
 
-    :root {
-      --hue-neutral: 180;
-      --hue-wrong: #ff0000;
-      --hue-correct: #61ff9e;
-    }
+        :root {
+            --hue-neutral: 180;
+            --hue-wrong: #ff0000;
+            --hue-correct: #61ff9e;
+        }
 
-    body {
-      --hue: var(--hue-neutral);
-      padding: 0;
-      margin: 0;
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      background-color: hsl(var(--hue), 100%, 25%);
-    }
+        body {
+            --hue: var(--hue-neutral);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: hsl(var(--hue), 100%, 25%);
+        }
 
-    input[type="submit"] {
-      --hue: var(--hue-neutral);
-      border: 1px solid hsl(var(--hue), 100%, 100%);
-      background-color: white;
-      border-radius: 20px;
-      padding: 5px 10px;
-      color: hsl(var(--hue), 30%, 40%);
-      cursor: pointer;
-      margin: 80px;
-      margin-top: 65px;
-      box-shadow: 0 0 10px 2px;
-      transition: 0.6s;
-    }
+        input[type="submit"] {
+            --hue: var(--hue-neutral);
+            border: 1px solid hsl(var(--hue), 100%, 100%);
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 10px;
+            color: hsl(var(--hue), 30%, 40%);
+            cursor: pointer;
+            margin: 80px;
+            margin-top: 65px;
+            box-shadow: 0 0 10px 2px;
+            transition: 0.6s;
+        }
 
-    input[type="submit"]:hover {
-      color: black;
-      transform: scale(1.1);
-    }
+        input[type="submit"]:hover {
+            color: black;
+            transform: scale(1.1);
+        }
 
-    input[type="checkbox"] {
-      position: relative;
-    }
+        input[type="checkbox"] {
+            position: relative;
+        }
 
-    input[type="checkbox"]:hover {
-      transform: scaleX(1.2);
-    }
+        input[type="checkbox"]:hover {
+            transform: scaleX(1.2);
+        }
 
-    input[type="number"] {
-      position: relative;
-      border-width: 1px;
-      width: 4rem;
-      border-radius: 4px;
-    }
-
-    .mathTex {
-      display: inline;
-    }
-  </style>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+        input[type="number"] {
+            position: relative;
+            border-width: 1px;
+            width: 4rem;
+            border-radius: 4px;
+        }
+    </style> -->
 </head>
 
 <body>
@@ -93,7 +87,7 @@
       <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
       <label for="andengradspolynomiumOgLigning">Andengradspolynomium og -ligning</label><br>
 
-      <input type="checkbox" id="talOgRegnearter" name="talOgRegnearter" value="true">
+      <input type="checkbox" id="talOgegnearter" name="talOgRegnearter" value="true">
       <label for="talOgRegnearter">Tal og regnearter</label><br>
 
 
@@ -147,6 +141,8 @@
 
     <input type='submit' value='Indsend'>
   </form>
+</body>
+</body>
 
 <!--
 <script>
@@ -163,171 +159,152 @@
 </script>
 -->
 <script>
-  /* eslint-disable no-undef */
-  const baseUrl = window.location.href;
+  const base_url = window.location.href;
 
+  /* Function for clicking submit, and generating exercises from the server */
   document.querySelector('#form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const exerciseSet = await getExerciseSetFromServer(event);
     buildExercisePage(exerciseSet);
   });
+  /* Making new promise for the server to generate exercises from the chosen subjects */
+  const getExerciseSetFromServer = (event) => {
+    return new Promise((resolve, reject) => {
+      exerciseAmount = document.querySelector('#amount').value;
+      exerciseSubjects = getExerciseSubjects();
 
-  const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
-    const exerciseAmount = document.querySelector('#amount').value;
-    const exerciseSubjects = getExerciseSubjects();
-
-    fetch(`${baseUrl}opgaver`, {
-      method: 'GET',
-      headers: {
-        subjects: exerciseSubjects,
-        amount: exerciseAmount,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        resolve(data);
-        // console.log(data);
+      fetch(`${base_url}opgaver`, {
+        method: 'GET',
+        headers: {
+          subjects: exerciseSubjects,
+          amount: exerciseAmount
+        }
       })
-      .catch((error) => reject(error));
-  });
-
+        .then(response => response.json())
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+    });
+  };
+  /* Function for chosing subjects on the website */
   const getExerciseSubjects = () => {
-    const elements = document.querySelector('#emneVælger').children;
+    let elements = document.querySelector('#emneVælger').children;
     let exerciseSubjects = '';
-    [...elements].forEach((element) => {
+    [...elements].forEach(element => {
       exerciseSubjects += getCheckedExerciseSubject(element);
     });
 
     return exerciseSubjects;
   };
 
+  /* Checks if subject is checked if not then return nothing */
   const getCheckedExerciseSubject = (element) => {
     if (element.checked) {
       return `${element.id},`;
+    } else {
+      return '';
     }
-    return '';
-};
+  };
 
+  /* Function for building a page for exercises */
   const buildExercisePage = (exerciseSet) => {
     clearDom();
     const exerciseForm = createExerciseForm();
-
     addExercisesToExerciseForm(exerciseForm, exerciseSet);
     addButtonToExerciseForm(exerciseForm, exerciseSet);
-  
     document.body.appendChild(exerciseForm);
-  
     giveFormAction(exerciseSet);
   };
 
-  const clearDom = () => {
+  function clearDom() {
     document.body.innerHTML = '';
-  };
+  }
 
-  const createExerciseForm = () => {
-    const exerciseForm = document.createElement('form');
+  /* Functions for making a form for a exercise and adding exercise to form */
+  function createExerciseForm() {
+    const exerciseForm = document.createElement("form");
     exerciseForm.setAttribute('id', 'exerciseForm');
     return exerciseForm;
-  };
+  }
 
-  const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
+  function addExercisesToExerciseForm(exerciseForm, exerciseSet) {
     let i = 1;
     exerciseSet.forEach((exercise) => {
-      addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
-      i++;
+      i = addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
     });
-  };
+  }
 
-  const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
-    const exerciseDiv = document.createElement('div');
-    exerciseDiv.setAttribute('class', 'exercise');
-  
+  /* Function to add single exercise to the form */
+  function addSingleExerciseToExerciseForm(i, exercise, exerciseForm) {
+    const exerciseDiv = document.createElement("div");
     addExerciseHeader(i, exercise, exerciseDiv);
     addExerciseText(exercise, exerciseDiv);
-    addExerciseVars(exercise, exerciseDiv);
     addExerciseInputField(i, exerciseDiv);
-  
     exerciseForm.appendChild(exerciseDiv);
-  };
+    i += 1;
+    return i;
+  }
 
-  const addExerciseHeader = (i, exercise, exerciseDiv) => {
+  /* These functions are for making a exercise appear and have action when submitting */
+  /* Add header */
+  function addExerciseHeader(i, exercise, exerciseDiv) {
     const exerciseHeader = document.createElement('h1');
     exerciseHeader.innerHTML = `Spørgsmål ${i}`;
-    // eslint-disable-next-line no-param-reassign
     exercise.questionNumber = i;
     exerciseDiv.appendChild(exerciseHeader);
-  };
+  }
 
-  const addExerciseText = (exercise, exerciseDiv) => {
-    const questionText = document.createElement('p');
+  /* Add text */
+  function addExerciseText(exercise, exerciseDiv) {
+    const questionText = document.createElement("p");
     questionText.innerHTML = exercise.txt;
     exerciseDiv.appendChild(questionText);
-  };
+  }
 
-  const addExerciseVars = (exercise, exerciseDiv) => {
-    const exerciseVars = Object.values(exercise.exerciseVars);
-
-    exerciseVars.forEach((eVar) => {
-      const questionText = document.createElement('p');
-      questionText.setAttribute('class', 'mathTex');
-      convert(eVar, questionText);
-      exerciseDiv.appendChild(questionText);
-    });
-  };
-
-  const addExerciseInputField = (i, exerciseDiv) => {
-    const textField = document.createElement('input');
-    textField.setAttribute('required', '1');
-    textField.setAttribute('id', `exercise${i}`);
+  /* Add input field */
+  function addExerciseInputField(i, exerciseDiv) {
+    const textField = document.createElement("input");
+    textField.setAttribute("required", "1");
+    textField.setAttribute("id", `exercise${i}`);
     exerciseDiv.appendChild(textField);
-  };
+  }
 
-  const addButtonToExerciseForm = (exerciseForm) => {
-    const submitButton = document.createElement('input');
-    submitButton.setAttribute('type', 'submit');
-    submitButton.setAttribute('value', 'kontroller dine svar');
+  /* Add submit button */
+  function addButtonToExerciseForm(exerciseForm) {
+    const submitButton = document.createElement("input");
+    submitButton.setAttribute("type", `submit`);
+    submitButton.setAttribute("value", `kontroller dine svar`);
     exerciseForm.appendChild(submitButton);
-  };
+  }
 
-  const giveFormAction = (exerciseSet) => {
+
+  function giveFormAction(exerciseSet) {
     document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
       event.preventDefault();
-      exerciseSet.forEach((exercise) => {
-        // eslint-disable-next-line no-param-reassign
-        exercise.questionAnswers = document.querySelector(
-          `#exercise${exercise.questionNumber}`,
-        ).value;
-      });
+      getExerciseAnswers(exerciseSet);
+      postExerciseSetToResultat(exerciseSet);
+    });
+  };
 
-      fetch(`${baseUrl}resultat`, {
-        method: 'POST',
-        header: {
-          'content-Type': 'application/json',
-        },
-        body: JSON.stringify(exerciseSet),
-      })
-        .then((response) => response.text())
-        .then((resultPage) => { document.body.innerHTML = resultPage; });
+  /* Gets answers from submitting and checks the answer */
+  function getExerciseAnswers(exerciseSet) {
+    exerciseSet.forEach(exercise => {
+      exercise.questionAnswers = document.querySelector(
+        `#exercise${exercise.questionNumber}`).value;
     });
-  };
+  }
+
+  /* Checks result*/
+  function postExerciseSetToResultat(exerciseSet) {
+    fetch(`${base_url}resultat`, {
+      method: 'POST',
+      header: {
+        'content-Type': 'application/json'
+      },
+      body: JSON.stringify(exerciseSet),
+    })
+      .then(response => response.text())
+      .then(resultPage => document.body.innerHTML = resultPage);
+  }
 </script>
-<script>
-  /* eslint-disable no-undef */
-  // eslint-disable-next-line no-unused-vars
-  const convert = (input, output) => {
-    MathJax.texReset();
-    const options = MathJax.getMetricsFor(output);
-    MathJax.tex2svgPromise(input, options).then((node) => {
-      output.appendChild(node);
-      MathJax.startup.document.clear();
-      MathJax.startup.document.updateDocument();
-    }).catch((err) => {
-      output.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err
-        .message));
-    }).then(() => {
-    });
-  };
-</script>
-</body>
 
 </html>

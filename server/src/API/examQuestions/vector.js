@@ -24,7 +24,10 @@ const generateRandom2dVector = () => {
  */
 const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))}, ${math.subset(vector, math.index(1, 0))}`;
 
-/* Generates two vectors needed for a addition exercise and calculates the right answer for the exercise */
+/**
+ * Represents a vektor addition exercise  .
+ * @constructor
+ */
 function VektorAdditionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
@@ -52,7 +55,10 @@ const getVektorAdditionFacit = (vectorA, vectorB) => math.matrix([
   [math.subset(vectorA, math.index(1, 0)) + math.subset(vectorB, math.index(1, 0))],
 ]);
 
-/* Generates two vectors needed for a substraction exercise and calculates the right answer for the exercise */
+/**
+ * Represents a vektor subtraction exercise  .
+ * @constructor
+ */
 function VektorSubtractionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
@@ -80,7 +86,10 @@ const getVektorSubtractionFacit = (vectorA, vectorB) => math.matrix([
   [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
 ]);
 
-/* Generates two vectors needed for a multiplication exercise and calculates the right answer for the exercise */
+/**
+ * Represents a vektor multiplication exercise  .
+ * @constructor
+ */
 function VektorMultiplicationExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();

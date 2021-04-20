@@ -33,6 +33,7 @@ const generateExcerciseSet = (categories, amount) => {
   global.globalSet = set;
   return set;
 };
+
 /**
  * This function randomly generates a vector exercise and returns it.
  * @return {object} Returns the generated exercise object.

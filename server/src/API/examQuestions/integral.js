@@ -3,7 +3,6 @@ const { randNum } = require('../../helper');
 /**
  * Represents a power integral exercise.
  * @constructor
- * @exports
  */
 function PowerIntegralExercise() {
   const { A, B, C } = generateVariablesForPowerIntegralExercise();
@@ -33,7 +32,6 @@ function generateVariablesForPowerIntegralExercise() {
  * @param {number} B
  * @param {number} C
  * @returns facit for a powerIntegralExercise.
- * @exports
  */
 const getPowerIntegralFacit = (A, B, C) => {
   const facitA = (A / 4);
@@ -47,7 +45,6 @@ const getPowerIntegralFacit = (A, B, C) => {
 /**
  * Represents a trigonometric integral exercise.
  * @constructor
- * @exports
  */
 function TrigonometricIntegralExercise() {
   const { A, B } = generateVariablesForTrigonometricIntergralExercise();
@@ -76,7 +73,6 @@ function generateVariablesForTrigonometricIntergralExercise() {
  * @param {number} A
  * @param {number} B
  * @returns facit for a TrigonometricIntegralExercise.
- * @exports
  */
 const getTrigonometricIntegralFacit = (A, B) => {
   let integralFacit;
@@ -110,7 +106,6 @@ const getTrigonometricIntegralFacit = (A, B) => {
 
 /**
  * Number of integral exercises.
- * @exports
  */
 const numOfTasks = 2;
 
