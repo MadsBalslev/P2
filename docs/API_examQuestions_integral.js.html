@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>API/examQuestions/integral.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="PowerIntegralExercise.html">PowerIntegralExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="TrigonometricIntegralExercise.html">TrigonometricIntegralExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorAdditionExercise.html">VektorAdditionExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorMultiplicationExercise.html">VektorMultiplicationExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorSubtractionExercise.html">VektorSubtractionExercise</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#formatVector">formatVector</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateExcerciseSet">generateExcerciseSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateIntegralExercise">generateIntegralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateRandom2dVector">generateRandom2dVector</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVariablesForPowerIntegralExercise">generateVariablesForPowerIntegralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVariablesForTrigonometricIntergralExercise">generateVariablesForTrigonometricIntergralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVectorExercise">generateVectorExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPowerIntegralFacit">getPowerIntegralFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrigonometricIntegralFacit">getTrigonometricIntegralFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorAdditionFacit">getVektorAdditionFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorMultiplicationFacit">getVektorMultiplicationFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorSubtractionFacit">getVektorSubtractionFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBody">handleBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequestBody">handleRequestBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultPostRequest">handleResultPostRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleResultRequest">handleResultRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#isActualSnawerValid">isActualSnawerValid</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#numOfTasks">numOfTasks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#randNum">randNum</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#requestBodyIsValid">requestBodyIsValid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#subjectsStringToArray">subjectsStringToArray</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">API/examQuestions/integral.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { randNum } = require('../../helper');
+
+/**
+ * Represents a power integral exercise.
+ * @constructor
+ */
+function PowerIntegralExercise() {
+  const { A, B, C } = generateVariablesForPowerIntegralExercise();
+  this.txt = 'Udregn det følgende ubestemte integral.';
+  this.type = 'integralregning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { integral: `${A}x^3+${B}x^2+${C}x` };
+  this.facit = getPowerIntegralFacit(A, B, C);
+}
+
+/**
+ * @returns three random numbers A, B, C where 0 ≤ A ≤ 40, 0 ≤ B ≤ 40 and 3 !divides B,
+ * 0 ≤ C ≤ 70.
+ */
+function generateVariablesForPowerIntegralExercise() {
+  let B;
+  while (B % 3 !== 0) B = randNum(40);
+  const A = randNum(40);
+  const C = randNum(70);
+  return { A, B, C };
+}
+
+/**
+ * Calculates the facit for a powerIntegralExercise.
+ * @param {number} A
+ * @param {number} B
+ * @param {number} C
+ * @returns facit for a powerIntegralExercise.
+ */
+const getPowerIntegralFacit = (A, B, C) => {
+  const facitA = (A / 4);
+  const facitB = (B / 3);
+  const facitC = (C / 2);
+
+  const integralFacit = `f(x) = ${facitA}x^4+${facitB}x^3+${facitC}x^2+K`;
+  return integralFacit;
+};
+
+/**
+ * Represents a trigonometric integral exercise.
+ * @constructor
+ */
+function TrigonometricIntegralExercise() {
+  const { A, B } = generateVariablesForTrigonometricIntergralExercise();
+  this.txt = 'Udregn det følgende ubestemte integral.';
+  this.type = 'integralregning';
+  this.point = 15;
+  this.tegn = '';
+  this.exerciseVars = { integral: `${A}cos(${B}x)` };
+  this.facit = getTrigonometricIntegralFacit(A, B);
+}
+
+/**
+ * @returns two random numbers A, B.
+ */
+function generateVariablesForTrigonometricIntergralExercise() {
+  const A = randNum(12) + 2;
+  let B = randNum(7);
+  if (B % 2 === 0) {
+    B++;
+  }
+  return { A, B };
+}
+
+/**
+ * Calculates the facit for a TrigonometricIntegralExercise.
+ * @param {number} A
+ * @param {number} B
+ * @returns facit for a TrigonometricIntegralExercise.
+ */
+const getTrigonometricIntegralFacit = (A, B) => {
+  let integralFacit;
+  let into;
+  let tempB;
+
+  if (A === B) {
+    integralFacit = `f(x) = sin(${B}x)+K`;
+  } else if (A === 1) {
+    integralFacit = `f(x) = sin(${B}x)/(${B}+K`;
+  } else if (B === 1) {
+    integralFacit = `f(x) = ${A}sin(x)+K`;
+  } else if (A % B === 0) {
+    into = A / B;
+    tempB = B % A;
+    integralFacit = `f(x) = ${into}sin(${tempB}x)+K`;
+  } else {
+    integralFacit = `f(x) = ${A}sin(${B}x)/${B}+K`;
+  }
+
+  return integralFacit;
+};
+
+// m.i.s
+// const f = math.parse('18x^7+10x^6-3x^5+x^4-19x^3+2x^2-x+10');
+// const x = math.parse('x');
+// const fm = math.derivative(f, x);
+
+// console.log('f(x) =', f.toString());
+// console.log("f'(x) =", fm.toString());
+
+/**
+ * Number of integral exercises.
+ */
+const numOfTasks = 2;
+
+module.exports = {
+  PowerIntegralExercise,
+  getPowerIntegralFacit,
+  TrigonometricIntegralExercise,
+  getTrigonometricIntegralFacit,
+  numOfTasks,
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Apr 20 2021 10:29:41 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

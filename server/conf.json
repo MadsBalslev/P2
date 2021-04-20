@@ -1,6 +1,6 @@
 {
   "source": {
-      "includePattern": ".js$, .html$",
+      "includePattern": ".js$",
       "excludePattern": "(node_modules/|docs)"
   },
 
