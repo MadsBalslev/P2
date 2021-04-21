@@ -13,8 +13,6 @@ const server = http.createServer();
 
 const filePath = path.join(__dirname, '../public/site.html');
 
-server.on('request', tryHandleRequest);
-
 /**
  * Will try to handle the request in {@link handleRequest} or if necessary catch the error
  * @param {*} request
@@ -86,6 +84,8 @@ const respondWith = async(file, fileType, response) => {
     response.writeHead(200, { 'Content-Type': fileType });
     response.end(fileData);
 };
+
+server.on('request', tryHandleRequest);
 
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);
