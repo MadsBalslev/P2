@@ -15,8 +15,8 @@ jobs:
       - name: Build Docs
         uses: andstor/jsdoc-action@v1
         with:
-          source_dir: /server/src
-          config_file: /server/conf.json
+          source_dir: ./src
+          config_file: ./conf.json
           template: minami
           recurse: true
 
