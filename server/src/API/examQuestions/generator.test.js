@@ -1,29 +1,28 @@
 const { generateExcerciseSet } = require('./generator');
 
 const empty = '';
+const allCategories = ['andengradspolynomiumOgLigning',
+  'talOgegnearter',
+  'ligninger',
+  'trigonometri',
+  'funktioner',
+  'geometri',
+  'differebtialregning',
+  'sandsynlighedOgKombinatorik',
+  'statistik',
+  'regression',
+  'vektor2d',
+  'vektorerI3d',
+  'vektorfunktioner',
+  'infinitesimalregning',
+  'integralregning',
+  'funktionerAfToVariable'];
 
 test('generateExerciseSet', () => {
-  const amount = 10;
-  const categories = [
-    'andengradspolynomiumOgLigning',
-    'talOgegnearter',
-    'ligninger',
-    'trigonometri',
-    'funktioner',
-    'geometri',
-    'differebtialregning',
-    'sandsynlighedOgKombinatorik',
-    'statistik',
-    'regression',
-    'vektor2d',
-    'vektorerI3d',
-    'vektorfunktioner',
-    'infinitesimalregning',
-    'integralregning',
-    'funktionerAfToVariable',
-  ];
+  const numberOfExercises = 10;
+  const categories = allCategories;
 
-  const exerciseSet = generateExcerciseSet(categories, amount);
+  const exerciseSet = generateExcerciseSet(categories, numberOfExercises);
 
   exerciseSet.forEach((exercise) => {
     if (errorInExerciseFields(exercise)) {
