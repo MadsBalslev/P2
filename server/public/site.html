@@ -4,69 +4,74 @@
   <title>P2 Projekt</title>
   <link rel='icon' type='image/png' href='./favicon.png' />
   <meta charset="UTF-8">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            font-family: sans-serif;
-            font-size: 18px;
-        }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      font-family: sans-serif;
+      font-size: 18px;
+    }
 
-        :root {
-            --hue-neutral: 180;
-            --hue-wrong: #ff0000;
-            --hue-correct: #61ff9e;
-        }
+    :root {
+      --hue-neutral: 180;
+      --hue-wrong: #ff0000;
+      --hue-correct: #61ff9e;
+    }
 
-        body {
-            --hue: var(--hue-neutral);
-            padding: 0;
-            margin: 0;
-            display: flex;
-            width: 100vw;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            background-color: hsl(var(--hue), 100%, 25%);
-        }
+    body {
+      --hue: var(--hue-neutral);
+      padding: 0;
+      margin: 0;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-color: hsl(var(--hue), 100%, 25%);
+    }
 
-        input[type="submit"] {
-            --hue: var(--hue-neutral);
-            border: 1px solid hsl(var(--hue), 100%, 100%);
-            background-color: white;
-            border-radius: 20px;
-            padding: 5px 10px;
-            color: hsl(var(--hue), 30%, 40%);
-            cursor: pointer;
-            margin: 80px;
-            margin-top: 65px;
-            box-shadow: 0 0 10px 2px;
-            transition: 0.6s;
-        }
+    input[type="submit"] {
+      --hue: var(--hue-neutral);
+      border: 1px solid hsl(var(--hue), 100%, 100%);
+      background-color: white;
+      border-radius: 20px;
+      padding: 5px 10px;
+      color: hsl(var(--hue), 30%, 40%);
+      cursor: pointer;
+      margin: 80px;
+      margin-top: 65px;
+      box-shadow: 0 0 10px 2px;
+      transition: 0.6s;
+    }
 
-        input[type="submit"]:hover {
-            color: black;
-            transform: scale(1.1);
-        }
+    input[type="submit"]:hover {
+      color: black;
+      transform: scale(1.1);
+    }
 
-        input[type="checkbox"] {
-            position: relative;
-        }
+    input[type="checkbox"] {
+      position: relative;
+    }
 
-        input[type="checkbox"]:hover {
-            transform: scaleX(1.2);
-        }
+    input[type="checkbox"]:hover {
+      transform: scaleX(1.2);
+    }
 
-        input[type="number"] {
-            position: relative;
-            border-width: 1px;
-            width: 4rem;
-            border-radius: 4px;
-        }
-    </style>
+    input[type="number"] {
+      position: relative;
+      border-width: 1px;
+      width: 4rem;
+      border-radius: 4px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 
 <body>
@@ -351,47 +356,47 @@
     const generateResultPage = (exerciseSet) => {
       clearDom();
       checkAnswer(exerciseSet);
-      console.log(exerciseSet);
-
     }
 
     const checkAnswer = (exerciseSet) => {
       let userPoints = 0;
       let totalPoints = 0;
 
-      exerciseSet.forEach(exerciseSet => {
+      const container = document.createElement("div");
+      container.setAttribute('class', 'container');
+
+      exerciseSet.forEach(exercise => {
         let userAnswerValue = null;
-        totalPoints = totalPoints + exerciseSet.point;
+        totalPoints = totalPoints + exercise.point;
         /* Det her burde være sin egen funktion senere */
-        if (exerciseSet.questionAnswers == exerciseSet.facit) {
+        if (exercise.questionAnswers == exercise.facit) {
           userAnswerValue = true;
-          userPoints = userPoints + exerciseSet.point;
+          userPoints = userPoints + exercise.point;
         } else userAnswerValue = false;
-        console.log(userAnswerValue);
 
         const div = document.createElement("div");
         const questionText = document.createElement("p");
-        questionText.innerHTML = (exerciseSet.txt) + ("<br />") + ("Spørgsmålstype: " + exerciseSet.type);
-
         const yourAnswer = document.createElement("p");
-        yourAnswer.innerHTML = `Dit svar: ${exerciseSet.questionAnswers}`;
+
+        div.setAttribute('class', 'answer');
+
+        questionText.innerHTML = (exercise.txt) + ("<br />") + ("Spørgsmålstype: " + exercise.type);
+        yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers}`;
+
         if (userAnswerValue == true) {
           yourAnswer.style.backgroundColor = "green";
           yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Rigtigt");
         } else {
           yourAnswer.style.backgroundColor = "red";
-          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exerciseSet.facit;
+          yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exercise.facit;
         }
 
-        div.style.display = "block";
 
         div.appendChild(questionText);
+        addExerciseVars(exercise, div);
         div.append(yourAnswer);
-        document.body.appendChild(div);
-        console.log(userPoints);
-        console.log(totalPoints);
-
-
+        container.appendChild(div);
+        document.body.appendChild(container);
       });
     }
   </script>

@@ -31,11 +31,11 @@ const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))}, ${ma
 function VektorAdditionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
-  const mathMatirxFacit = getVektorAdditionFacit(mathMatrixVectorA, mathMatrixVectorA);
+  const mathMatirxFacit = getVektorAdditionFacit(mathMatrixVectorA, mathMatrixVectorB);
 
   this.exerciseVars = {
-    vectorA: formatVector(mathMatrixVectorA),
-    vectorB: formatVector(mathMatrixVectorB),
+    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >`,
+    vectorB: `\\vec{b} = < ${formatVector(mathMatrixVectorB)} >`,
   };
   this.facit = formatVector(mathMatirxFacit);
   this.type = 'vektor2d';
@@ -62,11 +62,11 @@ const getVektorAdditionFacit = (vectorA, vectorB) => math.matrix([
 function VektorSubtractionExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
-  const mathMatirxFacit = getVektorSubtractionFacit(mathMatrixVectorA, mathMatrixVectorA);
+  const mathMatirxFacit = getVektorSubtractionFacit(mathMatrixVectorA, mathMatrixVectorB);
 
   this.exerciseVars = {
-    vectorA: formatVector(mathMatrixVectorA),
-    vectorB: formatVector(mathMatrixVectorB),
+    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >`,
+    vectorB: `\\vec{b} = < ${formatVector(mathMatrixVectorB)} >`,
   };
   this.facit = formatVector(mathMatirxFacit);
   this.type = 'vektor2d';
@@ -93,11 +93,11 @@ const getVektorSubtractionFacit = (vectorA, vectorB) => math.matrix([
 function VektorMultiplicationExercise() {
   const mathMatrixVectorA = generateRandom2dVector();
   const mathMatrixVectorB = generateRandom2dVector();
-  const facitNumber = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorA);
+  const facitNumber = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorB);
 
   this.exerciseVars = {
-    vectorA: formatVector(mathMatrixVectorA),
-    vectorB: formatVector(mathMatrixVectorB),
+    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >`,
+    vectorB: `\\vec{b} = < ${formatVector(mathMatrixVectorB)} >`,
   };
   this.facit = facitNumber.toString();
   this.type = 'vektor2d';
