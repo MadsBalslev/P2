@@ -110,7 +110,7 @@ function VektorMultiplicationExercise() {
  * This functions takes two vectors as input, multiplies them, and returns the resulting vector.
  * @param {math.Matrix} vectorA The first vector used as a parameter.
  * @param {math.Matrix} vectorB The second vector used as a parameter.
- * @return {integer} The final vector from multiplying the two input parameters, giving us the scalar product.
+ * @return {integer} The dot product of two vectors.
  */
 const getVektorMultiplicationFacit = (vectorA, vectorB) => math.dot(vectorA, vectorB);
 

@@ -1,4 +1,3 @@
-const math = require('mathjs');
 const integral = require('./integral.js');
 
 test('getPowerIntegralFacit', () => {
