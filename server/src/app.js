@@ -53,10 +53,6 @@ const handleRequest = (request, response) => {
       handleOpgaverRequest(request, response);
       break;
 
-    case '/resultat':
-      handleResultatRequest(request, response);
-      break;
-
     default:
       throw 'bad path';
   }
