@@ -10,7 +10,8 @@ const integrals = require('./integral');
  * Will generate an exerciseset with the given catagories
  * @param {string[]} categories An array containg the catagories of exercises to be generated
  * @param {integer} amount The amount of exercises to be generated in each catagory
- * @return {any[]} The function returns a generated excercise set as an array, based on the two input parameters.
+ * @return {any[]} The function returns a generated excercise set as an array, based on the two
+ * input parameters.
  */
 const generateExcerciseSet = (categories, amount) => {
   const set = [];
