@@ -13,28 +13,26 @@ const server = http.createServer();
 
 const filePath = path.join(__dirname, '../public/site.html');
 
-server.on('request', tryHandleRequest);
-
 /**
  * Will try to handle the request in {@link handleRequest} or if necessary catch the error
  * @param {*} request
  * @param {*} response
  */
-function tryHandleRequest(request, response) {
-  try {
-    logRequest(request);
-    handleRequest(request, response);
-  } catch (error) {
-    helper.errorResponse(response, 400, 'error at tryHandleRequest');
-  }
+const tryHandleRequest = (request, response) => {
+    try {
+        // logRequest(request);
+        handleRequest(request, response);
+    } catch (error) {
+        helper.errorResponse(response, 400, 'error at tryHandleRequest');
+    }
 }
 
 const logRequest = (request) => {
-  console.log(`NEW ${request.method} REQUEST`);
-  console.log(`Request url: ${request.url}`);
-  console.log('Request headers:');
-  console.log(request.headers);
-  console.log('');
+    console.log(`NEW ${request.method} REQUEST`);
+    console.log(`Request url: ${request.url}`);
+    console.log('Request headers:');
+    console.log(request.headers);
+    console.log('');
 };
 
 /**
@@ -44,17 +42,16 @@ const logRequest = (request) => {
  * @param {*} response
  */
 const handleRequest = (request, response) => {
-  switch (request.url) {
-    case '/':
-      handleBaseRequest(request, response);
-      break;
+    switch (request.url) {
+        case '/':
+            handleBaseRequest(request, response);
+            break;
 
-    case '/opgaver':
-      handleOpgaverRequest(request, response);
-      break;
-
-    default:
-      throw 'bad path';
+        case '/opgaver':
+            handleOpgaverRequest(request, response);
+            break;
+        default:
+            throw 'bad path';
   }
 };
 
@@ -64,11 +61,11 @@ const handleRequest = (request, response) => {
  * @param {*} response
  */
 const handleBaseRequest = (request, response) => {
-  if (request.method === 'GET') {
-    respondWith(filePath, 'text/html', response);
-  } else if (request.method !== 'GET') {
-    throw 'bad request';
-  }
+    if (request.method === 'GET') {
+        respondWith(filePath, 'text/html', response);
+    } else if (request.method !== 'GET') {
+        throw 'bad request';
+    }
 };
 
 /**
@@ -77,13 +74,15 @@ const handleBaseRequest = (request, response) => {
  * @param {string} fileType type of file
  * @param {*} response
  */
-const respondWith = async (file, fileType, response) => {
-  const fileData = await fs.promises.readFile(file);
-  response.writeHead(200, { 'Content-Type': fileType });
-  response.end(fileData);
+const respondWith = async(file, fileType, response) => {
+    const fileData = await fs.promises.readFile(file);
+    response.writeHead(200, { 'Content-Type': fileType });
+    response.end(fileData);
 };
 
+server.on('request', tryHandleRequest);
+
 server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-  console.log(filePath);
+    console.log(`Listening on port ${port}`);
+    console.log(filePath);
 });
