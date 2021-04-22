@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /**
  * Gets the generated exercise set from the server.
  * @param event
@@ -9,12 +11,12 @@ const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
   const exerciseSubjects = getExerciseSubjects();
 
   fetch(`${baseUrl}opgaver`, {
-      method: 'GET',
-      headers: {
-        subjects: exerciseSubjects,
-        amount: exerciseAmount,
-      },
-    })
+    method: 'GET',
+    headers: {
+      subjects: exerciseSubjects,
+      amount: exerciseAmount,
+    },
+  })
     .then((response) => response.json())
     .then((data) => {
       resolve(data);
