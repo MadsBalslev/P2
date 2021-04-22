@@ -1,11 +1,72 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-document.querySelector('#form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const exerciseSet = await getExerciseSetFromServer(event);
-  buildExercisePage(exerciseSet);
-});
+const generateStartPage = () => {
+  const subjects = ['Vektor 2D', 'Integralregning'];
+  const root = document.querySelector('#root');
+  const form = document.createElement('form');
+  const div = document.createElement('div');
+  const br = document.createElement('br');
+  const amountLabel = document.createElement('label');
+  const amountInput = document.createElement('input');
+  const submit = document.createElement('input');
+
+  amountLabel.setAttribute('for', 'amount');
+  amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  amountInput.setAttribute('type', 'number');
+  amountInput.setAttribute('id', 'amount');
+
+  submit.setAttribute('type', 'submit');
+  submit.setAttribute('value', 'Indsend');
+
+  form.setAttribute('id', 'form');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const exerciseSet = await getExerciseSetFromServer(event);
+    buildExercisePage(exerciseSet);
+  });
+  div.setAttribute('id', 'emneVælger');
+
+  subjects.forEach((subject) => {
+    const label = generateSubjectLabel(subject);
+    const input = generateSubjectInput(subject);
+
+    div.appendChild(input);
+    div.appendChild(label);
+    div.appendChild(br.cloneNode(true));
+  });
+
+  form.appendChild(div);
+  form.appendChild(br.cloneNode(true));
+  form.appendChild(amountLabel);
+  form.appendChild(amountInput);
+  form.appendChild(br.cloneNode(true));
+  form.appendChild(submit);
+
+  root.appendChild(form);
+};
+
+const generateSubjectLabel = (subject) => {
+  const label = document.createElement('label');
+  const trimmedSub = subject.replace(/\s+/g, '');
+
+  label.setAttribute('for', trimmedSub.toLowerCase());
+  label.innerHTML = subject;
+
+  return label;
+};
+
+const generateSubjectInput = (subject) => {
+  const input = document.createElement('input');
+  const trimmedSub = subject.replace(/\s+/g, '');
+
+  input.setAttribute('type', 'checkbox');
+  input.setAttribute('name', trimmedSub.toLowerCase());
+  input.setAttribute('id', trimmedSub.toLowerCase());
+
+  return input;
+};
 
 /**
  * Gets the exercises from the checkboxes.
@@ -44,7 +105,7 @@ const buildExercisePage = (exerciseSet) => {
   addExercisesToExerciseForm(exerciseForm, exerciseSet);
   addButtonToExerciseForm(exerciseForm, exerciseSet);
 
-  document.body.appendChild(exerciseForm);
+  document.querySelector('#root').appendChild(exerciseForm);
 
   giveFormAction(exerciseSet);
 };
@@ -53,7 +114,7 @@ const buildExercisePage = (exerciseSet) => {
  * Clears the document
  */
 const clearDom = () => {
-  document.body.innerHTML = '';
+  document.querySelector('#root').innerHTML = '';
 };
 
 /**
@@ -267,8 +328,10 @@ const checkAnswer = (exerciseSet) => {
   pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
   grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
   pointText.style.backgroundColor = 'grey';
-  document.body.appendChild(container);
+  document.querySelector('#root').appendChild(container);
   pointCounter.appendChild(pointText);
   container.appendChild(pointCounter);
   container.appendChild(grade);
 };
+
+generateStartPage();
