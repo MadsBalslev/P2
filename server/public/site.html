@@ -65,6 +65,43 @@
       border-radius: 4px;
     }
 
+    #timer,#buttons {
+    font-size: 40px;
+    width: 650px;
+    margin: 100px;
+    color: white;
+    text-align: right;
+    margin-top: 0.1%;
+    margin-bottom: 0%;
+    margin-left: auto;
+    
+  
+}
+
+#hours,
+#minutes,
+#seconds
+{
+    font-size: 3rem;
+    margin-right: 5px;
+    color: white;
+}
+
+button {
+    width: 65px;
+    height: 40px;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    
+}
+button:hover {
+    background: black;
+    transform: scaleX(1.1);
+    text-transform: capitalize;
+}
+
     .mathTex {
       display: inline;
     }
@@ -75,17 +112,19 @@
 
 <body>
   <form id='form'>
+    <div id="timer">
+      00:00:00
+  </div>
+  
+  <ul id="buttons">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="stopTimer()">Stop</button>
+      <button onclick="resetTimer()">Reset</button>
+  </ul>
     <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
 
     <label for='exerciseAmount'></label>
 
-    <!--
-        <select id='eksamenssætTypeVælger' name='eksamenssætType'>
-            <option value='generisk'>Generisk</option>
-            <option value='emneBestemt'>Emne bestemt</option>
-            <option value='personlig'>Personlig</option>
-        </select><br><br>
-        -->
 
     <div id='emneVælger'>
       <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
@@ -363,6 +402,71 @@
     }).then(() => {
     });
   };
+</script>
+<script>
+
+const timer = document.getElementById('timer');
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
+var stoptime = true;
+
+function startTimer() {
+  if (stoptime == true) {
+        stoptime = false;
+        timerCycle();
+    }
+    else if (exerciseForm) {
+        stoptime = false;
+        timerCycle();
+    }
+}
+function stopTimer() {
+  if (stoptime == false) {
+    stoptime = true;
+  }
+}
+
+function timerCycle() {
+    if (stoptime == false) {
+    seconds = parseInt(seconds);
+    minutes = parseInt(minutes);
+    hours = parseInt(hours);
+
+    seconds++;
+
+    if (seconds == 60) {
+      minutes++;
+      seconds = 0;
+    }
+    if (minutes == 60) {
+      hours ++;
+      minutes = 0;
+      seconds = 0;
+    }
+
+    if (seconds < 10 || seconds == 0) {
+      seconds = '0' + seconds;
+    }
+    if (minutes < 10 || minutes == 0) {
+      minutes = '0' + minutes;
+    }
+    if (hours < 10 || hours == 0) {
+      hours = '0' + hours;
+    }
+
+    timer.innerHTML = hours + ':' + minutes + ':' + seconds;
+
+    setTimeout("timerCycle()", 1000);
+  }
+}
+
+function resetTimer() {
+    seconds = "00"
+    minutes = "00"
+    hours = "00"
+    timer.innerHTML = '00:00:00';
+}
 </script>
 </body>
 
