@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<head>
+  <title>P2 Projekt</title>
+  <link rel='icon' type='image/png' href='./favicon.png' />
+  <meta charset="UTF-8">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      font-family: sans-serif;
+      font-size: 18px;
+    }
+
+    :root {
+      --hue-neutral: 180;
+      --hue-wrong: #ff0000;
+      --hue-correct: #61ff9e;
+    }
+
+    body {
+      --hue: var(--hue-neutral);
+      padding: 0;
+      margin: 0;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-color: hsl(var(--hue), 100%, 25%);
+    }
+
+    input[type="submit"] {
+      --hue: var(--hue-neutral);
+      border: 1px solid hsl(var(--hue), 100%, 100%);
+      background-color: white;
+      border-radius: 20px;
+      padding: 5px 10px;
+      color: hsl(var(--hue), 30%, 40%);
+      cursor: pointer;
+      margin: 80px;
+      margin-top: 65px;
+      box-shadow: 0 0 10px 2px;
+      transition: 0.6s;
+    }
+
+    input[type="submit"]:hover {
+      color: black;
+      transform: scale(1.1);
+    }
+
+    input[type="checkbox"] {
+      position: relative;
+    }
+
+    input[type="checkbox"]:hover {
+      transform: scaleX(1.2);
+    }
+
+    input[type="number"] {
+      position: relative;
+      border-width: 1px;
+      width: 4rem;
+      border-radius: 4px;
+    }
+
+    #timer,#buttons {
+    font-size: 40px;
+    width: 650px;
+    margin: 100px;
+    color: white;
+    text-align: right;
+    margin-top: 0.1%;
+    margin-bottom: 0%;
+    margin-left: auto;
+    
+  
+}
+
+#hours,
+#minutes,
+#seconds
+{
+    font-size: 3rem;
+    margin-right: 5px;
+    color: white;
+}
+
+button {
+    width: 65px;
+    height: 40px;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    
+}
+button:hover {
+    background: black;
+    transform: scaleX(1.1);
+    text-transform: capitalize;
+}
+
+    .mathTex {
+      display: inline;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <form id='form'>
+    <div id="timer">
+      00:00:00
+  </div>
+  
+  <ul id="buttons">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="stopTimer()">Stop</button>
+      <button onclick="resetTimer()">Reset</button>
+  </ul>
+    <label for='eksamenssætTypeVælger'><b>Vælg eksamenssæt type</b></label><br>
+
+    <label for='exerciseAmount'></label>
+
+
+    <div id='emneVælger'>
+      <label for='emneVælger' hidden><b>Inkluder Emner:</b></label>
+      <input type="checkbox" id="andengradspolynomiumOgLigning" name="andengradspolynomiumOgLigning" value="true">
+      <label for="andengradspolynomiumOgLigning">Andengradspolynomium og -ligning</label><br>
+
+      <input type="checkbox" id="talOgRegnearter" name="talOgRegnearter" value="true">
+      <label for="talOgRegnearter">Tal og regnearter</label><br>
+
+      <input type="checkbox" id="ligninger" name="ligninger" value="true">
+      <label for="ligninger">Ligninger</label><br>
+
+      <input type="checkbox" id="trigonometri" name="trigonometri" value="true">
+      <label for="trigonometri">Trigonometri</label><br>
+
+      <input type="checkbox" id="funktioner" name="funktioner" value="true">
+      <label for="funktioner">Funktioner</label><br>
+
+      <input type="checkbox" id="geometri" name="geometri" value="true">
+      <label for="geometri">Geometri</label><br>
+
+      <input type="checkbox" id="differebtialregning" name="differebtialregning" value="true">
+      <label for="differebtialregning">Differentialregning</label><br>
+
+      <input type="checkbox" id="sandsynlighedOgKombinatorik" name="sandsynlighedOgKombinatorik" value="true">
+      <label for="sandsynlighedOgKombinatorik">Sandsynlighed</label><br>
+
+      <input type="checkbox" id="statistik" name="statistik" value="true">
+      <label for="statistik">Statistik</label><br>
+
+      <input type="checkbox" id="regression" name="regression" value="true">
+      <label for="regression">Regression</label><br>
+
+      <input type="checkbox" id="vektor2d" name="vektorerI2d" value="true">
+      <label for="vektorerI2d">Vektorer i 2D</label><br>
+
+      <input type="checkbox" id="vektorerI3d" name="vektorerI3d" value="true">
+      <label for="vektorerI3d">Vektorer i 3D</label><br>
+
+      <input type="checkbox" id="vektorfunktioner" name="vektorfunktioner" value="true">
+      <label for="vektorfunktioner">Vektorfunktioner</label><br>
+
+      <input type="checkbox" id="infinitesimalregning" name="infinitesimalregning" value="true">
+      <label for="infinitesimalregning">Infinitesimalregning</label><br>
+
+      <input type="checkbox" id="integralregning" name="integralregning" value="true">
+      <label for="integralregning">Integralregning</label><br>
+
+      <input type="checkbox" id="funktionerAfToVariable" name="funktionerAfToVariable" value="true">
+      <label for="funktionerAfToVariable">Funktioner af to variable</label><br>
+    </div><br>
+
+    <label for="amount">Hvor mange opgaver vil du lave?</label>
+    <input type="number" id="amount">
+    <br><br>
+
+    <input type='submit' value='Indsend'>
+  </form>
+
+<!--
+<script>
+    const eksamnessætTypeVælger = document.querySelector('#eksamenssætTypeVælger');
+    const emneVælger = document.querySelector('#emneVælger');
+
+    eksamnessætTypeVælger.addEventListener('input', () => {
+        if (eksamnessætTypeVælger.value === 'emneBestemt') {
+            emneVælger.removeAttribute('hidden');
+        } else if (eksamnessætTypeVælger.value !== 'emneBestemt') {
+            emneVælger.setAttribute('hidden', '');
+        }
+    });
+</script>
+-->
+
+<script>
+    /* eslint-disable no-undef */
+  const baseUrl = window.location.href;
+
+  document.querySelector('#form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const exerciseSet = await getExerciseSetFromServer(event);
+    buildExercisePage(exerciseSet);
+  });
+
+  const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
+    const exerciseAmount = document.querySelector('#amount').value;
+    const exerciseSubjects = getExerciseSubjects();
+
+    fetch(`${baseUrl}opgaver`, {
+      method: 'GET',
+      headers: {
+        subjects: exerciseSubjects,
+        amount: exerciseAmount,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+        // console.log(data);
+      })
+      .catch((error) => reject(error));
+  });
+
+  const getExerciseSubjects = () => {
+    const elements = document.querySelector('#emneVælger').children;
+    let exerciseSubjects = '';
+    [...elements].forEach((element) => {
+      exerciseSubjects += getCheckedExerciseSubject(element);
+    });
+
+    return exerciseSubjects;
+  };
+
+  const getCheckedExerciseSubject = (element) => {
+    if (element.checked) {
+      return `${element.id},`;
+    }
+    return '';
+};
+
+  const buildExercisePage = (exerciseSet) => {
+    clearDom();
+    const exerciseForm = createExerciseForm();
+
+    addExercisesToExerciseForm(exerciseForm, exerciseSet);
+    addButtonToExerciseForm(exerciseForm, exerciseSet);
+  
+    document.body.appendChild(exerciseForm);
+  
+    giveFormAction(exerciseSet);
+  };
+
+  const clearDom = () => {
+    document.body.innerHTML = '';
+  };
+
+  const createExerciseForm = () => {
+    const exerciseForm = document.createElement('form');
+    exerciseForm.setAttribute('id', 'exerciseForm');
+    return exerciseForm;
+  };
+
+  const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
+    let i = 1;
+    exerciseSet.forEach((exercise) => {
+      addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
+      i++;
+    });
+  };
+
+  const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
+    const exerciseDiv = document.createElement('div');
+    exerciseDiv.setAttribute('class', 'exercise');
+  
+    addExerciseHeader(i, exercise, exerciseDiv);
+    addExerciseText(exercise, exerciseDiv);
+    addExerciseVars(exercise, exerciseDiv);
+    addExerciseInputField(i, exerciseDiv);
+  
+    exerciseForm.appendChild(exerciseDiv);
+  };
+
+  const addExerciseHeader = (i, exercise, exerciseDiv) => {
+    const exerciseHeader = document.createElement('h1');
+    exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+    // eslint-disable-next-line no-param-reassign
+    exercise.questionNumber = i;
+    exerciseDiv.appendChild(exerciseHeader);
+  };
+
+  const addExerciseText = (exercise, exerciseDiv) => {
+    const questionText = document.createElement('p');
+    questionText.innerHTML = exercise.txt;
+    exerciseDiv.appendChild(questionText);
+  };
+
+  const addExerciseVars = (exercise, exerciseDiv) => {
+    const exerciseVars = Object.values(exercise.exerciseVars);
+
+    exerciseVars.forEach((eVar) => {
+      const questionText = document.createElement('p');
+      questionText.setAttribute('class', 'mathTex');
+      convert(eVar, questionText);
+      exerciseDiv.appendChild(questionText);
+    });
+  };
+
+  const addExerciseInputField = (i, exerciseDiv) => {
+    const textField = document.createElement('input');
+    textField.setAttribute('required', '1');
+    textField.setAttribute('id', `exercise${i}`);
+    exerciseDiv.appendChild(textField);
+  };
+
+  const addButtonToExerciseForm = (exerciseForm) => {
+    const submitButton = document.createElement('input');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.setAttribute('value', 'kontroller dine svar');
+    exerciseForm.appendChild(submitButton);
+  };
+
+  const giveFormAction = (exerciseSet) => {
+        document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            exerciseSet.forEach(exercise => {
+                exercise.questionAnswers = document.querySelector(
+                    `#exercise${exercise.questionNumber}`).value;
+            });
+            generateResultPage(exerciseSet);
+        });
+    };
+
+  const generateResultPage = (exerciseSet) => {
+        clearDom();
+        checkAnswer(exerciseSet);
+        console.log(exerciseSet);
+
+    }
+
+  const checkAnswer = (exerciseSet) => {
+        let userPoints = 0;
+        let totalPoints = 0;
+
+        exerciseSet.forEach(exerciseSet => {
+            let userAnswerValue = null;
+            totalPoints = totalPoints + exerciseSet.point;
+            /* Det her burde være sin egen funktion senere */
+            if (exerciseSet.questionAnswers == exerciseSet.facit){
+                 userAnswerValue = true;
+                 userPoints = userPoints + exerciseSet.point;
+            }
+            else userAnswerValue = false;
+            console.log(userAnswerValue);
+            
+            const div = document.createElement("div");
+            const questionText = document.createElement("p");
+            questionText.innerHTML = (exerciseSet.txt)+ ("<br />") + ("Spørgsmålstype: " + exerciseSet.type);
+
+            const yourAnswer = document.createElement("p");
+            yourAnswer.innerHTML = `Dit svar: ${exerciseSet.questionAnswers}`;
+            if (userAnswerValue == true) {
+                yourAnswer.style.backgroundColor = "green";
+                yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Rigtigt");
+            }
+            else {
+                yourAnswer.style.backgroundColor = "red";
+                yourAnswer.innerHTML = yourAnswer.innerHTML + ("<br />") + ("Forkert, Facit: ") + exerciseSet.facit;
+            }
+
+            div.style.display = "block";
+           
+            div.appendChild(questionText);
+            div.append (yourAnswer);
+            document.body.appendChild(div);
+            console.log(userPoints);
+            console.log(totalPoints);
+
+
+        });
+    }
+</script>
+<script>
+  /* eslint-disable no-undef */
+  // eslint-disable-next-line no-unused-vars
+  const convert = (input, output) => {
+    MathJax.texReset();
+    const options = MathJax.getMetricsFor(output);
+    MathJax.tex2svgPromise(input, options).then((node) => {
+      output.appendChild(node);
+      MathJax.startup.document.clear();
+      MathJax.startup.document.updateDocument();
+    }).catch((err) => {
+      output.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err
+        .message));
+    }).then(() => {
+    });
+  };
+</script>
+<script>
+
+const timer = document.getElementById('timer');
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
+var stoptime = true;
+
+function startTimer() {
+  if (stoptime == true) {
+        stoptime = false;
+        timerCycle();
+    }
+    else if (exerciseForm) {
+        stoptime = false;
+        timerCycle();
+    }
+}
+function stopTimer() {
+  if (stoptime == false) {
+    stoptime = true;
+  }
+}
+
+function timerCycle() {
+    if (stoptime == false) {
+    seconds = parseInt(seconds);
+    minutes = parseInt(minutes);
+    hours = parseInt(hours);
+
+    seconds++;
+
+    if (seconds == 60) {
+      minutes++;
+      seconds = 0;
+    }
+    if (minutes == 60) {
+      hours ++;
+      minutes = 0;
+      seconds = 0;
+    }
+
+    if (seconds < 10 || seconds == 0) {
+      seconds = '0' + seconds;
+    }
+    if (minutes < 10 || minutes == 0) {
+      minutes = '0' + minutes;
+    }
+    if (hours < 10 || hours == 0) {
+      hours = '0' + hours;
+    }
+
+    timer.innerHTML = hours + ':' + minutes + ':' + seconds;
+
+    setTimeout("timerCycle()", 1000);
+  }
+}
+
+function resetTimer() {
+    seconds = "00"
+    minutes = "00"
+    hours = "00"
+    timer.innerHTML = '00:00:00';
+}
+</script>
+</body>
+
+</html>
+
