@@ -2,8 +2,9 @@ require('dotenv').config();
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const { lookup } = require('mime-types');
 const handleOpgaverRequest = require('./routes/opgaver');
-const helper = require('./helper');
+const { errorResponse } = require('./helper');
 
 global.globalSet = [];
 
@@ -23,7 +24,7 @@ const tryHandleRequest = (request, response) => {
     // logRequest(request);
     handleRequest(request, response);
   } catch (error) {
-    helper.errorResponse(response, 400, 'error at tryHandleRequest');
+    errorResponse(response, 400, 'error at tryHandleRequest');
   }
 };
 
@@ -42,17 +43,27 @@ const tryHandleRequest = (request, response) => {
  * @param {*} response
  */
 const handleRequest = (request, response) => {
+  handleBaseRequest(request, response);
   switch (request.url) {
-    case '/':
-      handleBaseRequest(request, response);
-      break;
-
     case '/opgaver':
       handleOpgaverRequest(request, response);
       break;
     default:
-      throw 'bad path';
+      handleStaticFiles(request, response);
   }
+};
+
+const handleStaticFiles = (request, response) => {
+  let staticPath = request.url.replace(/^\/+|\/+$/g, '');
+
+  if (staticPath === '') {
+    staticPath = 'index.html';
+  }
+
+  const file = path.join(__dirname, '../public/', staticPath);
+  const fileType = lookup(file);
+
+  respondWith(file, fileType, response);
 };
 
 /**
@@ -62,7 +73,7 @@ const handleRequest = (request, response) => {
  */
 const handleBaseRequest = (request, response) => {
   if (request.method === 'GET') {
-    respondWith(filePath, 'text/html', response);
+    handleStaticFiles(request, response);
   } else if (request.method !== 'GET') {
     throw 'bad request';
   }
@@ -74,10 +85,17 @@ const handleBaseRequest = (request, response) => {
  * @param {string} fileType type of file
  * @param {*} response
  */
-const respondWith = async (file, fileType, response) => {
-  const fileData = await fs.promises.readFile(file);
-  response.writeHead(200, { 'Content-Type': fileType });
-  response.end(fileData);
+const respondWith = (file, fileType, response) => {
+  fs.readFile(file, (err, content) => {
+    if (err) {
+      console.log(`File not found: ${file}`);
+      response.writeHead(404);
+      response.end();
+    } else {
+      response.writeHead(200, { 'Content-Type': fileType });
+      response.end(content);
+    }
+  });
 };
 
 server.on('request', tryHandleRequest);
