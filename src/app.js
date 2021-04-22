@@ -43,10 +43,12 @@ const tryHandleRequest = (request, response) => {
  * @param {*} response
  */
 const handleRequest = (request, response) => {
-  handleBaseRequest(request, response);
   switch (request.url) {
     case '/opgaver':
       handleOpgaverRequest(request, response);
+      break;
+    case '':
+      handleBaseRequest(request, response);
       break;
     default:
       handleStaticFiles(request, response);
