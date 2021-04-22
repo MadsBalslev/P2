@@ -29,6 +29,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
     "mathjs": "^9.3.0",
+    "mime-types": "^2.1.30",
     "mysql": "^2.18.1"
   }
 }
