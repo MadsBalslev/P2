@@ -1,9 +1,11 @@
+// DEPRECATED ? or wat
 require('dotenv').config();
 const {
   randNum,
 } = require('../../helper');
 
 const vectors = require('./vector');
+const vector3d = require('./vector3d');
 const integrals = require('./integral');
 
 const generateVectorExercise = () => {
@@ -18,6 +20,26 @@ const generateVectorExercise = () => {
       break;
     case 3:
       result = vectors.vektorMultiplication();
+      break;
+    default:
+      break;
+  }
+
+  return result;
+};
+
+const generateVector3dExercise = () => {
+  let result;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      result = vector3d.vektorAddition();
+      break;
+    case 2:
+      result = vector3d.vektorSubtraction();
+      break;
+    case 3:
+      result = vector3d.vektorMultiplication();
       break;
     default:
       break;
@@ -59,6 +81,9 @@ const generateExcerciseSet = (cat, amount) => {
         case 'integral':
           set.push(generateIntegralExercise(amount));
           break;
+        case 'vektor3d':
+          set.push(generateVector3dExercise(amount));
+          break;
         default:
           break;
       }
@@ -71,6 +96,7 @@ const generateExcerciseSet = (cat, amount) => {
 
 generateExcerciseSet(['vektor2d', 10]);
 generateExcerciseSet(['integral', 10]);
+generateVector3dExercise(['vektor3d', 10]);
 
 module.exports = {
   generateExcerciseSet,
