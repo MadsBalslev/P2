@@ -1,35 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-const baseUrl = window.location.href;
-
 document.querySelector('#form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const exerciseSet = await getExerciseSetFromServer(event);
   buildExercisePage(exerciseSet);
-});
-
-/**
- * Gets the generated exercise set from the server.
- * @param event
- * @returns New promise for a resolve or reject.
- */
-const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
-  const exerciseAmount = document.querySelector('#amount').value;
-  const exerciseSubjects = getExerciseSubjects();
-
-  fetch(`${baseUrl}opgaver`, {
-    method: 'GET',
-    headers: {
-      subjects: exerciseSubjects,
-      amount: exerciseAmount,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      resolve(data);
-      // console.log(data);
-    })
-    .catch((error) => reject(error));
 });
 
 /**
