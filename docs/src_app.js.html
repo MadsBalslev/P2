@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PowerIntegralExercise - Documentation</title>
+    <title>src/app.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,127 @@
 
 <div id="main">
     
-    <h1 class="page-title">PowerIntegralExercise</h1>
+    <h1 class="page-title">src/app.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PowerIntegralExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>require('dotenv').config();
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
+const { lookup } = require('mime-types');
+const handleOpgaverRequest = require('./routes/opgaver');
+const { errorResponse } = require('./helper');
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+global.globalSet = [];
 
-    
+const port = process.env.PORT || 8080;
 
-    <h4 class="name" id="PowerIntegralExercise"><span class="type-signature"></span>new PowerIntegralExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+const server = http.createServer();
 
-    
+const filePath = path.join(__dirname, '../public/site.html');
 
+/**
+ * Will try to handle the request in {@link handleRequest} or if necessary catch the error
+ * @param {*} request
+ * @param {*} response
+ */
+const tryHandleRequest = (request, response) => {
+  try {
+    // logRequest(request);
+    handleRequest(request, response);
+  } catch (error) {
+    errorResponse(response, 400, 'error at tryHandleRequest');
+  }
+};
 
+// const logRequest = (request) => {
+//   console.log(`NEW ${request.method} REQUEST`);
+//   console.log(`Request url: ${request.url}`);
+//   console.log('Request headers:');
+//   console.log(request.headers);
+//   console.log('');
+// };
 
-<div class="description">
-    <p>Represents a power integral exercise.</p>
-</div>
+/**
+ * Will check which route is requested and use the correct handler function. If a non-existing route
+ * is requsted it will throw an error which will be catched in {@link tryHandleRequest}
+ * @param {*} request
+ * @param {*} response
+ */
+const handleRequest = (request, response) => {
+  switch (request.url) {
+    case '/opgaver':
+      handleOpgaverRequest(request, response);
+      break;
+    case '':
+      handleBaseRequest(request, response);
+      break;
+    default:
+      handleStaticFiles(request, response);
+  }
+};
 
+const handleStaticFiles = (request, response) => {
+  let staticPath = request.url.replace(/^\/+|\/+$/g, '');
 
+  if (staticPath === '') {
+    staticPath = 'index.html';
+  }
 
+  const file = path.join(__dirname, '../public/', staticPath);
+  const fileType = lookup(file);
 
+  respondWith(file, fileType, response);
+};
 
-<dl class="details">
+/**
+ * Will handle requests to the '/' route
+ * @param {*} request
+ * @param {*} response
+ */
+const handleBaseRequest = (request, response) => {
+  if (request.method === 'GET') {
+    handleStaticFiles(request, response);
+  } else if (request.method !== 'GET') {
+    throw 'bad request';
+  }
+};
 
-    
+/**
+ * Will respond with a HTML file provided
+ * @param {string} file Path to the HTML file to respond with
+ * @param {string} fileType type of file
+ * @param {*} response
+ */
+const respondWith = (file, fileType, response) => {
+  fs.readFile(file, (err, content) => {
+    if (err) {
+      console.log(`File not found: ${file}`);
+      response.writeHead(404);
+      response.end();
+    } else {
+      response.writeHead(200, { 'Content-Type': fileType });
+      response.end(content);
+    }
+  });
+};
 
-    
+server.on('request', tryHandleRequest);
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_integral.js.html">src/API/examQuestions/integral.js</a>, <a href="src_API_examQuestions_integral.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+  console.log(filePath);
+});
+</code></pre>
+        </article>
+    </section>
 
 
 

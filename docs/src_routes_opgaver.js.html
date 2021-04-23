@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PowerIntegralExercise - Documentation</title>
+    <title>src/routes/opgaver.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,54 @@
 
 <div id="main">
     
-    <h1 class="page-title">PowerIntegralExercise</h1>
+    <h1 class="page-title">src/routes/opgaver.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PowerIntegralExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { generateExcerciseSet } = require('../API/examQuestions/generator.js');
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Will handle requests to the '/opgaver' route
+ * @param {*} request
+ * @param {*} response
+ */
+const handleOpgaverRequest = (request, response) => {
+  if (request.method === 'GET') {
+    handleOpgaverGetRequest(request, response);
+  } else if (request.method !== 'GET') {
+    throw 'bad request';
+  }
+};
 
-    
+const handleOpgaverGetRequest = (request, response) => {
+  const subjects = subjectsStringToArray(request.headers.subjects);
+  const result = generateExcerciseSet(subjects, request.headers.amount);
+  response.end(JSON.stringify(result));
+};
 
-    <h4 class="name" id="PowerIntegralExercise"><span class="type-signature"></span>new PowerIntegralExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+/**
+ * Takes the selected subjects as input, and splits the string with a comma.
+ * @param {str} subjectsString A string of subjects seperated by a comma
+ * @returns {str[]} An array of subjects
+ */
+const subjectsStringToArray = (subjectsString) => {
+  let subjects = [];
+  if (subjectsString) {
+    subjects = subjectsString.split(',');
+  }
+  return subjects;
+};
 
-    
-
-
-
-<div class="description">
-    <p>Represents a power integral exercise.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_integral.js.html">src/API/examQuestions/integral.js</a>, <a href="src_API_examQuestions_integral.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = handleOpgaverRequest;
+</code></pre>
+        </article>
+    </section>
 
 
 

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>public/js/generatePages.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="PowerIntegralExercise.html">PowerIntegralExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="TrigonometricIntegralExercise.html">TrigonometricIntegralExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorAdditionExercise.html">VektorAdditionExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorMultiplicationExercise.html">VektorMultiplicationExercise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="VektorSubtractionExercise.html">VektorSubtractionExercise</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addButtonToExerciseForm">addButtonToExerciseForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addExerciseHeader">addExerciseHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addExerciseInputField">addExerciseInputField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addExercisesToExerciseForm">addExercisesToExerciseForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addExerciseText">addExerciseText</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addExerciseVars">addExerciseVars</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addSingleExerciseToExerciseForm">addSingleExerciseToExerciseForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#buildExercisePage">buildExercisePage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkTable">checkTable</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#clearDom">clearDom</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createExerciseForm">createExerciseForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#errorResponse">errorResponse</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#formatVector">formatVector</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateExcerciseSet">generateExcerciseSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateIntegralExercise">generateIntegralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateRandom2dVector">generateRandom2dVector</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateRandom3dVector">generateRandom3dVector</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVariablesForPowerIntegralExercise">generateVariablesForPowerIntegralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVariablesForTrigonometricIntergralExercise">generateVariablesForTrigonometricIntergralExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVector3dExercise">generateVector3dExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateVectorExercise">generateVectorExercise</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCheckedExerciseSubject">getCheckedExerciseSubject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExerciseSetFromServer">getExerciseSetFromServer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExerciseSubjects">getExerciseSubjects</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPowerIntegralFacit">getPowerIntegralFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrigonometricIntegralFacit">getTrigonometricIntegralFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorAdditionFacit">getVektorAdditionFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorMultiplicationFacit">getVektorMultiplicationFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getVektorSubtractionFacit">getVektorSubtractionFacit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#giveFormAction">giveFormAction</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleBaseRequest">handleBaseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleOpgaverRequest">handleOpgaverRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleRequest">handleRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#numOfTasks">numOfTasks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#randNum">randNum</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#respondWith">respondWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#subjectsStringToArray">subjectsStringToArray</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#tryHandleRequest">tryHandleRequest</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">public/js/generatePages.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-undef */
+const generateStartPage = () => {
+  const subjects = ['Vektor 2D', 'Vektor 3D', 'Integralregning'];
+  const root = document.querySelector('#root');
+  const form = document.createElement('form');
+  const div = document.createElement('div');
+  const br = document.createElement('br');
+  const amountLabel = document.createElement('label');
+  const amountInput = document.createElement('input');
+  const submit = document.createElement('input');
+
+  amountLabel.setAttribute('for', 'amount');
+  amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  amountInput.setAttribute('type', 'number');
+  amountInput.setAttribute('id', 'amount');
+
+  submit.setAttribute('type', 'submit');
+  submit.setAttribute('value', 'Indsend');
+
+  form.setAttribute('id', 'form');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const exerciseSet = await getExerciseSetFromServer(event);
+    buildExercisePage(exerciseSet);
+  });
+  div.setAttribute('id', 'emneVælger');
+
+  subjects.forEach((subject) => {
+    const label = generateSubjectLabel(subject);
+    const input = generateSubjectInput(subject);
+
+    div.appendChild(input);
+    div.appendChild(label);
+    div.appendChild(br.cloneNode(true));
+  });
+
+  form.appendChild(div);
+  form.appendChild(br.cloneNode(true));
+  form.appendChild(amountLabel);
+  form.appendChild(amountInput);
+  form.appendChild(br.cloneNode(true));
+  form.appendChild(submit);
+
+  root.appendChild(form);
+};
+
+const generateSubjectLabel = (subject) => {
+  const label = document.createElement('label');
+  const trimmedSub = subject.replace(/\s+/g, '');
+
+  label.setAttribute('for', trimmedSub.toLowerCase());
+  label.innerHTML = subject;
+
+  return label;
+};
+
+const generateSubjectInput = (subject) => {
+  const input = document.createElement('input');
+  const trimmedSub = subject.replace(/\s+/g, '');
+
+  input.setAttribute('type', 'checkbox');
+  input.setAttribute('name', trimmedSub.toLowerCase());
+  input.setAttribute('id', trimmedSub.toLowerCase());
+
+  return input;
+};
+
+/**
+ * Gets the exercises from the checkboxes.
+ * @returns {str} The exercise subjects
+ */
+const getExerciseSubjects = () => {
+  const elements = document.querySelector('#emneVælger').children;
+  let exerciseSubjects = '';
+  [...elements].forEach((element) => {
+    exerciseSubjects += getCheckedExerciseSubject(element);
+  });
+
+  return exerciseSubjects;
+};
+
+/**
+ * Gets the checked off subjects from check boxes.
+ * @param element
+ * @returns {str} The chosen exercise subject element ids
+ */
+const getCheckedExerciseSubject = (element) => {
+  if (element.checked) {
+    return `${element.id},`;
+  }
+  return '';
+};
+
+/**
+ * Builds a page for the generated exercise set.
+ * @param {obj[]} exerciseSet
+ */
+const buildExercisePage = (exerciseSet) => {
+  clearDom();
+  const exerciseForm = createExerciseForm();
+
+  addExercisesToExerciseForm(exerciseForm, exerciseSet);
+  addButtonToExerciseForm(exerciseForm, exerciseSet);
+
+  document.querySelector('#root').appendChild(exerciseForm);
+
+  giveFormAction(exerciseSet);
+};
+
+/**
+ * Clears the document
+ */
+const clearDom = () => {
+  document.querySelector('#root').innerHTML = '';
+};
+
+/**
+ * Function for making an exercise form.
+ * @returns {*} An exercise form
+ */
+const createExerciseForm = () => {
+  const exerciseForm = document.createElement('form');
+  exerciseForm.setAttribute('id', 'exerciseForm');
+  return exerciseForm;
+};
+
+/**
+ * Function for adding an exercise to the exercise form.
+ * @param {*} exerciseForm
+ * @param {obj[]} exerciseSet
+ */
+const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
+  let i = 1;
+  exerciseSet.forEach((exercise) => {
+    addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
+    i++;
+  });
+};
+
+/**
+ * Function for adding a single exercise to a exercise form.
+ * @param {number} i
+ * @param {{}} exercise
+ * @param {*} exerciseForm
+ */
+const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
+  const exerciseDiv = document.createElement('div');
+  exerciseDiv.setAttribute('class', 'exercise');
+
+  addExerciseHeader(i, exercise, exerciseDiv);
+  addExerciseText(exercise, exerciseDiv);
+  addExerciseVars(exercise, exerciseDiv);
+  addExerciseInputField(i, exerciseDiv);
+
+  exerciseForm.appendChild(exerciseDiv);
+};
+
+/**
+ * Function for adding header of the exercise.
+ * @param {number} i
+ * @param {{}} exercise
+ * @param {*} exerciseDiv
+ */
+const addExerciseHeader = (i, exercise, exerciseDiv) => {
+  const exerciseHeader = document.createElement('h1');
+  exerciseHeader.innerHTML = `Spørgsmål ${i}`;
+  // eslint-disable-next-line no-param-reassign
+  exercise.questionNumber = i;
+  exerciseDiv.appendChild(exerciseHeader);
+};
+
+/**
+ * Function from adding text from the exercise.
+ * @param {{}} exercise
+ * @param {*} exerciseDiv
+ */
+const addExerciseText = (exercise, exerciseDiv) => {
+  const questionText = document.createElement('p');
+  questionText.innerHTML = exercise.txt;
+  exerciseDiv.appendChild(questionText);
+};
+
+/**
+ * Function from adding variables from the exercise.
+ * @param {{}} exercise
+ * @param {*} exerciseDiv
+ */
+const addExerciseVars = (exercise, exerciseDiv) => {
+  const exerciseVars = Object.values(exercise.exerciseVars);
+
+  exerciseVars.forEach((eVar) => {
+    const questionText = document.createElement('p');
+    questionText.setAttribute('class', 'mathTex');
+    convert(eVar, questionText);
+    exerciseDiv.appendChild(questionText);
+  });
+};
+
+/**
+ * Function for adding a input field for the exercise.
+ * @param {number} i
+ * @param {*} exerciseDiv
+ */
+const addExerciseInputField = (i, exerciseDiv) => {
+  const textField = document.createElement('input');
+  textField.setAttribute('required', '1');
+  textField.setAttribute('id', `exercise${i}`);
+  exerciseDiv.appendChild(textField);
+};
+
+/**
+ * Function for adding a submit button for the exercise form.
+ * @param {*} exerciseForm
+ */
+const addButtonToExerciseForm = (exerciseForm) => {
+  const submitButton = document.createElement('input');
+  submitButton.setAttribute('type', 'submit');
+  submitButton.setAttribute('value', 'kontroller dine svar');
+  exerciseForm.appendChild(submitButton);
+};
+
+/**
+ * Function that makes the submit button to get answers for the exercises.
+ * @param {*} exerciseSet
+ */
+const giveFormAction = (exerciseSet) => {
+  document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    exerciseSet.forEach((exercise) => {
+      exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
+    });
+    generateResultPage(exerciseSet);
+  });
+};
+
+const generateResultPage = (exerciseSet) => {
+  clearDom();
+  checkAnswer(exerciseSet);
+};
+
+const calcGrade = (points, maxPoints) => {
+  const scalar = 250 / maxPoints;
+  const normPoints = parseInt(scalar * points, 10);
+  let grade = '';
+
+  switch (true) {
+    case normPoints &lt; 20:
+      grade = '-3';
+      break;
+    case normPoints &lt; 66:
+      grade = '00';
+      break;
+    case normPoints &lt; 84:
+      grade = '02';
+      break;
+    case normPoints &lt; 124:
+      grade = '4';
+      break;
+    case normPoints &lt; 174:
+      grade = '7';
+      break;
+    case normPoints &lt; 210:
+      grade = '10';
+      break;
+    case normPoints > 210:
+      grade = '12';
+      break;
+    default:
+      grade = '--';
+      break;
+  }
+
+  return grade;
+};
+
+const checkAnswer = (exerciseSet) => {
+  let userPoints = 0;
+  let totalPoints = 0;
+
+  const container = document.createElement('div');
+  const pointCounter = document.createElement('div');
+  const pointText = document.createElement('p');
+  const grade = document.createElement('p');
+
+  container.setAttribute('class', 'container');
+
+  exerciseSet.forEach((exercise) => {
+    let userAnswerValue = null;
+    totalPoints += exercise.point;
+    /* Det her burde være sin egen funktion senere */
+    if (exercise.questionAnswers === exercise.facit) {
+      userAnswerValue = true;
+      userPoints += exercise.point;
+    } else userAnswerValue = false;
+
+    const div = document.createElement('div');
+    const questionText = document.createElement('p');
+    const questionType = document.createElement('p');
+    const yourAnswer = document.createElement('p');
+
+    div.setAttribute('class', 'answer');
+
+    questionText.innerHTML = exercise.txt;
+    questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
+    yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers}`;
+
+    if (userAnswerValue === true) {
+      yourAnswer.style.backgroundColor = 'green';
+      yourAnswer.innerHTML = `${exercise.questionAnswers} &lt;br /> Rigtigt!`;
+    } else {
+      yourAnswer.style.backgroundColor = 'red';
+      yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers} &lt;br /> Forkert! &lt;br /> Facit: ${exercise.facit}`;
+    }
+
+    div.appendChild(questionText);
+    addExerciseVars(exercise, div);
+    div.appendChild(questionType);
+    div.append(yourAnswer);
+    container.appendChild(div);
+
+    console.log(userPoints);
+    console.log(totalPoints);
+  });
+
+  pointText.innerHTML = `Du fik: ${userPoints} Point &lt;br /> Max mulige point: ${totalPoints}`;
+  grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
+  pointText.style.backgroundColor = 'grey';
+  document.querySelector('#root').appendChild(container);
+  pointCounter.appendChild(pointText);
+  container.appendChild(pointCounter);
+  container.appendChild(grade);
+};
+
+generateStartPage();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 23 2021 11:00:28 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
