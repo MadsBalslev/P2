@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 const generateStartPage = () => {
-  const subjects = ['Vektor 2D', 'Integralregning'];
+  const subjects = ['Vektor 2D', 'Vektor 3D', 'Integralregning'];
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
