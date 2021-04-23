@@ -14,7 +14,7 @@ function LigningPlusExercise () {
     const { A, B, C} = generateVars();
     this.txt = 'Find x i følgende ligning.';
     this.type = 'ligninger';
-    this.point = '5';
+    this.point = 5;
     this.tegn = '+';
     this.exerciseVars = { ligning: `${A}x + ${B} = ${C}` };
     this.facit = LigningFacit(A, B, C, this.tegn);
@@ -24,7 +24,7 @@ function LigningMinusExercise () {
     const { A, B, C } = generateVars();
     this.txt = 'Find x i følgende ligning.';
     this.type = 'ligninger';
-    this.point = '5';
+    this.point = 5;
     this.tegn = '-';
     this.exerciseVars = { ligning: `${A}x - ${B} = ${C}` };
     this.facit = LigningFacit(A, B, C, this.tegn);
@@ -37,11 +37,11 @@ const LigningFacit = (A, B, C, symbol) => {
     if (symbol === '+') {
             let answer = (C - B) / A;
             let ansFixed = answer.toFixed(1);
-            return `x = ${ansFixed}`}
+            return `${ansFixed}`}
     else if (symbol === '-') {
         let answer = (C + B) / A;
         let ansFixed = answer.toFixed(1);
-        return `x = ${ansFixed}`}
+        return `${ansFixed}`}
 }
 
 const numOfTasks = 2;

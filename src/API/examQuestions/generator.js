@@ -6,6 +6,7 @@ const {
 const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
+const ligninger = require('./ligninger');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -28,6 +29,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'integralregning':
           set.push(generateIntegralExercise(amount));
+          break;
+        case 'ligninger':
+          set.push(generateLigningExercise(amount));
           break;
         default:
           break;
@@ -100,6 +104,22 @@ const generateIntegralExercise = () => {
       break;
     case 2:
       exercise = new integrals.TrigonometricIntegralExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateLigningExercise = () => {
+  let exercise;
+  const rand = randNum(ligninger.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new ligninger.LigningPlusExercise();
+      break;
+    case 2:
+      exercise = new ligninger.LigningMinusExercise();
       break;
     default:
       break;
