@@ -68,3 +68,39 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
 }
+
+#timer, #buttons {
+  font-size: 40px;
+  max-width: 1px;
+  margin: 100px;
+  color: white;
+  text-align: right;
+  margin-top: 10%;
+  margin-bottom: 50%;
+  margin-right: 5%;
+  position: sticky;
+}
+
+#hours,
+#minutes,
+#seconds
+{
+  font-size: 3rem;
+  margin-right: 5px;
+  color: white;
+}
+
+button {
+  width: 65px;
+  height: 40px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 25px;
+  outline: none;   
+}
+button:hover {
+  background: black;
+  transform: scaleX(1.1);
+  text-transform: capitalize;
+}
