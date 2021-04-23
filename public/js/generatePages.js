@@ -360,9 +360,9 @@ function stopTimer() {
 
 function timerCycle() {
     if (stoptime === false) {
-    seconds = parseInt(seconds);
-    minutes = parseInt(minutes);
-    hours = parseInt(hours);
+    seconds = parseInt(seconds,2);
+    minutes = parseInt(minutes,2);
+    hours = parseInt(hours,2);
     
     seconds++;
 
