@@ -252,12 +252,12 @@ const calcUserStats = (exersiceSet) =>{
 
   exersiceSet.forEach(exersice => {
 
-      switch (true){
-          case exersice.type === "vektor2d":
+      switch (exersice.type){
+          case "vektor2d":
               maxPoints.vektor2d = maxPoints.vektor2d + exersice.point;
               if (exersice.questionAnswers === exersice.facit) userStatsData.vektor2d = userStatsData.vektor2d + exersice.point;
               break;
-          case exersice.type === "integralregning":
+          case "integralregning":
               maxPoints.integral = maxPoints.integral + exersice.point;
               if (exersice.questionAnswers === exersice.facit) userStatsData.integral = userStatsData.integral + exersice.point;
               break; 
