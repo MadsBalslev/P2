@@ -394,20 +394,22 @@
                 }
                 return AllData;
         }
-        const createStatsDivs = (AllData) => {
+        const createStatsDivs = (AllData, container) => {
                     if (AllData.maxPoints.integral > 0) {
                         const integraldiv = document.createElement ("div");
                         const integraltext = document.createElement("p");
                         integraltext.innerHTML = ("Indenfor integralregning fik du: " + AllData.userStatsData.integral + " ud af " + AllData.maxPoints.integral + " point");
                         integraldiv.appendChild(integraltext);
-                        document.body.appendChild(integraldiv);
+                        integraldiv.setAttribute('class', 'answer');
+                        container.appendChild(integraldiv);
                     }
                     if (AllData.maxPoints.vektor2d > 0) {
                         const vektor2ddiv = document.createElement ("div");
                         const vektor2dtext = document.createElement("p");
                         vektor2dtext.innerHTML = ("Indenfor Vektor Regning fik du: " + AllData.userStatsData.vektor2d + " ud af " + AllData.maxPoints.vektor2d + " point");
                         vektor2ddiv.appendChild(vektor2dtext);
-                        document.body.appendChild(vektor2ddiv);
+                        vektor2ddiv.setAttribute('class', 'answer');
+                        container.appendChild(vektor2ddiv);
                     }
                     
             
@@ -507,7 +509,7 @@
             AllData = calcUserStats(exerciseSet);
             console.log(AllData);
             /*Statistik for elevens evner indenfor emner */
-            createStatsDivs(AllData);
+            createStatsDivs(AllData, container);
             /*
             userStats = document.createElement("div");
             userStatsText = document.createElement("p");
