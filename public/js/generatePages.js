@@ -335,3 +335,7 @@ const checkAnswer = (exerciseSet) => {
 };
 
 generateStartPage();
+
+module.exports = {
+  calcGrade,
+};
