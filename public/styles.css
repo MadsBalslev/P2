@@ -70,7 +70,9 @@ input[type="number"] {
 .container {
   display: flex;
   flex-direction: column;
+
 }
+
 
 #timer,#buttons {
   font-size: 40px;
