@@ -1,0 +1,70 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 18px;
+}
+
+:root {
+  --hue-neutral: 180;
+  --hue-wrong: #ff0000;
+  --hue-correct: #61ff9e;
+}
+
+body {
+  --hue: var(--hue-neutral);
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(var(--hue), 100%, 25%);
+}
+
+input[type="submit"] {
+  --hue: var(--hue-neutral);
+  border: 1px solid hsl(var(--hue), 100%, 100%);
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  color: hsl(var(--hue), 30%, 40%);
+  cursor: pointer;
+  margin: 80px;
+  margin-top: 65px;
+  box-shadow: 0 0 10px 2px;
+  transition: 0.6s;
+}
+
+input[type="submit"]:hover {
+  color: black;
+  transform: scale(1.1);
+}
+
+input[type="checkbox"] {
+  position: relative;
+  vertical-align:middle;
+}
+
+input[type="checkbox"]:hover {
+  transform: scaleX(1.2);
+}
+
+input[type="number"] {
+  position: relative;
+  border-width: 1px;
+  width: 4rem;
+  border-radius: 4px;
+}
+
+.emnevælger {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
