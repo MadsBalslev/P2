@@ -1,4 +1,5 @@
 const { generateExcerciseSet } = require('../API/examQuestions/generator.js');
+const { arrShuffle } = require('../helper.js');
 
 /**
  * Will handle requests to the '/opgaver' route
@@ -16,6 +17,7 @@ const handleOpgaverRequest = (request, response) => {
 const handleOpgaverGetRequest = (request, response) => {
   const subjects = subjectsStringToArray(request.headers.subjects);
   const result = generateExcerciseSet(subjects, request.headers.amount);
+  arrShuffle(result);
   response.end(JSON.stringify(result));
 };
 
