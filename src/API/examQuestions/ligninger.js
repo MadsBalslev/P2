@@ -35,15 +35,15 @@ function LigningMinusExercise () {
 
 const LigningFacit = (A, B, C, symbol) => {
     if (symbol === '+') {
-            let answer = (C - B) / A;
-            let ansFixed = answer.toFixed(1);
-            return `${ansFixed}`}
+        let answer = (C - B) / A;
+        let ansFixed = answer.toFixed(1);
+        return `${ansFixed}`}
     else if (symbol === '-') {
         let answer = (C + B) / A;
         let ansFixed = answer.toFixed(1);
         return `${ansFixed}`}
-
-    return;
+    
+    return "";
 }
 
 const numOfTasks = 2;
