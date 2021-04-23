@@ -4,6 +4,7 @@ const {
 } = require('../../helper');
 
 const vectors = require('./vector');
+const vector3d = require('./vector3d');
 const integrals = require('./integral');
 
 /**
@@ -21,6 +22,9 @@ const generateExcerciseSet = (categories, amount) => {
       switch (catagory) {
         case 'vektor2d':
           set.push(generateVectorExercise(amount));
+          break;
+        case 'vektor3d':
+          set.push(generateVector3dExercise(amount));
           break;
         case 'integralregning':
           set.push(generateIntegralExercise(amount));
@@ -51,6 +55,30 @@ const generateVectorExercise = () => {
       break;
     case 3:
       exercise = new vectors.VektorMultiplicationExercise();
+      break;
+    default:
+      break;
+  }
+
+  return exercise;
+};
+
+/**
+ * This function randomly generates a vector exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+ const generateVector3dExercise = () => {
+  let exercise;
+  const rand = randNum(vectors.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vector3d.VektorAdditionExercise();
+      break;
+    case 2:
+      exercise = new vector3d.VektorSubtractionExercise();
+      break;
+    case 3:
+      exercise = new vector3d.VektorMultiplicationExercise();
       break;
     default:
       break;
