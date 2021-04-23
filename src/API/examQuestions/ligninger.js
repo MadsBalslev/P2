@@ -38,7 +38,7 @@ const LigningFacit = (A, B, C, symbol) => {
   } else if (symbol === '-') {
     const answer = (C + B) / A;
     const ansFixed = answer.toFixed(1);
-    return `${ansFixed}`
+    return `${ansFixed}`;
   }
 
   return '';
