@@ -30,9 +30,6 @@ function LigningMinusExercise () {
     this.facit = LigningFacit(A, B, C, this.tegn);
 }
 
-// const LigningPlusFacit = (A, B, C) => `x = ${(C - B) / A}`;
-// const LigningMinusFacit = (A, B, C) => `x = ${(C + B) / A}`;
-
 const LigningFacit = (A, B, C, symbol) => {
     if (symbol === '+') {
         let answer = (C - B) / A;
