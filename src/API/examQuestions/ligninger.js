@@ -1,4 +1,4 @@
-const math = require('mathjs');
+// const math = require('mathjs');
 const { randNum } = require('../../helper');
 
 const generateVars = () => {
@@ -42,6 +42,8 @@ const LigningFacit = (A, B, C, symbol) => {
         let answer = (C + B) / A;
         let ansFixed = answer.toFixed(1);
         return `${ansFixed}`}
+
+    return;
 }
 
 const numOfTasks = 2;
