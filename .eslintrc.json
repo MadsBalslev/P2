@@ -19,6 +19,7 @@
         "no-throw-literal": "off",
         "no-console": "off",
         "no-plusplus": "off",
+        "no-param-reassign": "off",
         "linebreak-style": ["error", "windows"]   
     },
     "settings": {
