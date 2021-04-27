@@ -259,28 +259,30 @@ const generateResultPage = (exerciseSet) => {
   checkAnswer(exerciseSet);
 };
 const calcUserStats = (exersiceSet) => {
-  const maxPoints = {
-    vektor2d: 0,
-    integral: 0,
-  };
-  const userStatsData = {
-    vektor2d: 0,
-    integral: 0,
-  };
+  const maxPoints = {};
+  const userStatsData = {};
+
+  subjects.forEach((subject) => {
+    maxPoints[subject.id] = 0;
+    userStatsData[subject.id] = 0;
+  });
 
   exersiceSet.forEach((exersice) => {
-    switch (exersice.type) {
-      case 'vektor2d':
-        maxPoints.vektor2d += exersice.point;
-        if (exersice.questionAnswers === exersice.facit) userStatsData.vektor2d += exersice.point;
-        break;
-      case 'integralregning':
-        maxPoints.integral += exersice.point;
-        if (exersice.questionAnswers === exersice.facit) userStatsData.integral += exersice.point;
-        break;
-      default:
-        console.log('fejl');
-    }
+    maxPoints[exersice.type] += exersice.point;
+    if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
+
+    // switch (exersice.type) {
+    //   case 'vektor2d':
+    //     maxPoints.vektor2d += exersice.point;
+    //     if (exersice.questionAnswers === exersice.facit) userStatsData.vektor2d += exersice.point;
+    //     break;
+    //   case 'integralregning':
+    //     maxPoints.integral += exersice.point;
+    //     if (exersice.questionAnswers === exersice.facit) userStatsData.integral += exersice.point;
+    //     break;
+    //   default:
+    //     console.log('fejl');
+    // }
   });
 
   const AllData = {
@@ -288,26 +290,31 @@ const calcUserStats = (exersiceSet) => {
     userStatsData,
   };
 
+  console.log(AllData);
+
   return AllData;
 };
 
 const createStatsDivs = (AllData, container) => {
-  if (AllData.maxPoints.integral > 0) {
-    const integraldiv = document.createElement('div');
-    const integraltext = document.createElement('p');
-    integraltext.innerHTML = (`Indenfor integralregning fik du: ${AllData.userStatsData.integral} ud af ${AllData.maxPoints.integral} point`);
-    integraldiv.appendChild(integraltext);
-    integraldiv.setAttribute('class', 'answer');
-    container.appendChild(integraldiv);
-  }
-  if (AllData.maxPoints.vektor2d > 0) {
-    const vektor2ddiv = document.createElement('div');
-    const vektor2dtext = document.createElement('p');
-    vektor2dtext.innerHTML = (`Indenfor Vektor 2D fik du: ${AllData.userStatsData.vektor2d} ud af ${AllData.maxPoints.vektor2d} point`);
-    vektor2ddiv.appendChild(vektor2dtext);
-    vektor2ddiv.setAttribute('class', 'answer');
-    container.appendChild(vektor2ddiv);
-  }
+  subjects.forEach((subject) => {
+    if (AllData.maxPoints[subject.id] > 0) {
+      const div = document.createElement('div');
+      const txt = document.createElement('p');
+      txt.innerHTML = (`Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`);
+      div.appendChild(txt);
+      div.setAttribute('class', 'answer');
+      container.appendChild(div);
+    }
+  });
+
+  // if (AllData.maxPoints.vektor2d > 0) {
+  //   const vektor2ddiv = document.createElement('div');
+  //   const vektor2dtext = document.createElement('p');
+  //   vektor2dtext.innerHTML = (`Indenfor Vektor 2D fik du: ${AllData.userStatsData.vektor2d} ud af ${AllData.maxPoints.vektor2d} point`);
+  //   vektor2ddiv.appendChild(vektor2dtext);
+  //   vektor2ddiv.setAttribute('class', 'answer');
+  //   container.appendChild(vektor2ddiv);
+  // }
 };
 
 const calcGrade = (points, maxPoints) => {
