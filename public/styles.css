@@ -2,7 +2,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: sans-serif;
   font-size: 18px;
 }
 
@@ -22,6 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: hsl(var(--hue), 100%, 25%);
+  font-family: sans-serif;
 }
 
 input[type="submit"] {
@@ -45,7 +45,7 @@ input[type="submit"]:hover {
 
 input[type="checkbox"] {
   position: relative;
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 input[type="checkbox"]:hover {
@@ -67,4 +67,8 @@ input[type="number"] {
 .container {
   display: flex;
   flex-direction: column;
+}
+
+.exercise {
+  font-family: Georgia, "Times New Roman", Times, serif;
 }

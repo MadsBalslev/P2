@@ -3,7 +3,7 @@
 const convert = (input, output) => {
   MathJax.texReset();
   const options = MathJax.getMetricsFor(output);
-  MathJax.tex2svgPromise(input, options).then((node) => {
+  MathJax.tex2chtmlPromise(input, options).then((node) => {
     output.appendChild(node);
     MathJax.startup.document.clear();
     MathJax.startup.document.updateDocument();

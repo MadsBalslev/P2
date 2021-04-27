@@ -31,17 +31,17 @@ function LigningMinusExercise() {
 }
 
 const LigningFacit = (A, B, C, symbol) => {
+  let ansFixed;
+
   if (symbol === '+') {
     const answer = (C - B) / A;
-    const ansFixed = answer.toFixed(1);
-    return `${ansFixed}`;
+    ansFixed = answer.toFixed(1);
   } else if (symbol === '-') {
     const answer = (C + B) / A;
-    const ansFixed = answer.toFixed(1);
-    return `${ansFixed}`;
+    ansFixed = answer.toFixed(1);
   }
 
-  return '';
+  return `${ansFixed}`;
 };
 
 const numOfTasks = 2;

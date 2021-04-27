@@ -9,19 +9,17 @@ test('getVektorAdditionFacit', () => {
   expect(vector.getVektorAdditionFacit(vectorA, vectorB)).toEqual(vectorExpect);
 });
 
-
 test('getVektorSubstractionFacit', () => {
-const vectorA = math.matrix([[5], [3], [2]]);
-const vectorB = math.matrix([[3], [2], [1]]);
+  const vectorA = math.matrix([[5], [3], [2]]);
+  const vectorB = math.matrix([[3], [2], [1]]);
 
-const vectorExpect = math.matrix([[2], [1], [1]]);
-expect(vector.getVektorSubtractionFacit(vectorA, vectorB)).toEqual(vectorExpect);
+  const vectorExpect = math.matrix([[2], [1], [1]]);
+  expect(vector.getVektorSubtractionFacit(vectorA, vectorB)).toEqual(vectorExpect);
 });
 
-
 test('getVektorMultiplicationFacit', () => {
-const vectorA = math.matrix([[10], [1], [7]]);
-const vectorB = math.matrix([[3],[6], [2]]);
+  const vectorA = math.matrix([[10], [1], [7]]);
+  const vectorB = math.matrix([[3], [6], [2]]);
 
-expect(vector.getVektorMultiplicationFacit(vectorA, vectorB)).toEqual(50);
+  expect(vector.getVektorMultiplicationFacit(vectorA, vectorB)).toEqual(50);
 });
