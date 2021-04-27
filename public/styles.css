@@ -59,16 +59,47 @@ input[type="number"] {
   border-radius: 4px;
 }
 
-.emnevælger {
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
 .exercise {
   font-family: Georgia, "Times New Roman", Times, serif;
+
+}
+
+.stopwatch {
+  display: grid;
+  justify-items: center;
+  grid-row-gap: 23px;
+  padding-top: 25px;
+  margin-bottom: 500px;
+  margin-left: 600px;
+}
+
+.time {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 50px;
+  font-size: 48px;
+}
+
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+
+  width: 187px;
+}
+
+button {
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  border: none;
+  margin: 0;
+  outline: none;
+}
+
+#playButton {
+  display: block;
+}
+
+#pauseButton {
+  display: none;
 }
