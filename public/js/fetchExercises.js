@@ -20,7 +20,7 @@ const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .then((response) => response.json())
     .then((data) => {
       resolve(data);
-      console.log(exerciseSubjects);
+      // console.log(exerciseSubjects);
     })
     .catch((error) => reject(error));
 });
