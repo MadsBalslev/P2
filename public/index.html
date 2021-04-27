@@ -5,13 +5,29 @@
   <link rel='icon' type='image/png' href='./favicon.png' />
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="Timer.css">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> -->
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="js/timer.js" defer></script>
 </head>
 
 <body>
   <div id="root"></div>
+
+  <div class="stopwatch">
+    <span class="time" id="display"><h1 style="font-size: 35px; font-family: sans-serif;">Timer</h1></span>
+  <div class="controls">
+    <button class="buttonPlay">
+      <img id="playButton" src="https://res.cloudinary.com/https-tinloof-com/image/upload/v1593360448/blog/time-in-js/play-button_opkxmt.svg" />
+
+      <img id="pauseButton" src="https://res.cloudinary.com/https-tinloof-com/image/upload/v1593360448/blog/time-in-js/pause-button_pinhpy.svg" />
+    </button>
+
+    <button class="buttonReset">
+      <img id="resetButton" src="https://res.cloudinary.com/https-tinloof-com/image/upload/v1593360448/blog/time-in-js/reset-button_mdv6wf.svg" />
+    </button>
+  </div>
 
   <script src="js/mathJax.js"></script>
   <script src="js/fetchExercises.js"></script>
