@@ -250,6 +250,7 @@ const calcUserStats = (exersiceSet) =>{
       "integral": 0
   }
 
+
   exersiceSet.forEach(exersice => {
 
       switch (exersice.type){
@@ -269,6 +270,7 @@ const calcUserStats = (exersiceSet) =>{
       
   });
   
+
   
   
   let AllData = {
@@ -296,6 +298,40 @@ const createStatsDivs = (AllData, container) => {
   }
   
 
+}
+/**
+ * Function that creates html responsible for grade and score.
+ * @param {*} container
+ * @param {*} userPoints
+ * @param {*} totalPoints
+ */
+const createGradeText = (container, userPoints, totalPoints) => {
+  const pointCounter = document.createElement('div');
+  const pointText = document.createElement('p');
+  const grade = document.createElement('p');
+
+  pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
+  grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
+  pointText.style.backgroundColor = 'grey';
+
+  pointCounter.appendChild(pointText);
+  container.appendChild(pointCounter);
+  container.appendChild(grade);
+}
+
+const showQuestionResult =(questionAnswer, facit, div ) => {
+  const yourAnswer = document.createElement('p');
+  yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
+  if (checkUserAnswerValue(questionAnswer, facit)) {
+    yourAnswer.style.backgroundColor = 'green';
+    yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
+    div.appendChild(yourAnswer);
+  }
+   else {
+    yourAnswer.style.backgroundColor = 'red';
+    yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Forkert! <br /> Facit: ${facit}`;
+    div.appendChild(yourAnswer);
+  }
 }
 
 const calcGrade = (points, maxPoints) => {
@@ -333,63 +369,81 @@ const calcGrade = (points, maxPoints) => {
   return grade;
 };
 
+
+/**
+ * Function adding points.
+ * @param {*} exerciseSet
+ */
+const addPoints = (exercise, userPoints) => {
+  if (exercise.questionAnswers === exercise.facit) {
+    userPoints += exercise.point;
+  }
+  return userPoints;
+};
+
+const checkUserAnswerValue = (answer, facit) => { 
+
+  if (answer === facit) { 
+    return true;} 
+  else if(answer ==! facit) {
+    return false;}
+  else {console.log("fejl i checkUserAnswerValue")}
+
+  return null;
+};
+/**
+ * Function checks the entire exercise set answer and calls addPoints function for adding points.
+ * @param {*} exerciseSet
+ */
 const checkAnswer = (exerciseSet) => {
   let userPoints = 0;
   let totalPoints = 0;
 
   const container = document.createElement('div');
-  const pointCounter = document.createElement('div');
-  const pointText = document.createElement('p');
-  const grade = document.createElement('p');
+  
 
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
-    let userAnswerValue = null;
+
     totalPoints += exercise.point;
-    /* Det her burde være sin egen funktion senere */
+    
+
+    userPoints = addPoints(exercise, userPoints);
+
+    /* Det her burde være sin egen funktion senere 
     if (exercise.questionAnswers === exercise.facit) {
       userAnswerValue = true;
       userPoints += exercise.point;
     } else userAnswerValue = false;
+    */
 
     const div = document.createElement('div');
     const questionText = document.createElement('p');
     const questionType = document.createElement('p');
-    const yourAnswer = document.createElement('p');
+    
 
     div.setAttribute('class', 'answer');
 
     questionText.innerHTML = exercise.txt;
     questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-    yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers}`;
+    
 
-    if (userAnswerValue === true) {
-      yourAnswer.style.backgroundColor = 'green';
-      yourAnswer.innerHTML = `${exercise.questionAnswers} <br /> Rigtigt!`;
-    } else {
-      yourAnswer.style.backgroundColor = 'red';
-      yourAnswer.innerHTML = `Dit svar: ${exercise.questionAnswers} <br /> Forkert! <br /> Facit: ${exercise.facit}`;
-    }
+    
 
     div.appendChild(questionText);
     addExerciseVars(exercise, div);
     div.appendChild(questionType);
-    div.append(yourAnswer);
     container.appendChild(div);
 
-    console.log(userPoints);
-    console.log(totalPoints);
+    showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
-  pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
-  grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
-  pointText.style.backgroundColor = 'grey';
+  
   document.querySelector('#root').appendChild(container);
-  pointCounter.appendChild(pointText);
-  container.appendChild(pointCounter);
-  container.appendChild(grade);
   AllData = calcUserStats(exerciseSet);
+  
+  createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
 };
 
