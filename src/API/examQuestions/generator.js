@@ -71,7 +71,7 @@ const generateVectorExercise = () => {
  * This function randomly generates a vector exercise and returns it.
  * @return {object} Returns the generated exercise object.
  */
- const generateVector3dExercise = () => {
+const generateVector3dExercise = () => {
   let exercise;
   const rand = randNum(vectors.numOfTasks);
   switch (rand) {

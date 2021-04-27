@@ -1,8 +1,26 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
+const subjects = [
+  {
+    name: 'Vektor 2D',
+    id: 'vektor2d',
+  },
+  {
+    name: 'Vektor 3D',
+    id: 'vektor3d',
+  },
+  {
+    name: 'Integralregning',
+    id: 'integralregning',
+  },
+  {
+    name: 'Ligninger',
+    id: 'ligninger',
+  },
+];
+
 const generateStartPage = () => {
-  const subjects = ['Vektor 2D', 'Vektor 3D', 'Integralregning', 'Ligninger'];
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
@@ -49,21 +67,21 @@ const generateStartPage = () => {
 
 const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
-  const trimmedSub = subject.replace(/\s+/g, '');
+  const { id } = subject;
 
-  label.setAttribute('for', trimmedSub.toLowerCase());
-  label.innerHTML = subject;
+  label.setAttribute('for', id.toLowerCase());
+  label.innerHTML = subject.name;
 
   return label;
 };
 
 const generateSubjectInput = (subject) => {
   const input = document.createElement('input');
-  const trimmedSub = subject.replace(/\s+/g, '');
+  const { id } = subject;
 
   input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', trimmedSub.toLowerCase());
-  input.setAttribute('id', trimmedSub.toLowerCase());
+  input.setAttribute('name', id.toLowerCase());
+  input.setAttribute('id', id.toLowerCase());
 
   return input;
 };
@@ -240,63 +258,42 @@ const generateResultPage = (exerciseSet) => {
   clearDom();
   checkAnswer(exerciseSet);
 };
-const calcUserStats = (exersiceSet) =>{
-  let maxPoints = {
-      "vektor2d": 0,
-      "integral": 0
-  }
-  let userStatsData = {
-      "vektor2d": 0,
-      "integral": 0
-  }
+const calcUserStats = (exersiceSet) => {
+  const maxPoints = {};
+  const userStatsData = {};
 
-
-  exersiceSet.forEach(exersice => {
-
-      switch (exersice.type){
-          case "vektor2d":
-              maxPoints.vektor2d = maxPoints.vektor2d + exersice.point;
-              if (exersice.questionAnswers === exersice.facit) userStatsData.vektor2d = userStatsData.vektor2d + exersice.point;
-              break;
-          case "integralregning":
-              maxPoints.integral = maxPoints.integral + exersice.point;
-              if (exersice.questionAnswers === exersice.facit) userStatsData.integral = userStatsData.integral + exersice.point;
-              break; 
-          default:
-          console.log("fejl");
-              
-              
-      }
-      
+  subjects.forEach((subject) => {
+    maxPoints[subject.id] = 0;
+    userStatsData[subject.id] = 0;
   });
-  
 
-  
-  
-  let AllData = {
-      maxPoints: maxPoints,
-      userStatsData: userStatsData
-  }
+  exersiceSet.forEach((exersice) => {
+    maxPoints[exersice.type] += exersice.point;
+    if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
+
+  });
+
+  const AllData = {
+    maxPoints,
+    userStatsData,
+  };
+
+  console.log(AllData);
+
   return AllData;
-}
+};
+
 const createStatsDivs = (AllData, container) => {
-  if (AllData.maxPoints.integral > 0) {
-      const integraldiv = document.createElement ("div");
-      const integraltext = document.createElement("p");
-      integraltext.innerHTML = ("Indenfor integralregning fik du: " + AllData.userStatsData.integral + " ud af " + AllData.maxPoints.integral + " point");
-      integraldiv.appendChild(integraltext);
-      integraldiv.setAttribute('class', 'answer');
-      container.appendChild(integraldiv);
-  }
-  if (AllData.maxPoints.vektor2d > 0) {
-      const vektor2ddiv = document.createElement ("div");
-      const vektor2dtext = document.createElement("p");
-      vektor2dtext.innerHTML = ("Indenfor Vektor Regning fik du: " + AllData.userStatsData.vektor2d + " ud af " + AllData.maxPoints.vektor2d + " point");
-      vektor2ddiv.appendChild(vektor2dtext);
-      vektor2ddiv.setAttribute('class', 'answer');
-      container.appendChild(vektor2ddiv);
-  }
-  
+  subjects.forEach((subject) => {
+    if (AllData.maxPoints[subject.id] > 0) {
+      const div = document.createElement('div');
+      const txt = document.createElement('p');
+      txt.innerHTML = (`Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`);
+      div.appendChild(txt);
+      div.setAttribute('class', 'answer');
+      container.appendChild(div);
+    }
+  });
 
 }
 /**
@@ -448,4 +445,7 @@ const checkAnswer = (exerciseSet) => {
 };
 
 generateStartPage();
- 
+
+module.exports = {
+  calcGrade,
+};
