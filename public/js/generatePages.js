@@ -280,6 +280,7 @@ const calcUserStats = (exersiceSet) => {
     maxPoints[exersice.type] += exersice.point;
     if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
 
+
   });
 
   const AllData = {
@@ -307,7 +308,6 @@ const createStatsDivs = (AllData, container) => {
       container.appendChild(div);
     }
   });
-
 }
 /**
  * Function that creates html responsible for grade and score.
@@ -319,6 +319,18 @@ const createGradeText = (container, userPoints, totalPoints) => {
   const pointCounter = document.createElement('div');
   const pointText = document.createElement('p');
   const grade = document.createElement('p');
+
+  // if (AllData.maxPoints.vektor2d > 0) {
+  //   const vektor2ddiv = document.createElement('div');
+  //   const vektor2dtext = document.createElement('p');
+  /*   vektor2dtext.innerHTML = (`Indenfor Vektor 2D fik du: ${AllData.userStatsData.vektor2d}-
+        ud af ${AllData.maxPoints.vektor2d} point`); */
+  //   vektor2ddiv.appendChild(vektor2dtext);
+  //   vektor2ddiv.setAttribute('class', 'answer');
+  //   container.appendChild(vektor2ddiv);
+  // }
+};
+
 
   pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
   grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
