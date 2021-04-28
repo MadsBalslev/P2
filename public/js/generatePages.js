@@ -320,16 +320,7 @@ const createGradeText = (container, userPoints, totalPoints) => {
   const pointText = document.createElement('p');
   const grade = document.createElement('p');
 
-  // if (AllData.maxPoints.vektor2d > 0) {
-  //   const vektor2ddiv = document.createElement('div');
-  //   const vektor2dtext = document.createElement('p');
-  /*   vektor2dtext.innerHTML = (`Indenfor Vektor 2D fik du: ${AllData.userStatsData.vektor2d}-
-        ud af ${AllData.maxPoints.vektor2d} point`); */
-  //   vektor2ddiv.appendChild(vektor2dtext);
-  //   vektor2ddiv.setAttribute('class', 'answer');
-  //   container.appendChild(vektor2ddiv);
-  // }
-};
+  
 
 
   pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
@@ -340,6 +331,7 @@ const createGradeText = (container, userPoints, totalPoints) => {
   container.appendChild(pointCounter);
   container.appendChild(grade);
 }
+
   /**
    * Function that creates html responsible showing if question got answered correct or wrong.
    * @param {*} questionAnswer
