@@ -264,7 +264,8 @@ const generateResultPage = (exerciseSet) => {
 };
 
 /**
- * Function that takes an exerciseSet as parameter, and calculates the maximum points available and the points achieved by the user.
+ * Function that takes an exerciseSet as parameter,
+   and calculates the maximum points available and the points achieved by the user.
  * @param {*} exerciseSet
  */
 const calcUserStats = (exersiceSet) => {
@@ -412,7 +413,7 @@ const addPoints = (exercise, userPoints) => {
 const checkUserAnswerValue = (answer, facit) => { 
   if (answer === facit) { 
     return true;} 
-  else if(answer ==! facit) {
+  else if(answer !== facit) {
     return false;}
   else {console.log("fejl i checkUserAnswerValue")}
 
