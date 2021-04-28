@@ -254,10 +254,19 @@ const giveFormAction = (exerciseSet) => {
   });
 };
 
+/**
+ * Function that takes the exerciseSet as a parameter and checks for correct answers.
+ * @param {*} exerciseSet
+ */
 const generateResultPage = (exerciseSet) => {
   clearDom();
   checkAnswer(exerciseSet);
 };
+
+/**
+ * Function that takes an exerciseSet as parameter, and calculates the maximum points available and the points achieved by the user.
+ * @param {*} exerciseSet
+ */
 const calcUserStats = (exersiceSet) => {
   const maxPoints = {};
   const userStatsData = {};
@@ -282,7 +291,11 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
-
+/**
+ * Function that creates html responsible for showing score in each subject.
+ * @param {*} AllData
+ * @param {*} container
+ */
 const createStatsDivs = (AllData, container) => {
   subjects.forEach((subject) => {
     if (AllData.maxPoints[subject.id] > 0) {
@@ -315,7 +328,12 @@ const createGradeText = (container, userPoints, totalPoints) => {
   container.appendChild(pointCounter);
   container.appendChild(grade);
 }
-
+  /**
+   * Function that creates html responsible showing if question got answered correct or wrong.
+   * @param {*} questionAnswer
+   * @param {*} facit
+   * @param {*} div
+   */
 const showQuestionResult =(questionAnswer, facit, div ) => {
   const yourAnswer = document.createElement('p');
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
@@ -330,7 +348,11 @@ const showQuestionResult =(questionAnswer, facit, div ) => {
     div.appendChild(yourAnswer);
   }
 }
-
+/**
+ * Function calculating which grade user should get based on percentage of points
+ * @param {*} points
+ * @param {*} maxPoints
+ */
 const calcGrade = (points, maxPoints) => {
   const scalar = 250 / maxPoints;
   const normPoints = parseInt(scalar * points, 10);
@@ -369,7 +391,8 @@ const calcGrade = (points, maxPoints) => {
 
 /**
  * Function adding points.
- * @param {*} exerciseSet
+ * @param {*} exercise
+ * @param {*} userPoints
  */
 const addPoints = (exercise, userPoints) => {
   if (exercise.questionAnswers === exercise.facit) {
@@ -377,9 +400,12 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
-
+/**
+ * Function to check if user answer is equal to the facit.
+ * @param {*} answer
+ * @param {*} facit
+ */
 const checkUserAnswerValue = (answer, facit) => { 
-
   if (answer === facit) { 
     return true;} 
   else if(answer ==! facit) {
@@ -388,6 +414,7 @@ const checkUserAnswerValue = (answer, facit) => {
 
   return null;
 };
+
 /**
  * Function checks the entire exercise set answer and calls addPoints function for adding points.
  * @param {*} exerciseSet
@@ -408,12 +435,7 @@ const checkAnswer = (exerciseSet) => {
 
     userPoints = addPoints(exercise, userPoints);
 
-    /* Det her burde være sin egen funktion senere 
-    if (exercise.questionAnswers === exercise.facit) {
-      userAnswerValue = true;
-      userPoints += exercise.point;
-    } else userAnswerValue = false;
-    */
+    
 
     const div = document.createElement('div');
     const questionText = document.createElement('p');
