@@ -1,4 +1,4 @@
-const { errorResponse } = require("../helper");
+const { errorResponse } = require('../helper');
 
 function handleReviseUserProfileRequest(request, response) {
   if (request.method === 'POST') {
