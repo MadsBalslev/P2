@@ -21,20 +21,11 @@ const filePath = path.join(__dirname, '../public/site.html');
  */
 const tryHandleRequest = (request, response) => {
   try {
-    // logRequest(request);
     handleRequest(request, response);
   } catch (error) {
     errorResponse(response, 400, 'error at tryHandleRequest');
   }
 };
-
-// const logRequest = (request) => {
-//   console.log(`NEW ${request.method} REQUEST`);
-//   console.log(`Request url: ${request.url}`);
-//   console.log('Request headers:');
-//   console.log(request.headers);
-//   console.log('');
-// };
 
 /**
  * Will check which route is requested and use the correct handler function. If a non-existing route
