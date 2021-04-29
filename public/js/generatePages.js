@@ -270,21 +270,6 @@ const calcUserStats = (exersiceSet) => {
   exersiceSet.forEach((exersice) => {
     maxPoints[exersice.type] += exersice.point;
     if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
-
-    // switch (exersice.type) {
-    //   case 'vektor2d':
-    //     maxPoints.vektor2d += exersice.point;
-    /*     if (exersice.questionAnswers === exersice.facit) -
-            userStatsData.vektor2d += exersice.point; */
-    //     break;
-    //   case 'integralregning':
-    //     maxPoints.integral += exersice.point;
-    /*     if (exersice.questionAnswers === exersice.facit) -
-              userStatsData.integral += exersice.point; */
-    //     break;
-    //   default:
-    //     console.log('fejl');
-    // }
   });
 
   const AllData = {
@@ -308,16 +293,6 @@ const createStatsDivs = (AllData, container) => {
       container.appendChild(div);
     }
   });
-
-  // if (AllData.maxPoints.vektor2d > 0) {
-  //   const vektor2ddiv = document.createElement('div');
-  //   const vektor2dtext = document.createElement('p');
-  /*   vektor2dtext.innerHTML = (`Indenfor Vektor 2D fik du: ${AllData.userStatsData.vektor2d}-
-        ud af ${AllData.maxPoints.vektor2d} point`); */
-  //   vektor2ddiv.appendChild(vektor2dtext);
-  //   vektor2ddiv.setAttribute('class', 'answer');
-  //   container.appendChild(vektor2ddiv);
-  // }
 };
 
 const calcGrade = (points, maxPoints) => {
