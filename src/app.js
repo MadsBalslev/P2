@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { lookup } = require('mime-types');
 const handleOpgaverRequest = require('./routes/opgaver');
+const handleReviseUserProfileRequest = require('./routes/reviseUserProfile.js');
 const { errorResponse } = require('./helper');
 
 global.globalSet = [];
@@ -46,6 +47,9 @@ const handleRequest = (request, response) => {
   switch (request.url) {
     case '/opgaver':
       handleOpgaverRequest(request, response);
+      break;
+    case '/reviseUserProfile':
+      handleReviseUserProfileRequest(request, response);
       break;
     case '':
       handleBaseRequest(request, response);
