@@ -17,7 +17,7 @@ function LigningPlusExercise() {
   this.point = 5;
   this.tegn = '+';
   this.exerciseVars = { ligning: `${A}x + ${B} = ${C}` };
-  this.facit = LigningFacit(A, B, C, this.tegn);
+  this.facit = ligningFacit(A, B, C, this.tegn);
 }
 
 function LigningMinusExercise() {
@@ -27,10 +27,10 @@ function LigningMinusExercise() {
   this.point = 5;
   this.tegn = '-';
   this.exerciseVars = { ligning: `${A}x - ${B} = ${C}` };
-  this.facit = LigningFacit(A, B, C, this.tegn);
+  this.facit = ligningFacit(A, B, C, this.tegn);
 }
 
-const LigningFacit = (A, B, C, symbol) => {
+const ligningFacit = (A, B, C, symbol) => {
   let ansFixed;
 
   if (symbol === '+') {
@@ -49,6 +49,6 @@ const numOfTasks = 2;
 module.exports = {
   LigningPlusExercise,
   LigningMinusExercise,
-  LigningFacit,
+  ligningFacit,
   numOfTasks,
 };
