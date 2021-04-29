@@ -37,7 +37,7 @@ function calculateUserProfile(exerciseProfiles, currentUserProfile) {
 
 }
 
-function respondWithUserProfile(params) {
+function respondWithUserProfile(newUserProfile, response) {
 }
 
 module.exports = handleReviseUserProfileRequest;
