@@ -51,6 +51,9 @@ const handleRequest = (request, response) => {
     case '/reviseUserProfile':
       handleReviseUserProfileRequest(request, response);
       break;
+    case '/generateUserSet':
+      handleGenerateUserSetProfile(request, response);
+      break;
     case '':
       handleBaseRequest(request, response);
       break;

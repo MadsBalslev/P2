@@ -291,6 +291,7 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
+
 /**
  * Function that creates html responsible for showing score in each subject.
  * @param {*} AllData
@@ -347,6 +348,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
     div.appendChild(yourAnswer);
   }
 };
+
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -398,6 +400,7 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
+
 /**
  * Function to check if user answer is equal to the facit.
  * @param {*} answer
@@ -450,10 +453,11 @@ const checkAnswer = (exerciseSet) => {
   });
 
   document.querySelector('#root').appendChild(container);
-  AllData = calcUserStats(exerciseSet);
+  const AllData = calcUserStats(exerciseSet);
 
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
+  console.log(exerciseSet);
 };
 
 generateStartPage();
