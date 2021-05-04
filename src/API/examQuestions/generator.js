@@ -7,6 +7,7 @@ const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
+const funktionerAfToVariable = require('./ligningertovariabler')
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -32,6 +33,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'ligninger':
           set.push(generateLigningExercise(amount));
+          break;
+        case 'funktionerAfToVariable':
+          set.push(generateFunktionerAfToVariableExercise(amount));
           break;
         default:
           break;
@@ -126,6 +130,26 @@ const generateLigningExercise = () => {
   }
   return exercise;
 };
+
+
+const generateFunktionerAfToVariableExercise = () => {
+  let exercise;
+  const rand = randNum(funktionerAfToVariable.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new funktionerAfToVariable.partielDifferentiationExercise();
+      break;
+  /*
+    case 2:
+      exercise = new funktionerAfToVariable.rangeExercise();
+      break;
+  */
+    default:
+      break;
+  }
+  return exercise;
+}
+
 
 module.exports = {
   generateExcerciseSet,

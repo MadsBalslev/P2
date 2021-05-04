@@ -2,33 +2,65 @@ const { derivative, concat } = require('mathjs');
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
+const generateVars = () => {
+  const A = randNum(10) + 1;
+  const B = randNum(4);
+  const C = randNum(10) + 2;
+  const D = randNum(4);
 
- partielDifferentiationExercise();
- rangeExercise();
-
-
- /**
- * Will create excercise about differentating towards x or y in a two variable function
- * @param {math.parse} expression Takes the expression for differentiating
- * @param {math.parse} fx First part of the function, with x
- * @param {math.parse} fy Second part of the function, with y
- * @return {any[]} The function returns a generated excercise set as an array, based on the two
- * input parameters.
- */
-function partielDifferentiationExercise () {
-  const fy = math.parse('3*y+2y');
-  const fx = math.parse('4*x+4x');
-  const expression = math.parse('x');
-
-  console.log(`Opgave 2: ${fx} + ${fy} `);
-  console.log(math.derivative(fx, expression).evaluate());
+  return { A, B, C, D };
 }
 
+const generateExpression = () => {
+  let i = randNum(2);
+
+  if (i = 1) {
+    return x;
+  }
+  else return y;
+}
+
+function partielDifferentiationExercise () {
+  const { A, B, C, D } = generateVars();
+  const expression = generateExpression();
+  this.txt = (`Differientier i forhold til ${expression} i følgende to variabel funktion.`);
+  this.type = 'funktionerAfToVariable';
+  this.point = 5;
+  this.tegn = '';
+  this.exerciseVars = { ligning: `${A}x + x^${B} + ${C}y + y^${D}` };
+  this.facit = partielDifferentiationFacit(A, B, C, D, expression);
+}
+
+
+const partielDifferentiationFacit = (A, B, C, D, expression) => {
+  const parser = math.parser();
+
+  A = parser.set('A',A);
+  B = parser.set('B',B);
+  C = parser.set('C',C);
+  D = parser.set('D',D);
+  f = math.parse('A*x+(x^B)+C*y+(y^D)');
+
+  math.derivative(f, expression).toString();
+}
+
+rangeExercise();
 
 function rangeExercise() {
-    const x = math.parse('0');
-    const y = math.parse('9');
-    const c = math.parse('90');
-    console.log(`opgave: ${c} - ${x} - ${y} `);
-    console.log(math.sqrt(c - y - x));
+    const unknowns = 9;
+    console.log(unknowns);
+    const x = math.parse('x');
+    const y = math.parse('y');
+    const c = 81 ;
+    console.log(`opgave: ${c} - ${unknowns}y^2 - ${unknowns}x^2 `);
+    console.log(math.sqrt(c/unknowns));
 }
+
+const numOfTasks = 1;
+
+module.exports = {
+  partielDifferentiationExercise,
+  partielDifferentiationFacit,
+  rangeExercise,
+  numOfTasks,
+};

@@ -18,6 +18,10 @@ const subjects = [
     name: 'Ligninger',
     id: 'ligninger',
   },
+  {
+    name: 'To Variabler',
+    id: 'funktionerAfToVariable',
+  },
 ];
 
 const generateStartPage = () => {
