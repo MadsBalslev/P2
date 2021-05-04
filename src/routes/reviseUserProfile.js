@@ -20,7 +20,7 @@ async function reviseUserProfile(request, response) {
   const { userProfile, exerciseSet } = await fetchRequestBody(request);
   const exerciseProfiles = convertExerciseSetToExerciseProfiles(exerciseSet);
   const newUserProfile = calculateUserProfile(exerciseProfiles, userProfile);
-  respondWithUserProfile(newUserProfile, response);
+  respondWithNewUserProfile(newUserProfile, response);
 }
 
 function fetchRequestBody(request) {
@@ -33,6 +33,11 @@ function fetchRequestBody(request) {
     request.on('end', () => {
       try {
         requestBody = JSON.parse(requestBody);
+
+        if (!requestBodyIsValid(requestBody)) {
+          throw 'invalid request body';
+        }
+
         resolve(requestBody);
       } catch (error) {
         reject(error);
@@ -45,34 +50,73 @@ function fetchRequestBody(request) {
   });
 }
 
-function convertExerciseSetToExerciseProfiles(exerciseSet) {
-  const ExerciseProfiles = [];
+function requestBodyIsValid(requestBody) {
+  return requestBodyUserProfileIsValid(requestBody)
+    && requestBodyExerciseSetIsValid(requestBody);
+}
 
+function requestBodyUserProfileIsValid(requestBody) {
+  return requestBody.hasOwnProperty('userProfile')
+    && requestBody.userProfile.length === 23;
+}
+
+function requestBodyExerciseSetIsValid(requestBody) {
+  let isValidExerciseSet;
+  if (!requestBody.hasOwnProperty('ExerciseSet')) {
+    isValidExerciseSet = false;
+  } if (requestBody.hasOwnProperty('ExerciseSet')) {
+    isValidExerciseSet = ValidateEachExerciseInExerciseSet(requestBody.exerciseSet);
+  }
+
+  return isValidExerciseSet;
+}
+
+function ValidateEachExerciseInExerciseSet(exerciseSet) {
   exerciseSet.forEach((exercise) => {
-    ExerciseProfiles.push(calculateExerciseProfile(exercise));
+    
   });
 }
 
-function calculateExerciseProfile(exercise) {
-  const wrongAnswerWeight = 0.7;
-  const correctAnswerWeight = 0.2;
-  const exerciseVector = convertExerciseToVector(exercise);
-  let exerciseProfile;
+function validateSingleExercise(exercise) {
 
-  if (isWrongAnswer(exercise)) {
-    exerciseProfile = wrongAnswerWeight * exerciseVector;
-  } else if (!isWrongAnswer(exercise)) {
-    exerciseProfile = correctAnswerWeight * exerciseVector;
-  }
-
-  return exerciseProfile;
 }
 
-convertExerciseToVector(exercise) {
+function convertExerciseSetToExerciseProfiles(exerciseSet) {
+  const exerciseProfiles = [];
+
+  exerciseSet.forEach((exercise) => {
+    exerciseProfiles.push(calculateExerciseProfile(exercise));
+  });
+
+  return exerciseProfiles;
+}
+
+function calculateExerciseProfile(exercise) {
+  const correctAnswerWeight = 0.2;
+  const wrongAnswerWeight = 0.7;
+  let exerciseVector = convertExerciseToVector(exercise);
+
+  if (isCorrectAnswer(exercise)) {
+    exerciseVector = scalarMultiplication(correctAnswerWeight, exerciseVector);
+  } else if (!isCorrectAnswer(exercise)) {
+    exerciseVector = scalarMultiplication(wrongAnswerWeight, exerciseVector);
+  }
+
+  return exerciseVector;
+}
+
+/**
+ * @param {number} scalar The scalar to use for the weight
+ * @param {[]} vector The vector to multiply with the scalar
+ * @return {[]} A new vector which is multiplied with the scalar
+ */
+const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
+
+function convertExerciseToVector(exercise) {
   switch (exercise.type) {
     case 'talOgRegnearter_C':
       return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'ligniger_C':
+    case 'ligninger_C':
       return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     case 'funktioner_C':
       return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -121,73 +165,79 @@ convertExerciseToVector(exercise) {
   }
 }
 
-function isWrongAnswer(params) {
-
-}
+const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswers;
 
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
+  const userWeight = 0.5;
+  const weightedUserProfile = scalarMultiplication(userWeight, currentUserProfile);
+  let newUserProfile = sumVectorArray(exerciseProfiles);
 
+  newUserProfile = scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
+  newUserProfile = sumVectorArray([newUserProfile, weightedUserProfile]);
+
+  return newUserProfile;
 }
 
-function respondWithUserProfile(newUserProfile, response) {
+const sumVectorArray = (exerciseProfiles) => exerciseProfiles.reduce((a, b) => a.map((c, i) => c + b[i]));
+
+function respondWithNewUserProfile(newUserProfile, response) {
 
 }
 
 module.exports = handleReviseUserProfileRequest;
 
 // example body:
-
-let example = {
-  userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-  exerciseSet:
-    [
-      {
-        "txt": "Find x i følgende ligning.",
-        "type": "ligninger",
-        "point": 5,
-        "tegn": "-",
-        "exerciseVars": {
-          "ligning": "11x - 14 = 29"
-        },
-        "facit": "3.9",
-        "questionNumber": 1,
-        "questionAnswers": "3"
-      },
-      {
-        "txt": "Find x i følgende ligning.",
-        "type": "ligninger",
-        "point": 5,
-        "tegn": "+",
-        "exerciseVars": {
-          "ligning": "4x + 22 = 45"
-        },
-        "facit": "5.8",
-        "questionNumber": 2,
-        "questionAnswers": "3"
-      },
-      {
-        "txt": "Find x i følgende ligning.",
-        "type": "ligninger",
-        "point": 5,
-        "tegn": "-",
-        "exerciseVars": {
-          "ligning": "6x - 20 = 59"
-        },
-        "facit": "13.2",
-        "questionNumber": 3,
-        "questionAnswers": "3"
-      },
-      {
-        "txt": "Find x i følgende ligning.",
-        "type": "ligninger",
-        "point": 5,
-        "tegn": "+",
-        "exerciseVars": {
-          "ligning": "2x + 13 = 29"
-        },
-        "facit": "8.0",
-        "questionNumber": 4,
-        "questionAnswers": "3",
-      }
-    ]
-};
+// {
+//   userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+//   exerciseSet:
+//     [
+//       {
+//         "txt": "Find x i følgende ligning.",
+//         "type": "ligninger",
+//         "point": 5,
+//         "tegn": "-",
+//         "exerciseVars": {
+//           "ligning": "11x - 14 = 29"
+//         },
+//         "facit": "3.9",
+//         "questionNumber": 1,
+//         "questionAnswers": "3"
+//       },
+//       {
+//         "txt": "Find x i følgende ligning.",
+//         "type": "ligninger",
+//         "point": 5,
+//         "tegn": "+",
+//         "exerciseVars": {
+//           "ligning": "4x + 22 = 45"
+//         },
+//         "facit": "5.8",
+//         "questionNumber": 2,
+//         "questionAnswers": "3"
+//       },
+//       {
+//         "txt": "Find x i følgende ligning.",
+//         "type": "ligninger",
+//         "point": 5,
+//         "tegn": "-",
+//         "exerciseVars": {
+//           "ligning": "6x - 20 = 59"
+//         },
+//         "facit": "13.2",
+//         "questionNumber": 3,
+//         "questionAnswers": "3"
+//       },
+//       {
+//         "txt": "Find x i følgende ligning.",
+//         "type": "ligninger",
+//         "point": 5,
+//         "tegn": "+",
+//         "exerciseVars": {
+//           "ligning": "2x + 13 = 29"
+//         },
+//         "facit": "8.0",
+//         "questionNumber": 4,
+//         "questionAnswers": "3",
+//       }
+//     ]
+// };
