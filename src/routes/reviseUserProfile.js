@@ -2,13 +2,13 @@ const { errorResponse } = require('../helper');
 
 function handleReviseUserProfileRequest(request, response) {
   if (request.method === 'POST') {
-    handleRevisedUserProfilePostRequest(request, response);
+    handleReviseUserProfilePostRequest(request, response);
   } else if (request.method !== 'POST') {
     throw 'bad request';
   }
 }
 
-async function handleRevisedUserProfilePostRequest(request, response) {
+async function handleReviseUserProfilePostRequest(request, response) {
   try {
     await reviseUserProfile(request, response);
   } catch (error) {
@@ -195,7 +195,24 @@ function respondWithNewUserProfile(newUserProfile, response) {
   response.end(newUserProfileJsonString);
 }
 
-module.exports = handleReviseUserProfileRequest;
+module.exports = {
+  handleReviseUserProfileRequest,
+  handleReviseUserProfilePostRequest,
+  reviseUserProfile,
+  fetchRequestBody,
+  requestBodyIsValid,
+  requestBodyUserProfileIsValid,
+  isUserProfileValidVector,
+  requestBodyExerciseSetIsValid,
+  validateEachExerciseInExerciseSet,
+  convertExerciseSetToExerciseProfiles,
+  calculateExerciseProfile,
+  scalarMultiplication,
+  convertExerciseToVector,
+  isCorrectAnswer,
+  sumVectorArray,
+  respondWithNewUserProfile,
+};
 
 // example body:
 // {
