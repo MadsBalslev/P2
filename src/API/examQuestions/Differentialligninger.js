@@ -5,13 +5,13 @@ const { randNum } = require('../../helper');
  * @constructor
  */
 function PowerIntegralExercise() {
-    const { A, B, C } = generateVariablesForPowerIntegralExercise();
-    this.txt = 'Find den fulstændige løsning til differentialligningen.';
-    this.type = 'differentialligning';
-    this.point = 10;
-    this.tegn = '';
-    this.exerciseVars = { Differentialligning: `y' = ${B}y*(${A}-y)` };
-    this.facit = getPowerIntegralFacit(A, B, C);
+  const { A, B, C } = generateVariablesForPowerIntegralExercise();
+  this.txt = 'Find den fulstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `y' = ${B}y*(${A}-y)` };
+  this.facit = getPowerIntegralFacit(A, B, C);
 }
 
 /**
@@ -19,11 +19,11 @@ function PowerIntegralExercise() {
  * 0 ≤ C ≤ 70.
  */
 function generateVariablesForPowerIntegralExercise() {
-    let B;
-    while (B % 3 !== 0) B = randNum(40);
-    const A = randNum(40);
-    const C = randNum(70);
-    return { A, B, C };
+  let B;
+  while (B % 3 !== 0) B = randNum(40);
+  const A = randNum(40);
+  const C = randNum(70);
+  return { A, B, C };
 }
 
 /**
@@ -34,17 +34,17 @@ function generateVariablesForPowerIntegralExercise() {
  * @returns facit for a powerIntegralExercise.
  */
 const getPowerIntegralFacit = (A, B, C) => {
-    const facitA = A / 4;
-    const facitB = B / 3;
-    const facitC = C / 2;
-    const integralFacit = `y = f(x) = ${facitA}/${facitB} + c*e^${facitC}*(${facitA})*x
+  const facitA = A / 4;
+  const facitB = B / 3;
+  const facitC = C / 2;
+  const integralFacit = `y = f(x) = ${facitA}/${facitB} + c*e^${facitC}*(${facitA})*x
     = ${facitA}/${facitB} + ce^-(${facitB}*${facitA})x`;
-    return integralFacit;
+  return integralFacit;
 };
 
 const numOfTasks = 2;
 module.exports = {
-    PowerIntegralExercise,
-    getPowerIntegralFacit,
-    numOfTasks,
+  PowerIntegralExercise,
+  getPowerIntegralFacit,
+  numOfTasks,
 };
