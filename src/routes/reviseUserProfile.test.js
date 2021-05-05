@@ -1,17 +1,27 @@
 const rup = require('./reviseUserProfile');
 
-const sampleExercise = {
+const sampleExercise1 = {
   txt: 'Find x i følgende ligning.',
   type: 'ligninger_C',
-  point: 5,
-  tegn: '-',
-  exerciseVars: {
-    ligning: '11x - 14 = 29',
-  },
   facit: '3.9',
-  questionNumber: 1,
   questionAnswers: '3.9',
 };
+
+const sampleExercise2 = {
+  txt: 'sample text',
+  type: 'statistik_A',
+  facit: 'correct answer',
+  questionAnswers: 'correct answer',
+};
+
+const sampleExercise3 = {
+  txt: 'sample text',
+  type: 'regression_B',
+  facit: 'wrong answer',
+  questionAnswers: 'correct answer',
+};
+
+const sampleExerciseSet = [sampleExercise1, sampleExercise2, sampleExercise3];
 
 test('isUserProfileValidVector thruthy', () => {
   const validUserProfile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
@@ -24,7 +34,7 @@ test('isUserProfileValidVector falsy', () => {
 });
 
 test('validateEachExerciseInExerciseSet valid input', () => {
-  const validExercise = [{ ...sampleExercise }];
+  const validExercise = [{ ...sampleExercise1 }];
   expect(rup.validateEachExerciseInExerciseSet(validExercise)).toBeTruthy();
 });
 
@@ -34,19 +44,19 @@ test('validateEachExerciseInExerciseSet empty object', () => {
 });
 
 test('validateEachExerciseInExerciseSet typeof facit invalid', () => {
-  const invalidExerciseSet = [{ ...sampleExercise }];
+  const invalidExerciseSet = [{ ...sampleExercise1 }];
   invalidExerciseSet[0].facit = 3.9;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
 
 test('validateEachExerciseInExerciseSet typeof questionAnswer invalid', () => {
-  const invalidExerciseSet = [{ ...sampleExercise }];
+  const invalidExerciseSet = [{ ...sampleExercise1 }];
   invalidExerciseSet[0].questionAnswers = 3.9;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
 
 test('validateEachExerciseInExerciseSet typeof type invalid', () => {
-  const invalidExerciseSet = [{ ...sampleExercise }];
+  const invalidExerciseSet = [{ ...sampleExercise1 }];
   invalidExerciseSet[0].type = 666;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
@@ -59,12 +69,12 @@ test('scalarMultiplication', () => {
 });
 
 test('isCorrectAnswer correct answer', () => {
-  const exerciseWithCorrectAnswer = { ...sampleExercise };
+  const exerciseWithCorrectAnswer = { ...sampleExercise1 };
   expect(rup.isCorrectAnswer(exerciseWithCorrectAnswer)).toBeTruthy();
 });
 
 test('isCorrectAnswer wrong answer', () => {
-  const exerciseWithWrongAnswer = { ...sampleExercise };
+  const exerciseWithWrongAnswer = { ...sampleExercise1 };
   exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
   expect(rup.isCorrectAnswer(exerciseWithWrongAnswer)).toBeFalsy();
 });
@@ -83,12 +93,8 @@ test('sumVectorArrayBig', () => {
   expect(rup.sumVectorArray(exerciseP)).toEqual([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
 });
 
-test('reviseUserProfile', () => {
-
-});
-
 test('convertExerciseSetToExerciseProfiles', () => {
-  const exSet = [{ ...sampleExercise }, { ...sampleExercise }];
+  const exSet = [{ ...sampleExercise1 }, { ...sampleExercise1 }];
   exSet[1].questionAnswers = 'wrong answer';
   const testVector = [
     [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -99,13 +105,13 @@ test('convertExerciseSetToExerciseProfiles', () => {
 });
 
 test('calculateExerciseProfile correct answer', () => {
-  const exerciseWithCorrectAnswer = { ...sampleExercise };
+  const exerciseWithCorrectAnswer = { ...sampleExercise1 };
   expect(rup.calculateExerciseProfile(exerciseWithCorrectAnswer))
     .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 });
 
 test('calculateExerciseProfile wrong answer', () => {
-  const exerciseWithWrongAnswer = { ...sampleExercise };
+  const exerciseWithWrongAnswer = { ...sampleExercise1 };
   exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
   expect(rup.calculateExerciseProfile(exerciseWithWrongAnswer))
     .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -142,4 +148,15 @@ test('calculateUserProfile', () => {
     1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
 
   expect(rup.calculateUserProfile(exerciseProfiles, currentUserProfile)).toEqual(newUserProfile);
+});
+
+test('reviseUserProfile', () => {
+  const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const newProfileExpected = [0.5, 0.566, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+    0.5, 0.733, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.566];
+  const newProfileActual = rup.reviseUserProfile(sampleExerciseSet, userProfile);
+
+  newProfileExpected.forEach((entry, i) => {
+    expect(newProfileActual[i]).toBeCloseTo(entry, 2);
+  });
 });
