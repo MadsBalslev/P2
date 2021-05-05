@@ -1,5 +1,9 @@
 const { errorResponse } = require('../helper');
 
+const CORRECT_ANSWER_WEIGHT = 0.2;
+const WRONG_ANSWER_WEIGHT = 0.7;
+const USER_WEIGHT = 0.5;
+
 function handleReviseUserProfileRequest(request, response) {
   if (request.method === 'POST') {
     handleReviseUserProfilePostRequest(request, response);
@@ -100,14 +104,12 @@ function convertExerciseSetToExerciseProfiles(exerciseSet) {
 }
 
 function calculateExerciseProfile(exercise) {
-  const correctAnswerWeight = 0.2;
-  const wrongAnswerWeight = 0.7;
   let exerciseVector = convertExerciseToVector(exercise);
 
   if (isCorrectAnswer(exercise)) {
-    exerciseVector = scalarMultiplication(correctAnswerWeight, exerciseVector);
+    exerciseVector = scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseVector);
   } else if (!isCorrectAnswer(exercise)) {
-    exerciseVector = scalarMultiplication(wrongAnswerWeight, exerciseVector);
+    exerciseVector = scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseVector);
   }
 
   return exerciseVector;
@@ -176,8 +178,7 @@ function convertExerciseToVector(exercise) {
 const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswers;
 
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
-  const userWeight = 0.5;
-  const weightedUserProfile = scalarMultiplication(userWeight, currentUserProfile);
+  const weightedUserProfile = scalarMultiplication(USER_WEIGHT, currentUserProfile);
   let newUserProfile = sumVectorArray(exerciseProfiles);
 
   newUserProfile = scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
@@ -213,6 +214,10 @@ module.exports = {
   isCorrectAnswer,
   sumVectorArray,
   respondWithNewUserProfile,
+  calculateUserProfile,
+  CORRECT_ANSWER_WEIGHT,
+  WRONG_ANSWER_WEIGHT,
+  USER_WEIGHT,
 };
 
 // example body:

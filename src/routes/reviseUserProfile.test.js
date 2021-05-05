@@ -24,7 +24,7 @@ test('isUserProfileValidVector falsy', () => {
 });
 
 test('validateEachExerciseInExerciseSet valid input', () => {
-  const validExercise = [sampleExercise];
+  const validExercise = [{ ...sampleExercise }];
   expect(rup.validateEachExerciseInExerciseSet(validExercise)).toBeTruthy();
 });
 
@@ -34,19 +34,19 @@ test('validateEachExerciseInExerciseSet empty object', () => {
 });
 
 test('validateEachExerciseInExerciseSet typeof facit invalid', () => {
-  const invalidExerciseSet = [sampleExercise];
+  const invalidExerciseSet = [{ ...sampleExercise }];
   invalidExerciseSet[0].facit = 3.9;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
 
 test('validateEachExerciseInExerciseSet typeof questionAnswer invalid', () => {
-  const invalidExerciseSet = [sampleExercise];
+  const invalidExerciseSet = [{ ...sampleExercise }];
   invalidExerciseSet[0].questionAnswers = 3.9;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
 
 test('validateEachExerciseInExerciseSet typeof type invalid', () => {
-  const invalidExerciseSet = [sampleExercise];
+  const invalidExerciseSet = [{ ...sampleExercise }];
   invalidExerciseSet[0].type = 666;
   expect(rup.validateEachExerciseInExerciseSet(invalidExerciseSet)).toBeFalsy();
 });
@@ -59,13 +59,13 @@ test('scalarMultiplication', () => {
 });
 
 test('isCorrectAnswer correct answer', () => {
-  const exerciseWithCorrectAnswer = sampleExercise;
+  const exerciseWithCorrectAnswer = { ...sampleExercise };
   expect(rup.isCorrectAnswer(exerciseWithCorrectAnswer)).toBeTruthy();
 });
 
 test('isCorrectAnswer wrong answer', () => {
-  const exerciseWithWrongAnswer = sampleExercise;
-  exerciseWithWrongAnswer.questionAnswers = 'something wrong';
+  const exerciseWithWrongAnswer = { ...sampleExercise };
+  exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
   expect(rup.isCorrectAnswer(exerciseWithWrongAnswer)).toBeFalsy();
 });
 
@@ -81,4 +81,65 @@ test('sumVectorArrayBig', () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   expect(rup.sumVectorArray(exerciseP)).toEqual([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
+});
+
+test('reviseUserProfile', () => {
+
+});
+
+test('convertExerciseSetToExerciseProfiles', () => {
+  const exSet = [{ ...sampleExercise }, { ...sampleExercise }];
+  exSet[1].questionAnswers = 'wrong answer';
+  const testVector = [
+    [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
+  expect(rup.convertExerciseSetToExerciseProfiles(exSet)).toEqual(testVector);
+});
+
+test('calculateExerciseProfile correct answer', () => {
+  const exerciseWithCorrectAnswer = { ...sampleExercise };
+  expect(rup.calculateExerciseProfile(exerciseWithCorrectAnswer))
+    .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+});
+
+test('calculateExerciseProfile wrong answer', () => {
+  const exerciseWithWrongAnswer = { ...sampleExercise };
+  exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
+  expect(rup.calculateExerciseProfile(exerciseWithWrongAnswer))
+    .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+});
+
+test('calculateUserProfile', () => {
+  const exerciseProfiles = [
+    [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23],
+  ];
+  const currentUserProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const newUserProfile = [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5,
+    1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
+
+  expect(rup.calculateUserProfile(exerciseProfiles, currentUserProfile)).toEqual(newUserProfile);
 });
