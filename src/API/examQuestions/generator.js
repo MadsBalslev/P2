@@ -139,16 +139,14 @@ const generateFunktionerAfToVariableExercise = () => {
     case 1:
       exercise = new funktionerAfToVariable.partielDifferentiationExercise();
       break;
-  /*
     case 2:
       exercise = new funktionerAfToVariable.rangeExercise();
       break;
-  */
     default:
       break;
   }
   return exercise;
-}
+};
 
 
 module.exports = {

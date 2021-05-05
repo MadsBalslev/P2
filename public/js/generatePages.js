@@ -19,7 +19,7 @@ const subjects = [
     id: 'ligninger',
   },
   {
-    name: 'To Variabler',
+    name: 'Funktioner af to variabler',
     id: 'funktionerAfToVariable',
   },
 ];
@@ -73,7 +73,7 @@ const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
 
-  label.setAttribute('for', id.toLowerCase());
+  label.setAttribute('for', id);
   label.innerHTML = subject.name;
 
   return label;
@@ -84,8 +84,8 @@ const generateSubjectInput = (subject) => {
   const { id } = subject;
 
   input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', id.toLowerCase());
-  input.setAttribute('id', id.toLowerCase());
+  input.setAttribute('name', id);
+  input.setAttribute('id', id);
 
   return input;
 };
