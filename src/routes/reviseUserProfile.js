@@ -10,17 +10,18 @@ function handleReviseUserProfileRequest(request, response) {
 
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
-    await reviseUserProfile(request, response);
+    const { userProfile, exerciseSet } = await fetchRequestBody(request);
+    const newUserProfile = reviseUserProfile(exerciseSet, userProfile);
+    respondWithNewUserProfile(newUserProfile, response);
   } catch (error) {
     errorResponse(response, '400', `${error}`);
   }
 }
 
-async function reviseUserProfile(request, response) {
-  const { userProfile, exerciseSet } = await fetchRequestBody(request);
+function reviseUserProfile(exerciseSet, userProfile) {
   const exerciseProfiles = convertExerciseSetToExerciseProfiles(exerciseSet);
   const newUserProfile = calculateUserProfile(exerciseProfiles, userProfile);
-  respondWithNewUserProfile(newUserProfile, response);
+  return newUserProfile;
 }
 
 function fetchRequestBody(request) {
