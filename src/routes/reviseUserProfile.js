@@ -56,29 +56,36 @@ function requestBodyIsValid(requestBody) {
 }
 
 function requestBodyUserProfileIsValid(requestBody) {
-  return requestBody.hasOwnProperty('userProfile')
-    && requestBody.userProfile.length === 23;
+  let isValidUserProfile;
+  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23)) {
+    isValidUserProfile = false;
+  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23) {
+    isValidUserProfile = isUserProfileValidVector(requestBody.userProfile);
+  }
+
+  return isValidUserProfile;
 }
+
+const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
 function requestBodyExerciseSetIsValid(requestBody) {
   let isValidExerciseSet;
-  if (!requestBody.hasOwnProperty('ExerciseSet')) {
+  if (!requestBody.hasOwnProperty('exerciseSet')) {
     isValidExerciseSet = false;
-  } if (requestBody.hasOwnProperty('ExerciseSet')) {
-    isValidExerciseSet = ValidateEachExerciseInExerciseSet(requestBody.exerciseSet);
+  } if (requestBody.hasOwnProperty('exerciseSet')) {
+    isValidExerciseSet = validateEachExerciseInExerciseSet(requestBody.exerciseSet);
   }
 
   return isValidExerciseSet;
 }
 
-function ValidateEachExerciseInExerciseSet(exerciseSet) {
-  exerciseSet.forEach((exercise) => {
-    
-  });
-}
-
-function validateSingleExercise(exercise) {
-
+function validateEachExerciseInExerciseSet(exerciseSet) {
+  return exerciseSet.every((exercise) => exercise.hasOwnProperty('type')
+    && exercise.hasOwnProperty('questionAnswers')
+    && exercise.hasOwnProperty('facit')
+    && typeof exercise.type === 'string'
+    && typeof exercise.questionAnswers === 'string'
+    && typeof exercise.facit === 'string');
 }
 
 function convertExerciseSetToExerciseProfiles(exerciseSet) {
@@ -181,7 +188,11 @@ function calculateUserProfile(exerciseProfiles, currentUserProfile) {
 const sumVectorArray = (exerciseProfiles) => exerciseProfiles.reduce((a, b) => a.map((c, i) => c + b[i]));
 
 function respondWithNewUserProfile(newUserProfile, response) {
-
+  const newUserProfileJsonString = JSON.stringify(newUserProfile);
+  response.writeHead(200, {
+    'Content-Type': 'application/json',
+  });
+  response.end(newUserProfileJsonString);
 }
 
 module.exports = handleReviseUserProfileRequest;
