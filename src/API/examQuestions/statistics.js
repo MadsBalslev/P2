@@ -11,7 +11,7 @@ const generateVars = () => {
 
 function confidenceIntervalExercise () {
   const { A, B } = generateVars();
-  this.txt = `En klasse af 3.g elever ${A} har stemt om de var klar til matematik eksamen og ${B} har stemt ja. Bestem nu middelværdien og bagefter brug det til at finde 95%-konfidensintervallet`;
+  this.txt = `En klasse af 3.g elever ${A} har stemt om de var klar til matematik eksamen og ${B} har stemt ja. Bestem nu sandsynlighedsparameteren og bagefter brug det til at finde 95%-konfidensintervallet`;
   this.type = 'statistik';
   this.point = 5;
   this.tegn = '';
