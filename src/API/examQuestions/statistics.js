@@ -32,10 +32,6 @@ const confidenceIntervalFacit = (A, B) => {
   confidenceinterval1 = (middelværdi - 1.96 * sqrt).toFixed(2);
   confidenceinterval2 = (middelværdi + 1.96 * sqrt).toFixed(2);
 
-  console.log(sqrt);
-  console.log(confidenceinterval1);
-  console.log(confidenceinterval2);
-
   return `[${confidenceinterval1};${confidenceinterval2}]`;
 }
 
