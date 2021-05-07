@@ -1,13 +1,9 @@
 const { randNum } = require('../../helper');
+let Fraction = require('fractional').Fraction
 
-            var script = doc.createElement('script'),
-                config;
-            script.src = 'MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js';
-            script.type = 'text/javascript';
-            
-            config = 'MathJax.Hub.config{text2jax:{inlineMath:[[\'$,\'$\'], ["\\(","\\)"]],displayMath:[[\'\\\\[\',\'\\\\];
-        }
-    }
+(new Fraction(7,3)).multiply(new Fraction(1,2)).toString();
+
+
 
 function differentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
@@ -17,11 +13,14 @@ function differentialLigningExercise() {
   this.tegn = '';
   this.exerciseVars = { Differentialligning: `f'(x)=${A}x^3+${B}x^2-${C}x+${D}`};
   this.facit = differentialLigningFacit(A, B, C, D);
+  this.print = () => {
+    console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
+  }
 }
 
 const diffLigningVars = () => {
-  const A = randNum(8) + 2;
-  const B = randNum(8) + 2;
+  const A = randNum(8) + 4;
+  const B = randNum(8) + 3;
   const C = randNum(8) + 2;
   const D = randNum(15) + 1;
 
@@ -39,6 +38,10 @@ const differentialLigningFacit = (A, B, C, D) => {
   return diffFacit;
 }
 
+
+let a = new differentialLigningExercise();
+
+a.print();
 
 const numOfTasks = 1;
 module.exports = {
