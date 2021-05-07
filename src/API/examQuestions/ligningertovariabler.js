@@ -1,4 +1,3 @@
-
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 /**
@@ -7,11 +6,11 @@ const { randNum } = require('../../helper');
  * @param c the whole number in the question
  * @returns facit for a rangeExercise
  */
- const rangeFacit = (unknowns, c) => math.sqrt(c/unknowns);
+const rangeFacit = (unknowns, c) => math.sqrt(c / unknowns);
 
 /**
  * Generates variables for exercises
- * @returns {numbers} 
+ * @returns {{}} An object containing the variables
  */
 const generateVars = () => {
   const A = randNum(10) + 1;
@@ -19,21 +18,24 @@ const generateVars = () => {
   const C = randNum(10) + 2;
   const D = randNum(4);
 
-  return { A, B, C, D };
-}
+  return {
+    A, B, C, D,
+  };
+};
 
 /**
  * Generates x or y randomly for the exercises.
  * @returns {variable} 
  */
 const generateExpression = () => {
-  let i = randNum(2);
+  const i = randNum(2);
 
   if (i === 1) {
     return 'x';
   }
-  else return 'y';
-}
+
+  return 'y';
+};
 
 /**
  * Construct for exercise, so it can make a new exercise when called.
