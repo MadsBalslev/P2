@@ -7,8 +7,9 @@ const USER_WEIGHT = 0.5;
 /**
  * Handles requests to /reviseUserProfile, if the request is a post request handle the request,
  * else if it’s not a request don’t handle it.
- * @param {*} request
- * @param {*} response
+ *
+ * @param {{}} request
+ * @param {{}} response
  */
 function handleReviseUserProfileRequest(request, response) {
   if (request.method === 'POST') {
@@ -22,6 +23,7 @@ function handleReviseUserProfileRequest(request, response) {
  * Handles a post rquest to /reviseUserProfile, will try fetching request body, then based on the
  * userProfile and exerciseSet in this body calculate a new userProfile, then responde with the new
  * userProfile.
+ *
  * @param {{}} request
  * @param {{}} response
  */
@@ -36,9 +38,10 @@ async function handleReviseUserProfilePostRequest(request, response) {
 }
 
 /**
- * fetch request body (JSON object)
+ * fetch request body (JSON object).
+ *
  * @param {*} request
- * @returns {Promise} request body
+ * @returns {Promise} Request body.
  */
 function fetchRequestBody(request) {
   return new Promise((resolve, reject) => {
@@ -69,6 +72,7 @@ function fetchRequestBody(request) {
 
 /**
  * Checks if requestBody has the correct properties and that the properties are of the correct type.
+ *
  * @param {Object} requestBody
  * @returns {boolean} True if the requestBody is valid, else false.
  */
@@ -80,6 +84,7 @@ function requestBodyIsValid(requestBody) {
 /**
  * Checks that requestBody has property userProfile and that the lenght of userProfile is 23. If
  * this is the case check if it's a true vector.
+ *
  * @param {Object} requestBody Object to control.
  * @returns {Boolean} True if the userProfile is valid, else false.
  */
@@ -96,11 +101,19 @@ function requestBodyUserProfileIsValid(requestBody) {
 
 /**
  * Checks that all items in an array are numbers, ie if it's vector.
+ *
  * @param {Array} susVector Array to check.
  * @returns {Boolean} True if alle items are numbers, else false.
  */
 const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
+/**
+ * Checks if requestBody contains the property exerciseSet, if it does checks if each exercise in
+ * exerciseSet is valid.
+ *
+ * @param {Object} requestBody
+ * @returns True if the requestBody.ExerciseSet is valid, else false.
+ */
 function requestBodyExerciseSetIsValid(requestBody) {
   let isValidExerciseSet;
   if (!requestBody.hasOwnProperty('exerciseSet')) {
@@ -112,6 +125,13 @@ function requestBodyExerciseSetIsValid(requestBody) {
   return isValidExerciseSet;
 }
 
+/**
+ * Checks if each exercise in requestBody.ExerciseSet contains the correct properties and that these
+ * properties are of the correct type.
+ *
+ * @param {Object[]} exerciseSet
+ * @returns True if the requestBody.ExerciseSet is valid, else false.
+ */
 function validateEachExerciseInExerciseSet(exerciseSet) {
   return exerciseSet.every((exercise) => exercise.hasOwnProperty('type')
     && exercise.hasOwnProperty('questionAnswers')
@@ -134,6 +154,13 @@ function reviseUserProfile(exerciseSet, userProfile) {
   return newUserProfile;
 }
 
+/**
+ * Converts a exerciseSet to an Array of exercises exerciseSet to an array of vectors/arrays called
+ * exerciseProfiles.
+ *
+ * @param {Object[]} exerciseSet
+ * @returns {Number[] exerciseProfile vectors.
+ */
 function convertExerciseSetToExerciseProfiles(exerciseSet) {
   const exerciseProfiles = [];
 
@@ -144,18 +171,31 @@ function convertExerciseSetToExerciseProfiles(exerciseSet) {
   return exerciseProfiles;
 }
 
+/**
+ * Calculates a single exerciseProfile vector given an exercise. If the answer is wrong the
+ * exerciseProfile is multiplied by 0.2, if the answer is wrong the exerciseProfile is multiplied by
+ * 0.7.
+ *
+ * @param {{}} exercise
+ * @returns ExerciseProfile.
+ */
 function calculateExerciseProfile(exercise) {
-  let exerciseVector = convertExerciseToVector(exercise);
+  let exerciseProfile = convertExerciseToVector(exercise);
 
   if (isCorrectAnswer(exercise)) {
-    exerciseVector = scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseVector);
+    exerciseProfile = scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseProfile);
   } else if (!isCorrectAnswer(exercise)) {
-    exerciseVector = scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseVector);
+    exerciseProfile = scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseProfile);
   }
 
-  return exerciseVector;
+  return exerciseProfile;
 }
-
+/**
+ * Converts and exercise to vector representation.
+ *
+ * @param {{}} exercise
+ * @returns {number[]} Exercise vector.
+ */
 function convertExerciseToVector(exercise) {
   switch (exercise.type) {
     case 'talOgRegnearter_C':
@@ -209,15 +249,21 @@ function convertExerciseToVector(exercise) {
   }
 }
 
+/**
+ * Compares the answer to an exercise with the facit.
+ *
+ * @param {Object} exercise
+ * @returns {Boolean} True if facit and answer are the same, else false.
+ */
 const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswers;
 
 /**
- * @param {number} scalar The scalar to use for the weight
- * @param {[]} vector The vector to multiply with the scalar
- * @return {[]} A new vector which is multiplied with the scalar
+ * Will calculate a new user profile based on the exerciseProfiles
+ *
+ * @param {number[][]} exerciseProfiles A nested array of exercise profiles
+ * @param {number[]} currentUserProfile The current user profile to be re-calculated
+ * @returns {number[]} The re-calculated user profile
  */
-const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
-
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
   const weightedUserProfile = scalarMultiplication(USER_WEIGHT, currentUserProfile);
   let newUserProfile = sumVectorArray(exerciseProfiles);
@@ -228,8 +274,28 @@ function calculateUserProfile(exerciseProfiles, currentUserProfile) {
   return newUserProfile;
 }
 
-const sumVectorArray = (exerciseProfiles) => exerciseProfiles.reduce((a, b) => a.map((c, i) => c + b[i]));
+/**
+ * Will scale a vector with the given scalar and return the new scaled vector
+ *
+ * @param {number} scalar The scalar to use for the weight
+ * @param {number[]} vector The vector to multiply with the scalar
+ * @return {number[]} A new vector which is multiplied with the scalar
+ */
+const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
 
+/**
+ * Will sum an array of vectors (arrays) together.
+ * @param {number[][]} vectors
+ * @return {number[]} Sum of vectors in the vectors array.
+ */
+const sumVectorArray = (vectors) => vectors.reduce((a, b) => a.map((c, i) => c + b[i]));
+
+/**
+ * Respondes to request with the newUserProfile.
+ *
+ * @param {number[]} newUserProfile
+ * @param {{}} response
+ */
 function respondWithNewUserProfile(newUserProfile, response) {
   const newUserProfileJsonString = JSON.stringify(newUserProfile);
   response.writeHead(200, {
