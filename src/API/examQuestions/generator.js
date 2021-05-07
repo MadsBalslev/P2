@@ -7,6 +7,7 @@ const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
+const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
 
 /**
@@ -33,6 +34,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'ligninger':
           set.push(generateLigningExercise(amount));
+          break;
+        case 'funktionerAfToVariable':
+          set.push(generateFunktionerAfToVariableExercise(amount));
           break;
         case 'statistik':
           set.push(generateStatistikExercise(amount));
@@ -124,6 +128,22 @@ const generateLigningExercise = () => {
       break;
     case 2:
       exercise = new ligninger.LigningMinusExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateFunktionerAfToVariableExercise = () => {
+  let exercise;
+  const rand = randNum(funktionerAfToVariable.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new funktionerAfToVariable.PartielDifferentiationExercise();
+      break;
+    case 2:
+      exercise = new funktionerAfToVariable.RangeExercise();
       break;
     default:
       break;
