@@ -1,7 +1,13 @@
 
 const math = require('mathjs');
 const { randNum } = require('../../helper');
-
+/**
+ * returns the facit of a rangeExercise question
+ * @param unknowns the amount of x^2 and y^2 variables in the question
+ * @param c the whole number in the question
+ * @returns facit for a rangeExercise
+ */
+ const rangeFacit = (unknowns, c) => math.sqrt(c/unknowns);
 
 /**
  * Generates variables for exercises
@@ -84,16 +90,7 @@ function RangeExercise() {
 
 }
 
-/**
- * returns the facit of a rangeExercise question
- * @param unknowns the amount of x^2 and y^2 variables in the question
- * @param c the whole number in the question
- * @returns facit for a rangeExercise
- */
-function rangeFacit(unknowns, c) {
-  const facit = (math.sqrt(c/unknowns));
-  return facit;
-}
+
 
 /**
  * Checks if given number is a whole or decimal number
