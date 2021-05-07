@@ -137,10 +137,10 @@ const generateStatistikExercise = () => {
   const rand = randNum(statistik.numOfTasks);
   switch (rand) {
     case 1:
-      exercise = new statistik.binormalConfidenceIntervalExercise();
+      exercise = new statistik.BinormalConfidenceIntervalExercise();
       break;
     case 2:
-      exercise = new statistik.normalConfidenceIntervalExercise();
+      exercise = new statistik.NormalConfidenceIntervalExercise();
       break;
     default:
       break;
