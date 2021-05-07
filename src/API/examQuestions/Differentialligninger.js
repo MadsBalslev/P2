@@ -14,6 +14,20 @@ function differentialLigningExercise() {
   }
 }
 
+function differentialLigningExercise2() {
+  const { A, B, C, D } = diffLigningVars();
+  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `f'(x)=${A}x^3-${B}x^2-${C}x-${D}`};
+  this.facit = differentialLigning2Facit(A, B, C, D);
+  this.print = () => {
+    console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
+  }
+}
+
+
 const diffLigningVars = () => {
   const A = randNum(8) + 4;
   const B = randNum(8) + 3;
@@ -28,16 +42,18 @@ const differentialLigningFacit = (A, B, C, D) => {
   let Bf = B / 3;
   let Cf = C / 2;
   let Df = D;
-  
-  // if(A % 4 === 0) { let Af = A }
 
-  // let Af = new Fraction(A / 4).toString();
-  // let Bf = new Fraction(B / 3).toString();
-  // let Cf = new Fraction (C / 2).toString();
-  // let Df = D;
-  
-  
   const diffFacit = `f(x)=${Af}x^4+${Bf}x^3-${Cf}x^2+${Df}x+C`
+  return diffFacit;
+}
+
+const differentialLigning2Facit = (A, B, C, D) => {
+  let Af = A / 4;
+  let Bf = B / 3;
+  let Cf = C / 2;
+  let Df = D;
+  
+  const diffFacit = `f(x)=${Af}x^4-${Bf}x^3-${Cf}x^2-${Df}x+C`
   return diffFacit;
 }
 
@@ -45,8 +61,11 @@ let a = new differentialLigningExercise();
 
 a.print();
 
-const numOfTasks = 1;
+const numOfTasks = 2;
 module.exports = {
   differentialLigningExercise,
+  differentialLigningFacit,
+  differentialLigningExercise2,
+  differentialLigning2Facit,
   numOfTasks,
 };
