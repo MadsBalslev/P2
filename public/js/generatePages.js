@@ -18,6 +18,10 @@ const subjects = [
     name: 'Ligninger',
     id: 'ligninger',
   },
+  {
+    name: 'Trigonometri',
+    id: 'trigonometri',
+  },
 ];
 
 const generateStartPage = () => {
@@ -264,8 +268,7 @@ const generateResultPage = (exerciseSet) => {
 };
 
 /**
- * Function that takes an exerciseSet as parameter,
-   and calculates the maximum points available and the points achieved by the user.
+ * Function that takes an exerciseSet as parameter, and calculates the maximum points available and the points achieved by the user.
  * @param {*} exerciseSet
  */
 const calcUserStats = (exersiceSet) => {
@@ -280,7 +283,6 @@ const calcUserStats = (exersiceSet) => {
   exersiceSet.forEach((exersice) => {
     maxPoints[exersice.type] += exersice.point;
     if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
-
 
   });
 
@@ -298,6 +300,7 @@ const calcUserStats = (exersiceSet) => {
  * @param {*} AllData
  * @param {*} container
  */
+
 const createStatsDivs = (AllData, container) => {
   subjects.forEach((subject) => {
     if (AllData.maxPoints[subject.id] > 0) {
@@ -309,6 +312,7 @@ const createStatsDivs = (AllData, container) => {
       container.appendChild(div);
     }
   });
+
 }
 /**
  * Function that creates html responsible for grade and score.
@@ -321,9 +325,6 @@ const createGradeText = (container, userPoints, totalPoints) => {
   const pointText = document.createElement('p');
   const grade = document.createElement('p');
 
-  
-
-
   pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
   grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
   pointText.style.backgroundColor = 'grey';
@@ -332,7 +333,6 @@ const createGradeText = (container, userPoints, totalPoints) => {
   container.appendChild(pointCounter);
   container.appendChild(grade);
 }
-
   /**
    * Function that creates html responsible showing if question got answered correct or wrong.
    * @param {*} questionAnswer
@@ -358,7 +358,7 @@ const showQuestionResult =(questionAnswer, facit, div ) => {
  * @param {*} points
  * @param {*} maxPoints
  */
-const calcGrade = (points, maxPoints) => {
+const calcGrade = (points, maxPoints) => {app
   const scalar = 250 / maxPoints;
   const normPoints = parseInt(scalar * points, 10);
   let grade = '';
@@ -413,7 +413,7 @@ const addPoints = (exercise, userPoints) => {
 const checkUserAnswerValue = (answer, facit) => { 
   if (answer === facit) { 
     return true;} 
-  else if(answer !== facit) {
+  else if(answer ==! facit) {
     return false;}
   else {console.log("fejl i checkUserAnswerValue")}
 
