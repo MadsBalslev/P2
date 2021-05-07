@@ -1,4 +1,4 @@
-const { derivative, concat, FunctionAssignmentNodeDependencies } = require('mathjs');
+
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
@@ -23,7 +23,7 @@ const generateVars = () => {
 const generateExpression = () => {
   let i = randNum(2);
 
-  if (i == 1) {
+  if (i === 1) {
     return 'x';
   }
   else return 'y';
