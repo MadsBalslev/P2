@@ -31,7 +31,6 @@ function userProfileIsValid(userProfile) {
 }
 
 function generateUserExerciseSet(userProfile) {
-
 }
 
 function cosineSimilarity(vectorA, vectorB) {
@@ -48,8 +47,8 @@ function dotProduct(vectorA, vectorB) {
 
 function lengthOfVector(vector) {
   let temp = 0;
-  vector.forEach(element => {
-    temp += Math.pow(element, 2);
+  vector.forEach((element) => {
+    temp += element ** 2;
   });
   return Math.sqrt(temp);
 }
