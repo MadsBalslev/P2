@@ -36,7 +36,7 @@ const generateExpression = () => {
 function partielDifferentiationExercise () {
   const { A, B, C, D } = generateVars();
   const expression = generateExpression();
-  this.txt = (`Differientier i forhold til ${expression} i følgende to variabel funktion.`);
+  this.txt = `Differientier i forhold til ${expression} i følgende to variabel funktion.`;
   this.type = 'funktionerAfToVariable';
   this.point = 5;
   this.tegn = '';
@@ -74,11 +74,11 @@ function rangeExercise() {
     c = unknowns * Math.floor(Math.random() * (10 - 1) + 1); ;
     facit = rangeFacit(unknowns, c);
     } while (wholeNumberCheck(facit) === false);
-    this.txt = (`bestem maksimumværdien af følgende 2 variabel funktion`);
-    this.type = (`funktionerAfToVariable`);
+    this.txt = `bestem maksimumværdien af følgende 2 variabel funktion`;
+    this.type = `funktionerAfToVariable`;
     this.point = 5;
-    this.tegn = ('');
-    this.exerciseVars = (`ligning ${c} - ${unknowns}x2 - ${unknowns}y2`);
+    this.tegn = '';
+    this.exerciseVars = {ligning: `\\sqrt{${c} - ${unknowns}x^2 - ${unknowns}y^2}`};
     this.facit = String(rangeFacit(unknowns, c));
 
 
