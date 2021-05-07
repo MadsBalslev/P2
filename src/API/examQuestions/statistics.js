@@ -27,8 +27,8 @@ const generateAfgivelse = () => {
  * @return {variables} Returns the randomly generated numbers.
  */
 const generateVars = () => {   
-  const A = randNum(75) + 1;
-  const B = randNum(50) + 1;
+  const A = randNum(75) + 1.01;
+  const B = randNum(50) + 1.01;
 
   return { A, B };
 }
@@ -99,16 +99,13 @@ return `[${confidenceinterval1};${confidenceinterval2}]`;
  * @return {facit} Returns the interval and correct answer for the exercise
  */
 const binormalConfidenceIntervalFacit = (A, B) => {
-  
-  let confidenceinterval1;
-  let confidenceinterval2;
-  let sqrt;
-  const middelværdi = (B / A);
+  middelværdi = (B / A);
   const n = (A + B);
 
-  sqrt = math.sqrt((middelværdi * (1 - middelværdi)/n)).toFixed(5);
-  confidenceinterval1 = (middelværdi - 1.96 * sqrt).toFixed(2);
-  confidenceinterval2 = (middelværdi + 1.96 * sqrt).toFixed(2);
+  sqrt = math.sqrt((middelværdi * (1 - middelværdi)/n));
+
+  confidenceinterval1 = parseFloat((middelværdi - 1.96 * sqrt).toFixed(2));
+  confidenceinterval2 = parseFloat((middelværdi + 1.96 * sqrt).toFixed(2));
 
   return `[${confidenceinterval1};${confidenceinterval2}]`;
 }
