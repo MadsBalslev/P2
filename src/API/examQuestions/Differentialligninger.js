@@ -1,9 +1,5 @@
 const { randNum } = require('../../helper');
-let Fraction = require('fractional').Fraction
-
-(new Fraction(7,3)).multiply(new Fraction(1,2)).toString();
-
-
+const { Fraction } = require('fractional');
 
 function differentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
@@ -33,11 +29,17 @@ const differentialLigningFacit = (A, B, C, D) => {
   let Cf = C / 2;
   let Df = D;
   
+  // if(A % 4 === 0) { let Af = A }
+
+  // let Af = new Fraction(A / 4).toString();
+  // let Bf = new Fraction(B / 3).toString();
+  // let Cf = new Fraction (C / 2).toString();
+  // let Df = D;
+  
   
   const diffFacit = `f(x)=${Af}x^4+${Bf}x^3-${Cf}x^2+${Df}x+C`
   return diffFacit;
 }
-
 
 let a = new differentialLigningExercise();
 
