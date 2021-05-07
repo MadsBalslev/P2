@@ -1,50 +1,57 @@
 const { randNum } = require('../../helper');
+var MathJaxInit = {
+        insertScript: function(doc) {
+            var googleFix = '.MathJax .mn {background: inherit;} .MathJax .mi {color: inherit;} .MathJax .mo {background:. inherit;}';
+            var style = do .createElement('style');
+                style.innerText = googleFix;
+            try {
+                style.textContent = googleFix;
+            } catch (e) {}
+            doc.getElementsByTagName('body')[0].appendChild(style);
 
-/**
- * Represents a power integral exercise.
- * @constructor
- */
-function PowerIntegralExercise() {
-  const { A, B, C } = generateVariablesForPowerIntegralExercise();
-  this.txt = 'Find den fulstændige løsning til differentialligningen.';
-  this.type = 'differentialligning';
-  this.point = 10;
-  this.tegn = '';
-  this.exerciseVars = { Differentialligning: `y' = ${B}y*(${A}-y)` };
-  this.facit = getPowerIntegralFacit(A, B, C);
+            var script = doc.createElement('script'),
+                config;
+            script.src = 'MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js';
+            script.type = 
+        }
+    }
+    /**
+     * Represents a power integral exercise.
+     * @constructor
+     */
+function differentialLigningExercise() {
+    const { A, B, C, D } = diffLigningVars();
+    this.txt = 'Find den fulstændige løsning til differentialligningen.';
+    this.type = 'differentialligning';
+    this.point = 10;
+    this.tegn = '';
+    this.exerciseVars = { Differentialligning: `y' = ${B}y*(${A}-y)` };
+    this.facit = '';
 }
 
-/**
- * @returns three random numbers A, B, C where 0 ≤ A ≤ 40, 0 ≤ B ≤ 40 and 3 !divides B,
- * 0 ≤ C ≤ 70.
- */
-function generateVariablesForPowerIntegralExercise() {
-  let B;
-  while (B % 3 !== 0) B = randNum(40);
-  const A = randNum(40);
-  const C = randNum(70);
-  return { A, B, C };
+function particularDifferentialExercise() {
+    const { A, B, C, D } = diffLigningVars();
+    this.txt = 'Find den partikulære løsning til differentialligningen.';
+    this.type = 'differentialligning';
+    this.point = 10;
+    this.tegn = '';
+    this.exerciseVars = {
+        Differentialligning: ``};
+    this.facit = '';
 }
 
-/**
- * Calculates the facit for a powerIntegralExercise.
- * @param {number} A
- * @param {number} B
- * @param {number} C
- * @returns facit for a powerIntegralExercise.
- */
-const getPowerIntegralFacit = (A, B, C) => {
-  const facitA = A / 4;
-  const facitB = B / 3;
-  const facitC = C / 2;
-  const integralFacit = `y = f(x) = ${facitA}/${facitB} + c*e^${facitC}*(${facitA})*x
-    = ${facitA}/${facitB} + ce^-(${facitB}*${facitA})x`;
-  return integralFacit;
-};
+const diffLigningVars = () => {
+    const A = randNum(8) + 1;
+    const B = randNum(8) + 1;
+    const C = randNum(8) + 1;
+    const D = randNum(15) + 1;
+
+    return { A, B, C, D }
+}
+
 
 const numOfTasks = 2;
 module.exports = {
-  PowerIntegralExercise,
-  getPowerIntegralFacit,
-  numOfTasks,
+    PowerIntegralExercise,
+    numOfTasks,
 };
