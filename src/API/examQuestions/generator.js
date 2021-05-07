@@ -137,10 +137,10 @@ const generateFunktionerAfToVariableExercise = () => {
   const rand = randNum(funktionerAfToVariable.numOfTasks);
   switch (rand) {
     case 1:
-      exercise = new funktionerAfToVariable.partielDifferentiationExercise();
+      exercise = new funktionerAfToVariable.PartielDifferentiationExercise();
       break;
     case 2:
-      exercise = new funktionerAfToVariable.rangeExercise();
+      exercise = new funktionerAfToVariable.RangeExercise();
       break;
     default:
       break;

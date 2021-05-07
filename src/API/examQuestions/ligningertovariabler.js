@@ -33,7 +33,7 @@ const generateExpression = () => {
  * Construct for exercise, so it can make a new exercise when called.
  * @constructor
  */
-function partielDifferentiationExercise () {
+function PartielDifferentiationExercise () {
   const { A, B, C, D } = generateVars();
   const expression = generateExpression();
   this.txt = `Differientier i forhold til ${expression} i følgende to variabel funktion.`;
@@ -54,18 +54,18 @@ function partielDifferentiationExercise () {
  */
 const partielDifferentiationFacit = (A, B, C, D, expression) => {
 
-  f = (`${A}x+(x^${B})+${C}y+(y^${D})`);
+  const f = (`${A}x+(x^${B})+${C}y+(y^${D})`);
 
-  facit = math.derivative(f, expression).toString();
+  const facit = math.derivative(f, expression).toString();
   return facit;
 }
 
-rangeExercise();
+RangeExercise();
 /**
  * constructor function for rangeexercise
  * @constructor
  */
-function rangeExercise() {
+function RangeExercise() {
     let c;
     let unknowns;
     let facit;
@@ -111,9 +111,9 @@ function wholeNumberCheck(number) {
 const numOfTasks = 2;
 
 module.exports = {
-  partielDifferentiationExercise,
+  PartielDifferentiationExercise,
   partielDifferentiationFacit,
-  rangeExercise,
+  RangeExercise,
   rangeFacit,
   numOfTasks,
 };
