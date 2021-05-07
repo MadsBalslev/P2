@@ -47,6 +47,6 @@ a.print();
 
 const numOfTasks = 1;
 module.exports = {
-    differentialLigningExercise,
-    numOfTasks,
+  differentialLigningExercise,
+  numOfTasks,
 };
