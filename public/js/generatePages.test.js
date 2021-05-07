@@ -9,7 +9,7 @@
 //   expect(grade.calcGrade(points, maxpoints)).toEqual(expectedgrade);
 // });
 
-test('dummy', () => {
+test('dummy test', () => {
   const a = 2;
   const b = 2;
 
