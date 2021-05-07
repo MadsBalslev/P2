@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { lookup } = require('mime-types');
 const handleOpgaverRequest = require('./routes/opgaver');
-const handleReviseUserProfileRequest = require('./routes/reviseUserProfile.js');
+const rup = require('./routes/reviseUserProfile.js');
 const { errorResponse } = require('./helper');
 
 global.globalSet = [];
@@ -25,7 +25,7 @@ const tryHandleRequest = (request, response) => {
     // logRequest(request);
     handleRequest(request, response);
   } catch (error) {
-    errorResponse(response, 400, 'error at tryHandleRequest');
+    errorResponse(response, 400, `${error}`);
   }
 };
 
@@ -49,7 +49,7 @@ const handleRequest = (request, response) => {
       handleOpgaverRequest(request, response);
       break;
     case '/reviseUserProfile':
-      handleReviseUserProfileRequest(request, response);
+      rup.handleReviseUserProfileRequest(request, response);
       break;
     case '/generateUserSet':
       handleGenerateUserSetProfile(request, response);
