@@ -4,6 +4,12 @@ const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
 
+/**
+ * Handles requests to /reviseUserProfile, if the request is a post request handle the request,
+ * else if it’s not a request don’t handle it.
+ * @param {*} request
+ * @param {*} response
+ */
 function handleReviseUserProfileRequest(request, response) {
   if (request.method === 'POST') {
     handleReviseUserProfilePostRequest(request, response);
@@ -12,6 +18,13 @@ function handleReviseUserProfileRequest(request, response) {
   }
 }
 
+/**
+ * Handles a post rquest to /reviseUserProfile, will try fetching request body, then based on the
+ * userProfile and exerciseSet in this body calculate a new userProfile, then responde with the new
+ * userProfile.
+ * @param {{}} request
+ * @param {{}} response
+ */
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
     const { userProfile, exerciseSet } = await fetchRequestBody(request);
@@ -22,12 +35,11 @@ async function handleReviseUserProfilePostRequest(request, response) {
   }
 }
 
-function reviseUserProfile(exerciseSet, userProfile) {
-  const exerciseProfiles = convertExerciseSetToExerciseProfiles(exerciseSet);
-  const newUserProfile = calculateUserProfile(exerciseProfiles, userProfile);
-  return newUserProfile;
-}
-
+/**
+ * fetch request body (JSON object)
+ * @param {*} request
+ * @returns {Promise} request body
+ */
 function fetchRequestBody(request) {
   return new Promise((resolve, reject) => {
     let requestBody = '';
@@ -55,11 +67,22 @@ function fetchRequestBody(request) {
   });
 }
 
+/**
+ * Checks if requestBody has the correct properties and that the properties are of the correct type.
+ * @param {Object} requestBody
+ * @returns {boolean} True if the requestBody is valid, else false.
+ */
 function requestBodyIsValid(requestBody) {
   return requestBodyUserProfileIsValid(requestBody)
     && requestBodyExerciseSetIsValid(requestBody);
 }
 
+/**
+ * Checks that requestBody has property userProfile and that the lenght of userProfile is 23. If
+ * this is the case check if it's a true vector.
+ * @param {Object} requestBody Object to control.
+ * @returns {Boolean} True if the userProfile is valid, else false.
+ */
 function requestBodyUserProfileIsValid(requestBody) {
   let isValidUserProfile;
   if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23)) {
@@ -71,6 +94,11 @@ function requestBodyUserProfileIsValid(requestBody) {
   return isValidUserProfile;
 }
 
+/**
+ * Checks that all items in an array are numbers, ie if it's vector.
+ * @param {Array} susVector Array to check.
+ * @returns {Boolean} True if alle items are numbers, else false.
+ */
 const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
 function requestBodyExerciseSetIsValid(requestBody) {
@@ -91,6 +119,19 @@ function validateEachExerciseInExerciseSet(exerciseSet) {
     && typeof exercise.type === 'string'
     && typeof exercise.questionAnswers === 'string'
     && typeof exercise.facit === 'string');
+}
+
+/**
+ * Function to revise the user profile based upon the old profile and an exerciseset
+ *
+ * @param {object[]} exerciseSet The exercise set to calculate user profile based on
+ * @param {number[]} userProfile The vector representing the user profile
+ * @return {number[]} A new vector representing the revised user profile
+ */
+function reviseUserProfile(exerciseSet, userProfile) {
+  const exerciseProfiles = convertExerciseSetToExerciseProfiles(exerciseSet);
+  const newUserProfile = calculateUserProfile(exerciseProfiles, userProfile);
+  return newUserProfile;
 }
 
 function convertExerciseSetToExerciseProfiles(exerciseSet) {
@@ -114,13 +155,6 @@ function calculateExerciseProfile(exercise) {
 
   return exerciseVector;
 }
-
-/**
- * @param {number} scalar The scalar to use for the weight
- * @param {[]} vector The vector to multiply with the scalar
- * @return {[]} A new vector which is multiplied with the scalar
- */
-const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
 
 function convertExerciseToVector(exercise) {
   switch (exercise.type) {
@@ -177,6 +211,13 @@ function convertExerciseToVector(exercise) {
 
 const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswers;
 
+/**
+ * @param {number} scalar The scalar to use for the weight
+ * @param {[]} vector The vector to multiply with the scalar
+ * @return {[]} A new vector which is multiplied with the scalar
+ */
+const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
+
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
   const weightedUserProfile = scalarMultiplication(USER_WEIGHT, currentUserProfile);
   let newUserProfile = sumVectorArray(exerciseProfiles);
@@ -219,59 +260,3 @@ module.exports = {
   WRONG_ANSWER_WEIGHT,
   USER_WEIGHT,
 };
-
-// example body:
-// {
-//   userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-//   exerciseSet:
-//     [
-//       {
-//         "txt": "Find x i følgende ligning.",
-//         "type": "ligninger",
-//         "point": 5,
-//         "tegn": "-",
-//         "exerciseVars": {
-//           "ligning": "11x - 14 = 29"
-//         },
-//         "facit": "3.9",
-//         "questionNumber": 1,
-//         "questionAnswers": "3"
-//       },
-//       {
-//         "txt": "Find x i følgende ligning.",
-//         "type": "ligninger",
-//         "point": 5,
-//         "tegn": "+",
-//         "exerciseVars": {
-//           "ligning": "4x + 22 = 45"
-//         },
-//         "facit": "5.8",
-//         "questionNumber": 2,
-//         "questionAnswers": "3"
-//       },
-//       {
-//         "txt": "Find x i følgende ligning.",
-//         "type": "ligninger",
-//         "point": 5,
-//         "tegn": "-",
-//         "exerciseVars": {
-//           "ligning": "6x - 20 = 59"
-//         },
-//         "facit": "13.2",
-//         "questionNumber": 3,
-//         "questionAnswers": "3"
-//       },
-//       {
-//         "txt": "Find x i følgende ligning.",
-//         "type": "ligninger",
-//         "point": 5,
-//         "tegn": "+",
-//         "exerciseVars": {
-//           "ligning": "2x + 13 = 29"
-//         },
-//         "facit": "8.0",
-//         "questionNumber": 4,
-//         "questionAnswers": "3",
-//       }
-//     ]
-// };
