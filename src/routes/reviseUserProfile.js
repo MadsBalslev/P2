@@ -1,4 +1,4 @@
-const { errorResponse } = require('../helper');
+const helper = require('../helper');
 
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
@@ -29,45 +29,19 @@ function handleReviseUserProfileRequest(request, response) {
  */
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
-    const { userProfile, exerciseSet } = await fetchRequestBody(request);
-    const newUserProfile = reviseUserProfile(exerciseSet, userProfile);
-    respondWithNewUserProfile(newUserProfile, response);
+    const requestBody = await helper.fetchJsonRequestBody(request);
+    validateRequestBody(requestBody);
+    const newUserProfile = reviseUserProfile(requestBody.exerciseSet, requestBody.userProfile);
+    helper.respondWithJsonObject(newUserProfile, response);
   } catch (error) {
-    errorResponse(response, '400', `${error}`);
+    helper.errorResponse(response, '400', `${error}`);
   }
 }
 
-/**
- * fetch request body (JSON object).
- *
- * @param {*} request
- * @returns {Promise} Request body.
- */
-function fetchRequestBody(request) {
-  return new Promise((resolve, reject) => {
-    let requestBody = '';
-    request.on('data', (chunk) => {
-      requestBody += chunk;
-    });
-
-    request.on('end', () => {
-      try {
-        requestBody = JSON.parse(requestBody);
-
-        if (!requestBodyIsValid(requestBody)) {
-          throw 'invalid request body';
-        }
-
-        resolve(requestBody);
-      } catch (error) {
-        reject(error);
-      }
-    });
-
-    request.on('error', (error) => {
-      reject(error);
-    });
-  });
+function validateRequestBody(requestBody) {
+  if (!requestBodyIsValid(requestBody)) {
+    throw 'invalid request body';
+  }
 }
 
 /**
@@ -93,19 +67,11 @@ function requestBodyUserProfileIsValid(requestBody) {
   if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23)) {
     isValidUserProfile = false;
   } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23) {
-    isValidUserProfile = isUserProfileValidVector(requestBody.userProfile);
+    isValidUserProfile = helper.isUserProfileValidVector(requestBody.userProfile);
   }
 
   return isValidUserProfile;
 }
-
-/**
- * Checks that all items in an array are numbers, ie if it's vector.
- *
- * @param {Array} susVector Array to check.
- * @returns {Boolean} True if alle items are numbers, else false.
- */
-const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
 /**
  * Checks if requestBody contains the property exerciseSet, if it does checks if each exercise in
@@ -290,28 +256,12 @@ const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
  */
 const sumVectorArray = (vectors) => vectors.reduce((a, b) => a.map((c, i) => c + b[i]));
 
-/**
- * Respondes to request with the newUserProfile.
- *
- * @param {number[]} newUserProfile
- * @param {{}} response
- */
-function respondWithNewUserProfile(newUserProfile, response) {
-  const newUserProfileJsonString = JSON.stringify(newUserProfile);
-  response.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
-  response.end(newUserProfileJsonString);
-}
-
 module.exports = {
   handleReviseUserProfileRequest,
   handleReviseUserProfilePostRequest,
   reviseUserProfile,
-  fetchRequestBody,
   requestBodyIsValid,
   requestBodyUserProfileIsValid,
-  isUserProfileValidVector,
   requestBodyExerciseSetIsValid,
   validateEachExerciseInExerciseSet,
   convertExerciseSetToExerciseProfiles,
@@ -320,7 +270,6 @@ module.exports = {
   convertExerciseToVector,
   isCorrectAnswer,
   sumVectorArray,
-  respondWithNewUserProfile,
   calculateUserProfile,
   CORRECT_ANSWER_WEIGHT,
   WRONG_ANSWER_WEIGHT,

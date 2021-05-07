@@ -28,8 +28,61 @@ const arrShuffle = (arr) => {
   }
 };
 
+/**
+ * fetch request body (JSON object).
+ *
+ * @param {*} request
+ * @returns {Promise} Request body.
+ */
+function fetchJsonRequestBody(request) {
+  return new Promise((resolve, reject) => {
+    let requestBody = '';
+    request.on('data', (chunk) => {
+      requestBody += chunk;
+    });
+
+    request.on('end', () => {
+      try {
+        requestBody = JSON.parse(requestBody);
+        resolve(requestBody);
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+    request.on('error', (error) => {
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Respondes to request with the newUserProfile.
+ *
+ * @param {number[]} jsonObject
+ * @param {{}} response
+ */
+function respondWithJsonObject(jsonObject, response) {
+  const newUserProfileJsonString = JSON.stringify(jsonObject);
+  response.writeHead(200, {
+    'Content-Type': 'application/json',
+  });
+  response.end(newUserProfileJsonString);
+}
+
+/**
+ * Checks that all items in an array are numbers, ie if it's vector.
+ *
+ * @param {Array} susVector Array to check.
+ * @returns {Boolean} True if alle items are numbers, else false.
+ */
+const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
+
 module.exports = {
   arrShuffle,
   randNum,
   errorResponse,
+  fetchJsonRequestBody,
+  respondWithJsonObject,
+  isUserProfileValidVector,
 };

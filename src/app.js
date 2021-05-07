@@ -5,6 +5,7 @@ const fs = require('fs');
 const { lookup } = require('mime-types');
 const handleOpgaverRequest = require('./routes/opgaver');
 const rup = require('./routes/reviseUserProfile.js');
+const gus = require('./routes/generateUserSet.js');
 const { errorResponse } = require('./helper');
 
 global.globalSet = [];
@@ -52,7 +53,7 @@ const handleRequest = (request, response) => {
       rup.handleReviseUserProfileRequest(request, response);
       break;
     case '/generateUserSet':
-      handleGenerateUserSetProfile(request, response);
+      gus.handleGenerateUserSetRequest(request, response);
       break;
     case '':
       handleBaseRequest(request, response);
