@@ -7,7 +7,8 @@ const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
-const funktionerAfToVariable = require('./ligningertovariabler')
+const funktionerAfToVariable = require('./ligningertovariabler');
+const statistik = require('./statistics');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -36,6 +37,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'funktionerAfToVariable':
           set.push(generateFunktionerAfToVariableExercise(amount));
+          break;
+        case 'statistik':
+          set.push(generateStatistikExercise(amount));
           break;
         default:
           break;
@@ -131,7 +135,6 @@ const generateLigningExercise = () => {
   return exercise;
 };
 
-
 const generateFunktionerAfToVariableExercise = () => {
   let exercise;
   const rand = randNum(funktionerAfToVariable.numOfTasks);
@@ -148,6 +151,21 @@ const generateFunktionerAfToVariableExercise = () => {
   return exercise;
 };
 
+const generateStatistikExercise = () => {
+  let exercise;
+  const rand = randNum(statistik.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new statistik.BinormalConfidenceIntervalExercise();
+      break;
+    case 2:
+      exercise = new statistik.NormalConfidenceIntervalExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
 
 module.exports = {
   generateExcerciseSet,
