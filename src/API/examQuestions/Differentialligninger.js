@@ -1,5 +1,14 @@
 const { randNum } = require('../../helper');
 
+            var script = doc.createElement('script'),
+                config;
+            script.src = 'MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js';
+            script.type = 'text/javascript';
+            
+            config = 'MathJax.Hub.config{text2jax:{inlineMath:[[\'$,\'$\'], ["\\(","\\)"]],displayMath:[[\'\\\\[\',\'\\\\];
+        }
+    }
+
 function differentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
