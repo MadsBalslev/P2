@@ -76,13 +76,14 @@ function NormalConfidenceIntervalExercise() {
 
 /**
  * Generates a vector, and puts in a matrix
- * @param {[]} numbers The array of randomly generated numbers
+ *
+ * @param {number[]} nums The array of randomly generated numbers
  * @param {number} i The size of the array
  * @param {number} afgivelse The standard deviation
- * @return {String} Returns the interval and correct answer for the exercise
+ * @return {string} Returns the interval and correct answer for the exercise
  */
-const normalConfidenceIntervalFacit = (numbers, i, afgivelse) => {
-  const sum = numbers.reduce(add, 0);
+const normalConfidenceIntervalFacit = (nums, i, afgivelse) => {
+  const sum = nums.reduce(add, 0);
   const middelværdi = (sum / i);
   const sqrt = math.sqrt(i).toFixed(3);
 
@@ -97,7 +98,7 @@ const normalConfidenceIntervalFacit = (numbers, i, afgivelse) => {
  *
  * @param {number} A The first randomly generated number
  * @param {number} B The second randomly generated number
- * @return {String} Returns the interval and correct answer for the exercise
+ * @return {string} Returns the interval and correct answer for the exercise
  */
 const binormalConfidenceIntervalFacit = (A, B) => {
   const middelværdi = (B / A);
