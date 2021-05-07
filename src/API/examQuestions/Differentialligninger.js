@@ -1,57 +1,38 @@
 const { randNum } = require('../../helper');
-var MathJaxInit = {
-        insertScript: function(doc) {
-            var googleFix = '.MathJax .mn {background: inherit;} .MathJax .mi {color: inherit;} .MathJax .mo {background:. inherit;}';
-            var style = do .createElement('style');
-                style.innerText = googleFix;
-            try {
-                style.textContent = googleFix;
-            } catch (e) {}
-            doc.getElementsByTagName('body')[0].appendChild(style);
 
-            var script = doc.createElement('script'),
-                config;
-            script.src = 'MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js';
-            script.type = 
-        }
-    }
-    /**
-     * Represents a power integral exercise.
-     * @constructor
-     */
 function differentialLigningExercise() {
-    const { A, B, C, D } = diffLigningVars();
-    this.txt = 'Find den fulstændige løsning til differentialligningen.';
-    this.type = 'differentialligning';
-    this.point = 10;
-    this.tegn = '';
-    this.exerciseVars = { Differentialligning: `y' = ${B}y*(${A}-y)` };
-    this.facit = '';
-}
-
-function particularDifferentialExercise() {
-    const { A, B, C, D } = diffLigningVars();
-    this.txt = 'Find den partikulære løsning til differentialligningen.';
-    this.type = 'differentialligning';
-    this.point = 10;
-    this.tegn = '';
-    this.exerciseVars = {
-        Differentialligning: ``};
-    this.facit = '';
+  const { A, B, C, D } = diffLigningVars();
+  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `f'(x)=${A}x^3+${B}x^2-${C}x+${D}`};
+  this.facit = differentialLigningFacit(A, B, C, D);
 }
 
 const diffLigningVars = () => {
-    const A = randNum(8) + 1;
-    const B = randNum(8) + 1;
-    const C = randNum(8) + 1;
-    const D = randNum(15) + 1;
+  const A = randNum(8) + 2;
+  const B = randNum(8) + 2;
+  const C = randNum(8) + 2;
+  const D = randNum(15) + 1;
 
-    return { A, B, C, D }
+  return { A, B, C, D }
+}
+
+const differentialLigningFacit = (A, B, C, D) => {
+  let Af = A / 4;
+  let Bf = B / 3;
+  let Cf = C / 2;
+  let Df = D;
+  
+  
+  const diffFacit = `f(x)=${Af}x^4+${Bf}x^3-${Cf}x^2+${Df}x+C`
+  return diffFacit;
 }
 
 
-const numOfTasks = 2;
+const numOfTasks = 1;
 module.exports = {
-    PowerIntegralExercise,
+    differentialLigningExercise,
     numOfTasks,
 };
