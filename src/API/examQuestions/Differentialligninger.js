@@ -12,7 +12,9 @@ var MathJaxInit = {
             var script = doc.createElement('script'),
                 config;
             script.src = 'MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js';
-            script.type = 
+            script.type = 'text/javascript';
+            
+            config = 'MathJax.Hub.config{text2jax:{inlineMath:[[\'$,\'$\'], ["\\(","\\)"]],displayMath:[[\'\\\\[\',\'\\\\];
         }
     }
     /**
