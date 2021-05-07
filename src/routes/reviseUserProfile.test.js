@@ -160,3 +160,58 @@ test('reviseUserProfile', () => {
     expect(newProfileActual[i]).toBeCloseTo(entry, 2);
   });
 });
+
+test('requestBodyUserProfileIsValid number of elements below 23', () => {
+  const requestBody = {
+    userProfile: [1, 2],
+    exerciseSet: [...sampleExerciseSet],
+  };
+  expect(rup.requestBodyUserProfileIsValid(requestBody)).toBeFalsy();
+});
+
+test('requestBodyUserProfileIsValid missing userProfile', () => {
+  const requestBody = {
+    exerciseSet: [...sampleExerciseSet],
+  };
+  expect(rup.requestBodyUserProfileIsValid(requestBody)).toBeFalsy();
+});
+
+test('requestBodyUserProfileIsValid valid userProfile', () => {
+  const requestBody = {
+    userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    exerciseSet: [...sampleExerciseSet],
+  };
+  expect(rup.requestBodyUserProfileIsValid(requestBody)).toBeTruthy();
+});
+
+test('requestBodyExerciseSetIsValid missing exerciseSet', () => {
+  const requestBody = {
+    userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  };
+  expect(rup.requestBodyExerciseSetIsValid(requestBody)).toBeFalsy();
+});
+
+test('requestBodyExerciseSetIsValid valid requestBody', () => {
+  const requestBody = {
+    userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    exerciseSet: [...sampleExerciseSet],
+  };
+  expect(rup.requestBodyExerciseSetIsValid(requestBody)).toBeTruthy();
+});
+
+test('requestBodyIsValid valid requestBody', () => {
+  const requestBody = {
+    userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    exerciseSet: [...sampleExerciseSet],
+  };
+  expect(rup.requestBodyIsValid(requestBody)).toBeTruthy();
+});
+
+test('requestBodyIsValid invalid requestBody', () => {
+  const requestBody = {
+    userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    exerciseSet: [...sampleExerciseSet],
+  };
+  delete requestBody.exerciseSet[0].facit;
+  expect(rup.requestBodyIsValid(requestBody)).toBeFalsy();
+});
