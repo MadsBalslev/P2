@@ -34,6 +34,33 @@ function generateUserExerciseSet(userProfile) {
 
 }
 
+function cosineSimilarity(vectorA, vectorB) {
+  return dotProduct(vectorA, vectorB) / (lengthOfVector(vectorA) * lengthOfVector(vectorB));
+}
+
+function dotProduct(vectorA, vectorB) {
+  let dotProductProcedual = 0;
+  vectorA.forEach((element, i) => {
+    dotProductProcedual += vectorA[i] * vectorB[i];
+  });
+  return dotProductProcedual;
+}
+
+function lengthOfVector(vector) {
+  let temp = 0;
+  vector.forEach(element => {
+    temp += Math.pow(element, 2);
+  });
+  return Math.sqrt(temp);
+}
+
 module.exports = {
   handleGenerateUserSetRequest,
+  handleGenerateUserSetPostRequest,
+  validateUserProfile,
+  userProfileIsValid,
+  generateUserExerciseSet,
+  cosineSimilarity,
+  dotProduct,
+  lengthOfVector,
 };
