@@ -131,7 +131,6 @@ const generateLigningExercise = () => {
   return exercise;
 };
 
-
 const generateStatistikExercise = () => {
   let exercise;
   const rand = randNum(statistik.numOfTasks);
