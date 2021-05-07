@@ -36,4 +36,4 @@ function generateUserExerciseSet(userProfile) {
 
 module.exports = {
   handleGenerateUserSetRequest,
-}
+};
