@@ -18,6 +18,10 @@ const subjects = [
     name: 'Ligninger',
     id: 'ligninger',
   },
+  {
+    name: 'Statistik',
+    id: 'statistik',
+  },
 ];
 
 const generateStartPage = () => {
@@ -291,7 +295,6 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
-
 /**
  * Function that creates html responsible for showing score in each subject.
  * @param {*} AllData
@@ -302,14 +305,14 @@ const createStatsDivs = (AllData, container) => {
     if (AllData.maxPoints[subject.id] > 0) {
       const div = document.createElement('div');
       const txt = document.createElement('p');
-      txt.innerHTML = (`Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`);
+      // eslint-disable-next-line max-len
+      txt.innerHTML = `Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`;
       div.appendChild(txt);
       div.setAttribute('class', 'answer');
       container.appendChild(div);
     }
   });
 };
-
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -321,6 +324,7 @@ const createGradeText = (container, userPoints, totalPoints) => {
   const pointText = document.createElement('p');
   const grade = document.createElement('p');
 
+  pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
   grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
   pointText.style.backgroundColor = 'grey';
 
@@ -330,11 +334,11 @@ const createGradeText = (container, userPoints, totalPoints) => {
 };
 
 /**
- * Function that creates html responsible showing if question got answered correct or wrong.
- * @param {*} questionAnswer
- * @param {*} facit
- * @param {*} div
- */
+   * Function that creates html responsible showing if question got answered correct or wrong.
+   * @param {*} questionAnswer
+   * @param {*} facit
+   * @param {*} div
+   */
 const showQuestionResult = (questionAnswer, facit, div) => {
   const yourAnswer = document.createElement('p');
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
@@ -348,7 +352,6 @@ const showQuestionResult = (questionAnswer, facit, div) => {
     div.appendChild(yourAnswer);
   }
 };
-
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -400,7 +403,6 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
-
 /**
  * Function to check if user answer is equal to the facit.
  * @param {*} answer
@@ -453,11 +455,10 @@ const checkAnswer = (exerciseSet) => {
   });
 
   document.querySelector('#root').appendChild(container);
-  const AllData = calcUserStats(exerciseSet);
+  AllData = calcUserStats(exerciseSet);
 
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
-  console.log(exerciseSet);
 };
 
 generateStartPage();
