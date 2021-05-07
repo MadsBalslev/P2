@@ -17,7 +17,7 @@ const generateArray = () => {
  * @return {number} Returns the standard deviation.
  */
 const generateAfgivelse = () => {
-  const afgivelse = randNum(15);
+  const afgivelse = randNum(10) + 1;
 
   return afgivelse;
 }
@@ -51,7 +51,7 @@ function binormalConfidenceIntervalExercise () {
   this.type = 'statistik';
   this.point = 5;
   this.tegn = '';
-  this.exerciseVars = { ligning: 'middelværdi - 1.96*sqrt((middelværdi*(1-middelværdi)/n) ; middelværdi + 1.96*sqrt((middelværdi*(1-middelværdi)/n)'};
+  this.exerciseVars = { ligning: '\\hat{p} - 1.96 * \\sqrt{\\hat{p}*(1-\\hat{p})/n} ; \\hat{p} + 1.96* \\sqrt{\\hat{p}*(1-\\hat{p})/n}'};
   this.facit = binormalConfidenceIntervalFacit(A, B);
 }
 
