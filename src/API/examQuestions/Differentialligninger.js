@@ -1,5 +1,4 @@
 const { randNum } = require('../../helper');
-const { Fraction } = require('fractional');
 
 /**
  * Represents a differential equation exercise.
