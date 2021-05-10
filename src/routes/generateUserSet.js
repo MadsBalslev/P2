@@ -1,3 +1,4 @@
+const { floor, ceil, round } = require('mathjs');
 const { generateExcerciseSet } = require('../API/examQuestions/generator');
 const helper = require('../helper');
 
@@ -13,7 +14,7 @@ async function handleGenerateUserSetPostRequest(request, response) {
   try {
     const userProfile = await helper.fetchJsonRequestBody(request);
     validateUserProfile(userProfile);
-    const userExerciseSet = generateUserExerciseSet(userProfile);
+    const userExerciseSet = generateUserExerciseSet2(userProfile, request.headers.amount);
     helper.respondWithJsonObject(userExerciseSet);
   } catch (error) {
     helper.errorResponse(response, '400', `${error}`);
@@ -30,7 +31,7 @@ function userProfileIsValid(userProfile) {
   return userProfile.length === 23 && helper.isUserProfileValidVector(userProfile);
 }
 
-function generateUserExerciseSet(userProfile) {
+function generateUserExerciseSet1(userProfile, amountOfExercises) {
   const identityMatrix23 = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -61,14 +62,28 @@ function generateUserExerciseSet(userProfile) {
     return cosineSimilarity(vectorB, userProfile) - cosineSimilarity(vectorA, userProfile);
   });
 
-  const exerciseSetPart1 = generateExcerciseSet([vectorToExerciseCategory(identityMatrix23[0])], 3);
-  const exerciseSetPart2 = generateExcerciseSet([vectorToExerciseCategory(identityMatrix23[1])], 3);
-  const exerciseSetPart3 = generateExcerciseSet([vectorToExerciseCategory(identityMatrix23[2])], 2);
-  const exerciseSetPart4 = generateExcerciseSet([randomCategory()], 1);
-  const exerciseSetPart5 = generateExcerciseSet([randomCategory()], 1);
+  let amountOfRemainingExercises = amountOfExercises;
+  let i = 0;
+  let amountOfExercisesInPart;
+  const exerciseSet = [];
+  let exercisePart;
 
-  const exerciseSet = exerciseSetPart1.concat(exerciseSetPart2, exerciseSetPart3, exerciseSetPart4, exerciseSetPart5);
+  while (amountOfRemainingExercises > 0) {
+    amountOfExercisesInPart = ceil(amountOfRemainingExercises / 2);
+    amountOfRemainingExercises -= amountOfExercisesInPart;
+    exercisePart = generateExcerciseSet([vectorToExerciseCategory(identityMatrix23[i])], amountOfExercisesInPart);
+    exerciseSet.concat(exercisePart);
+    i++;
+  }
+
   return exerciseSet;
+}
+
+function generateUserExerciseSet2(userProfile, amountOfExercises) {
+}
+
+function generateUserExerciseSet3(userProfile, amountOfExercises) {
+  
 }
 
 function cosineSimilarity(vectorA, vectorB) {
@@ -154,7 +169,7 @@ module.exports = {
   handleGenerateUserSetPostRequest,
   validateUserProfile,
   userProfileIsValid,
-  generateUserExerciseSet,
+  generateUserExerciseSet: generateUserExerciseSet1,
   cosineSimilarity,
   dotProduct,
   lengthOfVector,
