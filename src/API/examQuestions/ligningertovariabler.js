@@ -68,7 +68,6 @@ const partielDifferentiationFacit = (A, B, C, D, expression) => {
   return facit;
 }
 
-RangeExercise();
 /**
  * constructor function for rangeexercise
  * @constructor
@@ -88,11 +87,7 @@ function RangeExercise() {
     this.tegn = '';
     this.exerciseVars = {ligning: `\\sqrt{${c} - ${unknowns}x^2 - ${unknowns}y^2}`};
     this.facit = String(rangeFacit(unknowns, c));
-
-
 }
-
-
 
 /**
  * Checks if given number is a whole or decimal number
@@ -105,7 +100,7 @@ function wholeNumberCheck(number) {
       return false;
     else
       return true;
-      }
+}
 
 const numOfTasks = 2;
 
