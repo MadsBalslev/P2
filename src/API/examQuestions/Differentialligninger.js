@@ -4,7 +4,7 @@ const { randNum } = require('../../helper');
  * Represents a differential equation exercise.
  * @constructor 
  */
-function differentialLigningExercise() {
+function DifferentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
   this.type = 'differentialligning';
@@ -21,7 +21,7 @@ function differentialLigningExercise() {
  * Represents a differential equation exercise.
  * @constructor 
  */
-function differentialLigningExercise2() {
+function DifferentialLigningExercise2() {
   const { A, B, C, D } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
   this.type = 'differentialligning';
@@ -37,7 +37,7 @@ function differentialLigningExercise2() {
  * Represents a differential equation exercise.
  * @constructor 
  */
-function differentialLigningExercise3() {
+function DifferentialLigningExercise3() {
   const { A, B, C } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
   this.type = 'differentialligning';
@@ -118,11 +118,11 @@ const differentialLigning3Facit = (A, B, C) => {
 
 const numOfTasks = 3;
 module.exports = {
-  differentialLigningExercise,
+  DifferentialLigningExercise,
   differentialLigningFacit,
-  differentialLigningExercise2,
+  DifferentialLigningExercise2,
   differentialLigning2Facit,
-  differentialLigningExercise3,
+  DifferentialLigningExercise3,
   differentialLigning3Facit,
   numOfTasks,
 };
