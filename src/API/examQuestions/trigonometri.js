@@ -1,12 +1,16 @@
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
-function sinusGenerateVars(){
+function sinusGenerateVars() {
   let a = randNum(5);
   let b = randNum(5);
   return {a, b};
 }
-
+function tangensGeneratevars() {
+ let a = randNum(10);
+ return a
+}
+tangensExercise();
 
 function SinusExercise(){
   const {a, b} = sinusGenerateVars();
@@ -23,7 +27,15 @@ function sinusFacit(a, b) {
     if (facit === -0) facit = 0;
     return String(facit);
 }
+function tangensExercise() {
+  const a = tangensGeneratevars();
+  this.txt = "find tangens til følgende vinkel";
+  this.type = "trigonometri";
+  this.point = 5;
+  this.tegn = '';
+  this.exerciseVars = {trigonometri:  }
 
+}
 const numOfTasks = 1;
 
 module.exports = {
