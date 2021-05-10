@@ -26,6 +26,10 @@ const subjects = [
     name: 'Statistik',
     id: 'statistik',
   },
+  {
+    name: 'Ligning af to variable',
+    id: 'funktionerAfToVariable',
+  },
 ];
 
 const generateStartPage = () => {
