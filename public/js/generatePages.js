@@ -315,7 +315,8 @@ const createStatsDivs = (AllData, container) => {
     if (AllData.maxPoints[subject.id] > 0) {
       const div = document.createElement('div');
       const txt = document.createElement('p');
-      txt.innerHTML = (`Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`);
+      // eslint-disable-next-line max-len
+      txt.innerHTML = `Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`;
       div.appendChild(txt);
       div.setAttribute('class', 'answer');
       container.appendChild(div);
