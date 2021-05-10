@@ -33,6 +33,8 @@ const subjects = [
 ];
 
 const generateStartPage = () => {
+  clearDom();
+
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
@@ -67,6 +69,11 @@ const generateStartPage = () => {
     div.appendChild(br.cloneNode(true));
   });
 
+  submit.addEventListener('click', () => {
+    reset();
+    start();
+  });
+
   form.appendChild(div);
   form.appendChild(br.cloneNode(true));
   form.appendChild(amountLabel);
@@ -81,7 +88,7 @@ const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
 
-  label.setAttribute('for', id.toLowerCase());
+  label.setAttribute('for', id);
   label.innerHTML = subject.name;
 
   return label;
@@ -92,8 +99,8 @@ const generateSubjectInput = (subject) => {
   const { id } = subject;
 
   input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', id.toLowerCase());
-  input.setAttribute('id', id.toLowerCase());
+  input.setAttribute('name', id);
+  input.setAttribute('id', id);
 
   return input;
 };
@@ -292,8 +299,6 @@ const calcUserStats = (exersiceSet) => {
   exersiceSet.forEach((exersice) => {
     maxPoints[exersice.type] += exersice.point;
     if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
-
-
   });
 
   const AllData = {
@@ -322,7 +327,7 @@ const createStatsDivs = (AllData, container) => {
       container.appendChild(div);
     }
   });
-}
+};
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -334,9 +339,6 @@ const createGradeText = (container, userPoints, totalPoints) => {
   const pointText = document.createElement('p');
   const grade = document.createElement('p');
 
-  
-
-
   pointText.innerHTML = `Du fik: ${userPoints} Point <br /> Max mulige point: ${totalPoints}`;
   grade.innerHTML = `Dette svarer til ${calcGrade(userPoints, totalPoints)} på 7-trinsskalen`;
   pointText.style.backgroundColor = 'grey';
@@ -344,28 +346,27 @@ const createGradeText = (container, userPoints, totalPoints) => {
   pointCounter.appendChild(pointText);
   container.appendChild(pointCounter);
   container.appendChild(grade);
-}
+};
 
-  /**
+/**
    * Function that creates html responsible showing if question got answered correct or wrong.
    * @param {*} questionAnswer
    * @param {*} facit
    * @param {*} div
    */
-const showQuestionResult =(questionAnswer, facit, div ) => {
+const showQuestionResult = (questionAnswer, facit, div) => {
   const yourAnswer = document.createElement('p');
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
   if (checkUserAnswerValue(questionAnswer, facit)) {
     yourAnswer.style.backgroundColor = 'green';
     yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
     div.appendChild(yourAnswer);
-  }
-   else {
+  } else {
     yourAnswer.style.backgroundColor = 'red';
     yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Forkert! <br /> Facit: ${facit}`;
     div.appendChild(yourAnswer);
   }
-}
+};
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -406,7 +407,6 @@ const calcGrade = (points, maxPoints) => {
   return grade;
 };
 
-
 /**
  * Function adding points.
  * @param {*} exercise
@@ -423,12 +423,14 @@ const addPoints = (exercise, userPoints) => {
  * @param {*} answer
  * @param {*} facit
  */
-const checkUserAnswerValue = (answer, facit) => { 
-  if (answer === facit) { 
-    return true;} 
-  else if(answer !== facit) {
-    return false;}
-  else {console.log("fejl i checkUserAnswerValue")}
+const checkUserAnswerValue = (answer, facit) => {
+  if (answer === facit) {
+    return true;
+  }
+  if (answer !== facit) {
+    return false;
+  }
+  console.log('fejl i checkUserAnswerValue');
 
   return null;
 };
@@ -442,31 +444,22 @@ const checkAnswer = (exerciseSet) => {
   let totalPoints = 0;
 
   const container = document.createElement('div');
-  
 
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
-
     totalPoints += exercise.point;
-    
 
     userPoints = addPoints(exercise, userPoints);
-
-    
 
     const div = document.createElement('div');
     const questionText = document.createElement('p');
     const questionType = document.createElement('p');
-    
 
     div.setAttribute('class', 'answer');
 
     questionText.innerHTML = exercise.txt;
     questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-    
-
-    
 
     div.appendChild(questionText);
     addExerciseVars(exercise, div);
@@ -476,16 +469,11 @@ const checkAnswer = (exerciseSet) => {
     showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
-  
   document.querySelector('#root').appendChild(container);
   AllData = calcUserStats(exerciseSet);
-  
+
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
 };
 
 generateStartPage();
-
-module.exports = {
-  calcGrade,
-};
