@@ -47,7 +47,7 @@ const generateExcerciseSet = (categories, amount) => {
           set.push(generateStatistikExercise(amount));
           break;
         case 'infinitesimalregning':
-          set.push();
+          set.push(generateInfinitesimalregning(amount));
           break;
         default:
           break;
@@ -212,6 +212,7 @@ const generateInfinitesimalregning = () => {
   default:
     break;
   }
+return exercise;
 }
 
 

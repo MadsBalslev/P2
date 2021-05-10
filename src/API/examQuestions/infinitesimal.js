@@ -14,7 +14,7 @@ function RotatingBodyExercise () {
   this.type = 'infinitesimalregning';
   this.point = 5;
   this.tegn = '';
-  this.exerciseVars = '\\pi\\int_{a]^{b}(f(x))^2 \\dx';
+  this.exerciseVars = '\\(int_(a)^(b) x^2dx)';
   this.facit = String(rotatingBodyFacit(A, B, C));
 }
 
