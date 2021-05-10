@@ -1,6 +1,10 @@
 const { randNum } = require('../../helper');
 const { Fraction } = require('fractional');
 
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
 function differentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
@@ -14,6 +18,10 @@ function differentialLigningExercise() {
   };
 }
 
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
 function differentialLigningExercise2() {
   const { A, B, C, D } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
@@ -26,7 +34,10 @@ function differentialLigningExercise2() {
     console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
   };
 }
-
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
 function differentialLigningExercise3() {
   const { A, B, C } = diffLigningVars();
   this.txt = 'Find den fuldstændige løsning til differentialligningen.';
@@ -40,6 +51,10 @@ function differentialLigningExercise3() {
   };
 }
 
+/**
+ * 
+ * @returns four random numbers, A, B, C, D where 4 ≤ A, 3 ≤ B, 2 ≤ C and 1 ≤ D.
+ */
 const diffLigningVars = () => {
   const A = randNum(8) + 4;
   const B = randNum(8) + 3;
@@ -49,6 +64,14 @@ const diffLigningVars = () => {
   return { A, B, C, D };
 };
 
+/**
+ * Calculates the facit for the first diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the first diffLigningExercise.
+ */
 const differentialLigningFacit = (A, B, C, D) => {
   const Af = A / 4;
   const Bf = B / 3;
@@ -59,6 +82,14 @@ const differentialLigningFacit = (A, B, C, D) => {
   return diffFacit;
 };
 
+/**
+ * Calculates the facit for the second diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the sceond diffLigningExercise.
+ */
 const differentialLigning2Facit = (A, B, C, D) => {
   const Af = A / 4;
   const Bf = B / 3;
@@ -69,6 +100,14 @@ const differentialLigning2Facit = (A, B, C, D) => {
   return diffFacit;
 };
 
+/**
+ * Calculates the facit for the third diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the third diffLigningExercise.
+ */
 const differentialLigning3Facit = (A, B, C) => {
   const Af = A / B;
   const Bf = B;
@@ -77,10 +116,6 @@ const differentialLigning3Facit = (A, B, C) => {
   const diffFacit = `f(x)=${Af}xsin(${Bf}x+${Cf})+C`;
   return diffFacit;
 };
-
-let a = new differentialLigningExercise();
-
-a.print();
 
 const numOfTasks = 3;
 module.exports = {

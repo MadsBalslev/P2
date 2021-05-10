@@ -7,6 +7,7 @@ const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
+const diffligning = require('./Differentialligninger');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -32,6 +33,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'ligninger':
           set.push(generateLigningExercise(amount));
+          break;
+        case 'differentialligning':
+          set.push(generateDiffLigningExercise(amount));
           break;
         default:
           break;
@@ -111,6 +115,10 @@ const generateIntegralExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateLigningExercise = () => {
   let exercise;
   const rand = randNum(ligninger.numOfTasks);
@@ -120,6 +128,29 @@ const generateLigningExercise = () => {
       break;
     case 2:
       exercise = new ligninger.LigningMinusExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+/**
+ * This function randomly generates a differential equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+const generateDiffLigningExercise = () => {
+  let exercise;
+  const rand = randNum(diffligning.numOfTasks);
+  switch(rand) {
+    case 1:
+      exercise = new diffligning.differentialLigningExercise();
+      break;
+    case 2:
+      exercise = new diffligning.differentialLigningExercise2();
+      break;
+    case 3:
+      exercise = new diffligning.differentialLigningExercise3();
       break;
     default:
       break;

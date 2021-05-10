@@ -18,6 +18,10 @@ const subjects = [
     name: 'Ligninger',
     id: 'ligninger',
   },
+  {
+    name: 'Differentialligninger',
+    id: 'differentialligning',
+  },
 ];
 
 const generateStartPage = () => {
