@@ -19,8 +19,16 @@ const subjects = [
     id: 'ligninger',
   },
   {
+    name: 'Differentialligninger',
+    id: 'differentialligning',
+  },
+  {
     name: 'Statistik',
     id: 'statistik',
+  },
+  {
+    name: 'Ligning af to variable',
+    id: 'funktionerAfToVariable',
   },
 ];
 
