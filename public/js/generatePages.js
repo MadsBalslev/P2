@@ -25,6 +25,8 @@ const subjects = [
 ];
 
 const generateStartPage = () => {
+  clearDom();
+
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
@@ -57,6 +59,11 @@ const generateStartPage = () => {
     div.appendChild(input);
     div.appendChild(label);
     div.appendChild(br.cloneNode(true));
+  });
+
+  submit.addEventListener('click', () => {
+    reset();
+    start();
   });
 
   form.appendChild(div);
@@ -462,7 +469,3 @@ const checkAnswer = (exerciseSet) => {
 };
 
 generateStartPage();
-
-module.exports = {
-  calcGrade,
-};
