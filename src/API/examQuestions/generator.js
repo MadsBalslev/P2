@@ -138,6 +138,8 @@ const generateTrigonometriExercise = () => {
     case 1:
       exercise = new trigonometri.SinusExercise();
       break;
+    case 2:
+      exercise = new trigonometri.tangensExercise();
     default:
       break;
   }
