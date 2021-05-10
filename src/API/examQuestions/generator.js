@@ -8,6 +8,8 @@ const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
+const funktionerAfToVariable = require('./ligningertovariabler');
+const statistik = require('./statistics');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -36,6 +38,12 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'differentialligning':
           set.push(generateDiffLigningExercise(amount));
+          break;
+        case 'funktionerAfToVariable':
+          set.push(generateFunktionerAfToVariableExercise(amount));
+          break;
+        case 'statistik':
+          set.push(generateStatistikExercise(amount));
           break;
         default:
           break;
@@ -151,6 +159,38 @@ const generateDiffLigningExercise = () => {
       break;
     case 3:
       exercise = new diffligning.differentialLigningExercise3();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateFunktionerAfToVariableExercise = () => {
+  let exercise;
+  const rand = randNum(funktionerAfToVariable.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new funktionerAfToVariable.PartielDifferentiationExercise();
+      break;
+    case 2:
+      exercise = new funktionerAfToVariable.RangeExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateStatistikExercise = () => {
+  let exercise;
+  const rand = randNum(statistik.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new statistik.BinormalConfidenceIntervalExercise();
+      break;
+    case 2:
+      exercise = new statistik.NormalConfidenceIntervalExercise();
       break;
     default:
       break;

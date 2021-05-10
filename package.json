@@ -28,8 +28,14 @@
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
+<<<<<<< HEAD
     "fractional": "^1.0.0",
     "mathjs": "^9.3.0",
+=======
+    "math.js": "^1.1.46",
+    "mathjax": "^3.1.4",
+    "mathjs": "^9.3.2",
+>>>>>>> 0fd30a379f11930580702120f8ed2699508e886b
     "mime-types": "^2.1.30",
     "mysql": "^2.18.1"
   }

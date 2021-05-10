@@ -20,7 +20,9 @@
         "no-console": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
-        "linebreak-style": ["error", "windows"]   
+        "linebreak-style": ["error", "windows"],
+        "max-len": [2, 120, 4, {"ignoreUrls": true}],
+        "no-prototype-builtins": "off"
     },
     "settings": {
         "jest": {

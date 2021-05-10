@@ -2,12 +2,12 @@ const { generateExcerciseSet } = require('./generator');
 
 const empty = '';
 const allCategories = ['andengradspolynomiumOgLigning',
-  'talOgegnearter',
+  'talOgRegnearter',
   'ligninger',
   'trigonometri',
   'funktioner',
   'geometri',
-  'differebtialregning',
+  'differentialregning',
   'sandsynlighedOgKombinatorik',
   'statistik',
   'regression',
