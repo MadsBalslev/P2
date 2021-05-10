@@ -3,6 +3,8 @@
 *::after {
   box-sizing: border-box;
   font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -24,16 +26,15 @@ body {
   font-family: sans-serif;
 }
 
-input[type="submit"] {
+input[type="submit"], .reset {
   --hue: var(--hue-neutral);
+  height: fit-content;
   border: 1px solid hsl(var(--hue), 100%, 100%);
   background-color: white;
   border-radius: 20px;
   padding: 5px 10px;
   color: hsl(var(--hue), 30%, 40%);
   cursor: pointer;
-  margin: 80px;
-  margin-top: 65px;
   box-shadow: 0 0 10px 2px;
   transition: 0.6s;
 }
@@ -59,6 +60,34 @@ input[type="number"] {
   border-radius: 4px;
 }
 
+.main {
+  padding: 2rem;
+  min-height: 100vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.top {
+  padding: .5em;
+  background-color: hsl(var(--hue), 100%, 25%);
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#root {
+  margin-top: 1em;
+  width: 100%;
+}
+
 .emnevælger {
   display: flex;
   flex-direction: column;
@@ -70,5 +99,6 @@ input[type="number"] {
 }
 
 .exercise {
+  margin: 2rem;
   font-family: Georgia, "Times New Roman", Times, serif;
 }

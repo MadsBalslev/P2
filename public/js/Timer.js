@@ -61,8 +61,8 @@ function showButton(buttonKey) {
 }
 // Create event listeners
 
-let playButton = document.getElementById('playButton');
-let pauseButton = document.getElementById('pauseButton');
+const playButton = document.getElementById('playButton');
+const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
 
 playButton.addEventListener('click', start);

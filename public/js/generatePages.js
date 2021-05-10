@@ -19,12 +19,22 @@ const subjects = [
     id: 'ligninger',
   },
   {
-    name: 'Trigonometri',
-    id: 'trigonometri',
+    name: 'Differentialligninger',
+    id: 'differentialligning',
+  },
+  {
+    name: 'Statistik',
+    id: 'statistik',
+  },
+  {
+    name: 'Ligning af to variable',
+    id: 'funktionerAfToVariable',
   },
 ];
 
 const generateStartPage = () => {
+  clearDom();
+
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
@@ -59,6 +69,11 @@ const generateStartPage = () => {
     div.appendChild(br.cloneNode(true));
   });
 
+  submit.addEventListener('click', () => {
+    reset();
+    start();
+  });
+
   form.appendChild(div);
   form.appendChild(br.cloneNode(true));
   form.appendChild(amountLabel);
@@ -73,7 +88,7 @@ const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
 
-  label.setAttribute('for', id.toLowerCase());
+  label.setAttribute('for', id);
   label.innerHTML = subject.name;
 
   return label;
@@ -84,8 +99,8 @@ const generateSubjectInput = (subject) => {
   const { id } = subject;
 
   input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', id.toLowerCase());
-  input.setAttribute('id', id.toLowerCase());
+  input.setAttribute('name', id);
+  input.setAttribute('id', id);
 
   return input;
 };
@@ -268,7 +283,8 @@ const generateResultPage = (exerciseSet) => {
 };
 
 /**
- * Function that takes an exerciseSet as parameter, and calculates the maximum points available and the points achieved by the user.
+ * Function that takes an exerciseSet as parameter,
+   and calculates the maximum points available and the points achieved by the user.
  * @param {*} exerciseSet
  */
 const calcUserStats = (exersiceSet) => {
@@ -283,7 +299,6 @@ const calcUserStats = (exersiceSet) => {
   exersiceSet.forEach((exersice) => {
     maxPoints[exersice.type] += exersice.point;
     if (exersice.questionAnswers === exersice.facit) userStatsData[exersice.type] += exersice.point;
-
   });
 
   const AllData = {
@@ -300,20 +315,19 @@ const calcUserStats = (exersiceSet) => {
  * @param {*} AllData
  * @param {*} container
  */
-
 const createStatsDivs = (AllData, container) => {
   subjects.forEach((subject) => {
     if (AllData.maxPoints[subject.id] > 0) {
       const div = document.createElement('div');
       const txt = document.createElement('p');
-      txt.innerHTML = (`Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`);
+      // eslint-disable-next-line max-len
+      txt.innerHTML = `Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`;
       div.appendChild(txt);
       div.setAttribute('class', 'answer');
       container.appendChild(div);
     }
   });
-
-}
+};
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -332,33 +346,33 @@ const createGradeText = (container, userPoints, totalPoints) => {
   pointCounter.appendChild(pointText);
   container.appendChild(pointCounter);
   container.appendChild(grade);
-}
-  /**
+};
+
+/**
    * Function that creates html responsible showing if question got answered correct or wrong.
    * @param {*} questionAnswer
    * @param {*} facit
    * @param {*} div
    */
-const showQuestionResult =(questionAnswer, facit, div ) => {
+const showQuestionResult = (questionAnswer, facit, div) => {
   const yourAnswer = document.createElement('p');
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
   if (checkUserAnswerValue(questionAnswer, facit)) {
     yourAnswer.style.backgroundColor = 'green';
     yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
     div.appendChild(yourAnswer);
-  }
-   else {
+  } else {
     yourAnswer.style.backgroundColor = 'red';
     yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Forkert! <br /> Facit: ${facit}`;
     div.appendChild(yourAnswer);
   }
-}
+};
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
  * @param {*} maxPoints
  */
-const calcGrade = (points, maxPoints) => {app
+const calcGrade = (points, maxPoints) => {
   const scalar = 250 / maxPoints;
   const normPoints = parseInt(scalar * points, 10);
   let grade = '';
@@ -393,7 +407,6 @@ const calcGrade = (points, maxPoints) => {app
   return grade;
 };
 
-
 /**
  * Function adding points.
  * @param {*} exercise
@@ -410,12 +423,14 @@ const addPoints = (exercise, userPoints) => {
  * @param {*} answer
  * @param {*} facit
  */
-const checkUserAnswerValue = (answer, facit) => { 
-  if (answer === facit) { 
-    return true;} 
-  else if(answer ==! facit) {
-    return false;}
-  else {console.log("fejl i checkUserAnswerValue")}
+const checkUserAnswerValue = (answer, facit) => {
+  if (answer === facit) {
+    return true;
+  }
+  if (answer !== facit) {
+    return false;
+  }
+  console.log('fejl i checkUserAnswerValue');
 
   return null;
 };
@@ -429,31 +444,22 @@ const checkAnswer = (exerciseSet) => {
   let totalPoints = 0;
 
   const container = document.createElement('div');
-  
 
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
-
     totalPoints += exercise.point;
-    
 
     userPoints = addPoints(exercise, userPoints);
-
-    
 
     const div = document.createElement('div');
     const questionText = document.createElement('p');
     const questionType = document.createElement('p');
-    
 
     div.setAttribute('class', 'answer');
 
     questionText.innerHTML = exercise.txt;
     questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-    
-
-    
 
     div.appendChild(questionText);
     addExerciseVars(exercise, div);
@@ -463,16 +469,11 @@ const checkAnswer = (exerciseSet) => {
     showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
-  
   document.querySelector('#root').appendChild(container);
   AllData = calcUserStats(exerciseSet);
-  
+
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
 };
 
 generateStartPage();
-
-module.exports = {
-  calcGrade,
-};

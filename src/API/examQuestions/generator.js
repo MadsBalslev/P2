@@ -7,7 +7,9 @@ const vectors = require('./vector');
 const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
-const trigonometri = require('./trigonometri');
+const diffligning = require('./Differentialligninger');
+const funktionerAfToVariable = require('./ligningertovariabler');
+const statistik = require('./statistics');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -34,8 +36,14 @@ const generateExcerciseSet = (categories, amount) => {
         case 'ligninger':
           set.push(generateLigningExercise(amount));
           break;
-        case 'trigonometri':
-          set.push (generateTrigonometriExercise(amount));
+        case 'differentialligning':
+          set.push(generateDiffLigningExercise(amount));
+          break;
+        case 'funktionerAfToVariable':
+          set.push(generateFunktionerAfToVariableExercise(amount));
+          break;
+        case 'statistik':
+          set.push(generateStatistikExercise(amount));
           break;
         default:
           break;
@@ -115,6 +123,10 @@ const generateIntegralExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateLigningExercise = () => {
   let exercise;
   const rand = randNum(ligninger.numOfTasks);
@@ -131,15 +143,55 @@ const generateLigningExercise = () => {
   return exercise;
 };
 
-const generateTrigonometriExercise = () => {
+/**
+ * This function randomly generates a differential equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+const generateDiffLigningExercise = () => {
   let exercise;
-  const rand = randNum(trigonometri.numOfTasks);
-  switch (rand){
+  const rand = randNum(diffligning.numOfTasks);
+  switch (rand) {
     case 1:
-      exercise = new trigonometri.SinusExercise();
+      exercise = new diffligning.DifferentialLigningExercise();
       break;
     case 2:
-      exercise = new trigonometri.tangensExercise();
+      exercise = new diffligning.DifferentialLigningExercise2();
+      break;
+    case 3:
+      exercise = new diffligning.DifferentialLigningExercise3();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateFunktionerAfToVariableExercise = () => {
+  let exercise;
+  const rand = randNum(funktionerAfToVariable.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new funktionerAfToVariable.PartielDifferentiationExercise();
+      break;
+    case 2:
+      exercise = new funktionerAfToVariable.RangeExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateStatistikExercise = () => {
+  let exercise;
+  const rand = randNum(statistik.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new statistik.BinormalConfidenceIntervalExercise();
+      break;
+    case 2:
+      exercise = new statistik.NormalConfidenceIntervalExercise();
+      break;
     default:
       break;
   }
