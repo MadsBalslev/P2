@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PartielDifferentiationExercise - Documentation</title>
+    <title>src/API/examQuestions/Differentialligninger.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,147 @@
 
 <div id="main">
     
-    <h1 class="page-title">PartielDifferentiationExercise</h1>
+    <h1 class="page-title">src/API/examQuestions/Differentialligninger.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PartielDifferentiationExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { randNum } = require('../../helper');
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
+function DifferentialLigningExercise() {
+  const { A, B, C, D } = diffLigningVars();
+  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `f'(x)=${A}x^3+${B}x^2-${C}x+${D}` };
+  this.facit = differentialLigningFacit(A, B, C, D);
+  this.print = () => {
+    console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
+  };
+}
 
-    
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
+function DifferentialLigningExercise2() {
+  const { A, B, C, D } = diffLigningVars();
+  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `f'(x)=${A}x^3-${B}x^2-${C}x-${D}` };
+  this.facit = differentialLigning2Facit(A, B, C, D);
+  this.print = () => {
+    console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
+  };
+}
+/**
+ * Represents a differential equation exercise.
+ * @constructor 
+ */
+function DifferentialLigningExercise3() {
+  const { A, B, C } = diffLigningVars();
+  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.type = 'differentialligning';
+  this.point = 10;
+  this.tegn = '';
+  this.exerciseVars = { Differentialligning: `f'(x)=${A}cos(${B}x+${C})` };
+  this.facit = differentialLigning3Facit(A, B, C);
+  this.print = () => {
+    console.log(this.txt, this.type, this.point, this.tegn, this.exerciseVars, this.facit);
+  };
+}
 
-    <h4 class="name" id="PartielDifferentiationExercise"><span class="type-signature"></span>new PartielDifferentiationExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+/**
+ * 
+ * @returns four random numbers, A, B, C, D where 4 ≤ A, 3 ≤ B, 2 ≤ C and 1 ≤ D.
+ */
+const diffLigningVars = () => {
+  const A = randNum(8) + 4;
+  const B = randNum(8) + 3;
+  const C = randNum(8) + 2;
+  const D = randNum(15) + 1;
 
-    
+  return { A, B, C, D };
+};
 
+/**
+ * Calculates the facit for the first diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the first diffLigningExercise.
+ */
+const differentialLigningFacit = (A, B, C, D) => {
+  const Af = A / 4;
+  const Bf = B / 3;
+  const Cf = C / 2;
+  const Df = D;
 
+  const diffFacit = `f(x)=${Af}x^4+${Bf}x^3-${Cf}x^2+${Df}x+C`;
+  return diffFacit;
+};
 
-<div class="description">
-    <p>Construct for exercise, so it can make a new exercise when called.</p>
-</div>
+/**
+ * Calculates the facit for the second diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the sceond diffLigningExercise.
+ */
+const differentialLigning2Facit = (A, B, C, D) => {
+  const Af = A / 4;
+  const Bf = B / 3;
+  const Cf = C / 2;
+  const Df = D;
 
+  const diffFacit = `f(x)=${Af}x^4-${Bf}x^3-${Cf}x^2-${Df}x+C`;
+  return diffFacit;
+};
 
+/**
+ * Calculates the facit for the third diffLigningExercise.
+ * @param {number} A 
+ * @param {number} B 
+ * @param {number} C 
+ * @param {number} D 
+ * @returns facit for the third diffLigningExercise.
+ */
+const differentialLigning3Facit = (A, B, C) => {
+  const Af = A / B;
+  const Bf = B;
+  const Cf = C;
 
+  const diffFacit = `f(x)=${Af}xsin(${Bf}x+${Cf})+C`;
+  return diffFacit;
+};
 
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_ligningertovariabler.js.html">src/API/examQuestions/ligningertovariabler.js</a>, <a href="src_API_examQuestions_ligningertovariabler.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+const numOfTasks = 3;
+module.exports = {
+  DifferentialLigningExercise,
+  differentialLigningFacit,
+  DifferentialLigningExercise2,
+  differentialLigning2Facit,
+  DifferentialLigningExercise3,
+  differentialLigning3Facit,
+  numOfTasks,
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
