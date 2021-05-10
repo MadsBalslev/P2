@@ -22,6 +22,10 @@ const subjects = [
     name: 'Statistik',
     id: 'statistik',
   },
+  {
+    name: 'Infinitesimal regning',
+    id: 'infinitesimalregning',
+  },
 ];
 
 const generateStartPage = () => {

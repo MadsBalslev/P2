@@ -8,19 +8,30 @@ const generateVars = () => {
     return { A, B, C }
 }
 
-
-
-function rotatingBodyExercise () {
+function RotatingBodyExercise () {
   const { A, B, C } = generateVars();
-  this.txt = `Differientier i forhold til ${expression} i følgende to variabel funktion.`;
+  this.txt = `Vi har en kegle med en højde på ${A} og en radius på ${B}. Vi er interesseret i området [0;${C}]. Find volumen af keglen ved hjælp af formlen`;
   this.type = 'infinitesimalregning';
   this.point = 5;
   this.tegn = '';
-  this.exerciseVars = { ligning: `${A}x + x^${B} + ${C}y + y^${D}` };
-  this.facit = String(partielDifferentiationFacit(A, B, C, D, expression));
+  this.exerciseVars = '\\pi\\int_{a]^{b}(f(x))^2 \\dx';
+  this.facit = String(rotatingBodyFacit(A, B, C));
 }
 
 
 const rotatingBodyFacit = (A, B, C) => {
-  diffExpression = math.derivative()
+  let x = 'x'
+  const f = (B/A)^2;
+  const diffExpression = math.derivative(f, x);
+  const lengthExpression = Math.PI * (diffExpression)^2*C;
+  
+  return `pi*${lengthExpression}/4`;
+};
+
+const numOfTasks = 1;
+
+module.exports = {
+  numOfTasks,
+  RotatingBodyExercise,
+  rotatingBodyFacit,
 };

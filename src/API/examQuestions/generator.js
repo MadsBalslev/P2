@@ -9,6 +9,7 @@ const integrals = require('./integral');
 const ligninger = require('./ligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
+const infinitesimalregning = require('./infinitesimal');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -41,8 +42,12 @@ const generateExcerciseSet = (categories, amount) => {
         case 'statistik':
           set.push(generateStatistikExercise(amount));
           break;
+        case 'infinitesimalregning':
+          set.push();
+          break;
         default:
           break;
+      
       }
     }
   });
@@ -166,6 +171,18 @@ const generateStatistikExercise = () => {
   }
   return exercise;
 };
+
+const generateInfinitesimalregning = () => {
+  let exercise;
+  const rand = randNum(infinitesimalregning.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new infinitesimalregning.RotatingBodyExercise();
+  default:
+    break;
+  }
+}
+
 
 module.exports = {
   generateExcerciseSet,
