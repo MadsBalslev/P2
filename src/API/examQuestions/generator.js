@@ -152,13 +152,13 @@ const generateDiffLigningExercise = () => {
   const rand = randNum(diffligning.numOfTasks);
   switch(rand) {
     case 1:
-      exercise = new diffligning.differentialLigningExercise();
+      exercise = new diffligning.DifferentialLigningExercise();
       break;
     case 2:
-      exercise = new diffligning.differentialLigningExercise2();
+      exercise = new diffligning.DifferentialLigningExercise2();
       break;
     case 3:
-      exercise = new diffligning.differentialLigningExercise3();
+      exercise = new diffligning.DifferentialLigningExercise3();
       break;
     default:
       break;
