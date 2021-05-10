@@ -150,7 +150,7 @@ const generateLigningExercise = () => {
 const generateDiffLigningExercise = () => {
   let exercise;
   const rand = randNum(diffligning.numOfTasks);
-  switch(rand) {
+  switch (rand) {
     case 1:
       exercise = new diffligning.DifferentialLigningExercise();
       break;
