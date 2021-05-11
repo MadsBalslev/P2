@@ -88,6 +88,10 @@ input[type="number"] {
   width: 100%;
 }
 
+#back-btn {
+  visibility: hidden;
+}
+
 .emnevælger {
   display: flex;
   flex-direction: column;
