@@ -209,8 +209,12 @@ const generateInfinitesimalregning = () => {
   switch (rand) {
     case 1:
       exercise = new infinitesimalregning.RotatingBodyExercise();
-  default:
-    break;
+      break;
+    case 2:
+      exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
+      break;
+      default:
+      break;
   }
 return exercise;
 }
