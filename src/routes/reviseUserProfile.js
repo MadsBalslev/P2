@@ -1,5 +1,6 @@
 const helper = require('../helper');
 
+const USER_PROFILE_LENGTH = 7;
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
@@ -64,9 +65,9 @@ function requestBodyIsValid(requestBody) {
  */
 function requestBodyUserProfileIsValid(requestBody) {
   let isValidUserProfile;
-  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23)) {
+  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH)) {
     isValidUserProfile = false;
-  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23) {
+  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH) {
     isValidUserProfile = helper.isUserProfileValidVector(requestBody.userProfile);
   }
 
@@ -156,6 +157,7 @@ function calculateExerciseProfile(exercise) {
 
   return exerciseProfile;
 }
+
 /**
  * Converts and exercise to vector representation.
  *
@@ -164,54 +166,22 @@ function calculateExerciseProfile(exercise) {
  */
 function convertExerciseToVector(exercise) {
   switch (exercise.type) {
-    case 'talOgRegnearter_C':
-      return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'ligninger_C':
-      return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'funktioner_C':
-      return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_C':
-      return [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'geometri_C':
-      return [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'sandsynlighed_C':
-      return [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'andengradspolynomiumOgLigning_B':
-      return [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_B':
-      return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'funktioner_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'geometri_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'differentialregning_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'sandsynlighedOgKombinatori_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'statistik_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'regression_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorerI2d_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorerI3d_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorfunktioner_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-    case 'infinitesimalregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
-    case 'differentialregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-    case 'integralregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
-    case 'funktionerAfToVariable_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
-    case 'statistik_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+    case 'vektor2d':
+      return [1, 0, 0, 0, 0, 0, 0];
+    case 'vektor3d':
+      return [0, 1, 0, 0, 0, 0, 0];
+    case 'integralregning':
+      return [0, 0, 1, 0, 0, 0, 0];
+    case 'ligninger':
+      return [0, 0, 0, 1, 0, 0, 0];
+    case 'differentialligning':
+      return [0, 0, 0, 0, 1, 0, 0];
+    case 'funktionerAfToVariable':
+      return [0, 0, 0, 0, 0, 1, 0];
+    case 'statistik':
+      return [0, 0, 0, 0, 0, 0, 1];
     default:
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 0];
   }
 }
 
@@ -261,6 +231,7 @@ module.exports = {
   isCorrectAnswer,
   sumVectorArray,
   calculateUserProfile,
+  USER_PROFILE_LENGTH,
   CORRECT_ANSWER_WEIGHT,
   WRONG_ANSWER_WEIGHT,
   USER_WEIGHT,

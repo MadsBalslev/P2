@@ -63,11 +63,11 @@ function fetchJsonRequestBody(request) {
  * @param {{}} response
  */
 function respondWithJsonObject(jsonObject, response) {
-  const newUserProfileJsonString = JSON.stringify(jsonObject);
+  const jsonString = JSON.stringify(jsonObject);
   response.writeHead(200, {
     'Content-Type': 'application/json',
   });
-  response.end(newUserProfileJsonString);
+  response.end(jsonString);
 }
 
 /**

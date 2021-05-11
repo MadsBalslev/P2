@@ -1,6 +1,7 @@
 const { round } = require('mathjs');
 const { generateExcerciseSet } = require('../API/examQuestions/generator');
 const helper = require('../helper');
+const { USER_PROFILE_LENGTH } = require('./reviseUserProfile');
 
 function handleGenerateUserSetRequest(request, response) {
   if (request.method === 'POST') {
@@ -15,7 +16,8 @@ async function handleGenerateUserSetPostRequest(request, response) {
     const userProfile = await helper.fetchJsonRequestBody(request);
     validateUserProfile(userProfile);
     const userExerciseSet = generateUserExerciseSet(userProfile, request.headers.amount);
-    helper.respondWithJsonObject(userExerciseSet);
+    console.log(userExerciseSet);
+    helper.respondWithJsonObject(userExerciseSet, response);
   } catch (error) {
     helper.errorResponse(response, '400', `${error}`);
   }
@@ -28,24 +30,22 @@ function validateUserProfile(userProfile) {
 }
 
 function userProfileIsValid(userProfile) {
-  return userProfile.length === 23 && helper.isUserProfileValidVector(userProfile);
+  return userProfile.length === USER_PROFILE_LENGTH && helper.isUserProfileValidVector(userProfile);
 }
 
 function generateUserExerciseSet(userProfile, amountOfExercises) {
   const percentUserProfile = vectorToPercentVector(userProfile);
   const exerciseAmountVector = percentVectorToExerciseAmountVector(percentUserProfile, amountOfExercises);
-  console.log(exerciseAmountVector);
   let { actualAmount, exerciseSet } = generateCoreExerciseSet(exerciseAmountVector);
-  console.log(actualAmount);
   exerciseSet = fillExerciseSetWithRandomExercises(actualAmount, amountOfExercises, exerciseSet);
   return exerciseSet;
 }
 
 function fillExerciseSetWithRandomExercises(actualAmount, amountOfExercises, exerciseSet) {
-  const exerciseSetCopy = [...exerciseSet];
+  let exerciseSetCopy = [...exerciseSet];
   while (actualAmount < amountOfExercises) {
     const randomExercise = generateExcerciseSet([randomCategory()], 1);
-    exerciseSetCopy.concat(randomExercise);
+    exerciseSetCopy = exerciseSetCopy.concat(randomExercise);
     actualAmount++;
   }
   return exerciseSetCopy;
@@ -53,10 +53,10 @@ function fillExerciseSetWithRandomExercises(actualAmount, amountOfExercises, exe
 
 function generateCoreExerciseSet(exerciseAmountVector) {
   let actualAmount = 0;
-  const exerciseSet = [];
+  let exerciseSet = [];
   exerciseAmountVector.forEach((amount, i) => {
     const exerciseSubset = generateExcerciseSet([indexToCategory(i)], amount);
-    exerciseSet.concat(exerciseSubset);
+    exerciseSet = exerciseSet.concat(exerciseSubset);
     actualAmount += amount;
   });
   return { actualAmount, exerciseSet };
@@ -76,34 +76,18 @@ function percentVectorToExerciseAmountVector(percentVector, amountOfExercises) {
 }
 
 function randomCategory() {
-  return indexToCategory(helper.randNum(22) + 1);
+  return indexToCategory(helper.randNum(USER_PROFILE_LENGTH - 1) + 1);
 }
 
 function indexToCategory(category) {
   switch (category) {
-    case 0: return 'talOgRegnearter_C';
-    case 1: return 'ligninger_C';
-    case 2: return 'funktioner_C';
-    case 3: return 'trigonometri_C';
-    case 4: return 'geometri_C';
-    case 5: return 'sandsynlighed_C';
-    case 6: return 'andengradspolynomiumOgLigning_B';
-    case 7: return 'trigonometri_B';
-    case 8: return 'funktioner_B';
-    case 9: return 'geometri_B';
-    case 10: return 'differentialregning_B';
-    case 11: return 'sandsynlighedOgKombinatori_B';
-    case 12: return 'statistik_B';
-    case 13: return 'regression_B';
-    case 14: return 'vektorerI2d_B';
-    case 15: return 'vektorerI3d_A';
-    case 16: return 'vektorfunktioner_A';
-    case 17: return 'trigonometri_A';
-    case 18: return 'infinitesimalregning_A';
-    case 19: return 'differentialregning_A';
-    case 20: return 'integralregning_A';
-    case 21: return 'funktionerAfToVariable_A';
-    case 22: return 'statistik_A';
+    case 0: return 'vektor2d';
+    case 1: return 'vektor3d';
+    case 2: return 'integralregning';
+    case 3: return 'ligninger';
+    case 4: return 'differentialligning';
+    case 5: return 'funktionerAfToVariable';
+    case 6: return 'statistik';
     default: return '';
   }
 }
