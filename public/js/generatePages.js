@@ -35,6 +35,9 @@ const subjects = [
 const generateStartPage = () => {
   clearDom();
 
+  const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = 'hidden';
+
   const root = document.querySelector('#root');
   const form = document.createElement('form');
   const div = document.createElement('div');
@@ -138,9 +141,11 @@ const getCheckedExerciseSubject = (element) => {
 const buildExercisePage = (exerciseSet) => {
   clearDom();
   const exerciseForm = createExerciseForm();
+  const backBtn = document.querySelector('#back-btn');
 
   addExercisesToExerciseForm(exerciseForm, exerciseSet);
   addButtonToExerciseForm(exerciseForm, exerciseSet);
+  backBtn.style.visibility = 'visible';
 
   document.querySelector('#root').appendChild(exerciseForm);
 
