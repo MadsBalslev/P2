@@ -78,6 +78,15 @@ function respondWithJsonObject(jsonObject, response) {
  */
 const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
+/**
+ * Will scale a vector with the given scalar and return the new scaled vector
+ *
+ * @param {number} scalar The scalar to use for the weight
+ * @param {number[]} vector The vector to multiply with the scalar
+ * @return {number[]} A new vector which is multiplied with the scalar
+ */
+const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
+
 module.exports = {
   arrShuffle,
   randNum,
@@ -85,4 +94,5 @@ module.exports = {
   fetchJsonRequestBody,
   respondWithJsonObject,
   isUserProfileValidVector,
+  scalarMultiplication,
 };

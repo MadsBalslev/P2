@@ -53,15 +53,6 @@ describe('validateEachExerciseInExerciseSet', () => {
   });
 });
 
-describe('scalarMultiplication', () => {
-  test('scalarMultiplication', () => {
-    const scalar = 0.5;
-    const vector = [2, 4, 6, 10, 3];
-
-    expect(rup.scalarMultiplication(scalar, vector)).toEqual([1, 2, 3, 5, 1.5]);
-  });
-});
-
 describe('isCorrectAnswer', () => {
   test('isCorrectAnswer correct answer', () => {
     const exerciseWithCorrectAnswer = { ...sampleExercise1 };

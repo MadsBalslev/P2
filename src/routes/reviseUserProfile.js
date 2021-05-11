@@ -149,9 +149,9 @@ function calculateExerciseProfile(exercise) {
   let exerciseProfile = convertExerciseToVector(exercise);
 
   if (isCorrectAnswer(exercise)) {
-    exerciseProfile = scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseProfile);
+    exerciseProfile = helper.scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseProfile);
   } else if (!isCorrectAnswer(exercise)) {
-    exerciseProfile = scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseProfile);
+    exerciseProfile = helper.scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseProfile);
   }
 
   return exerciseProfile;
@@ -231,23 +231,14 @@ const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswer
  * @returns {number[]} The re-calculated user profile
  */
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
-  const weightedUserProfile = scalarMultiplication(USER_WEIGHT, currentUserProfile);
+  const weightedUserProfile = helper.scalarMultiplication(USER_WEIGHT, currentUserProfile);
   let newUserProfile = sumVectorArray(exerciseProfiles);
 
-  newUserProfile = scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
+  newUserProfile = helper.scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
   newUserProfile = sumVectorArray([newUserProfile, weightedUserProfile]);
 
   return newUserProfile;
 }
-
-/**
- * Will scale a vector with the given scalar and return the new scaled vector
- *
- * @param {number} scalar The scalar to use for the weight
- * @param {number[]} vector The vector to multiply with the scalar
- * @return {number[]} A new vector which is multiplied with the scalar
- */
-const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
 
 /**
  * Will sum an array of vectors (arrays) together.
@@ -266,7 +257,6 @@ module.exports = {
   validateEachExerciseInExerciseSet,
   convertExerciseSetToExerciseProfiles,
   calculateExerciseProfile,
-  scalarMultiplication,
   convertExerciseToVector,
   isCorrectAnswer,
   sumVectorArray,

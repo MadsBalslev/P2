@@ -12,3 +12,12 @@ describe('isUserProfileValidVector', () => {
     expect(helper.isUserProfileValidVector(invalidUserProfile)).toBeFalsy();
   });
 });
+
+describe('scalarMultiplication', () => {
+  test('scalarMultiplication', () => {
+    const scalar = 0.5;
+    const vector = [2, 4, 6, 10, 3];
+
+    expect(helper.scalarMultiplication(scalar, vector)).toEqual([1, 2, 3, 5, 1.5]);
+  });
+});
