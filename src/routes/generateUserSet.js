@@ -16,7 +16,6 @@ async function handleGenerateUserSetPostRequest(request, response) {
     const userProfile = await helper.fetchJsonRequestBody(request);
     validateUserProfile(userProfile);
     const userExerciseSet = generateUserExerciseSet(userProfile, request.headers.amount);
-    console.log(userExerciseSet);
     helper.respondWithJsonObject(userExerciseSet, response);
   } catch (error) {
     helper.errorResponse(response, '400', `${error}`);
@@ -36,30 +35,9 @@ function userProfileIsValid(userProfile) {
 function generateUserExerciseSet(userProfile, amountOfExercises) {
   const percentUserProfile = vectorToPercentVector(userProfile);
   const exerciseAmountVector = percentVectorToExerciseAmountVector(percentUserProfile, amountOfExercises);
-  let { actualAmount, exerciseSet } = generateCoreExerciseSet(exerciseAmountVector);
-  exerciseSet = fillExerciseSetWithRandomExercises(actualAmount, amountOfExercises, exerciseSet);
+  let exerciseSet = generateCoreExerciseSet(exerciseAmountVector);
+  exerciseSet = fillExerciseSetWithRandomExercises(amountOfExercises, exerciseSet);
   return exerciseSet;
-}
-
-function fillExerciseSetWithRandomExercises(actualAmount, amountOfExercises, exerciseSet) {
-  let exerciseSetCopy = [...exerciseSet];
-  while (actualAmount < amountOfExercises) {
-    const randomExercise = generateExcerciseSet([randomCategory()], 1);
-    exerciseSetCopy = exerciseSetCopy.concat(randomExercise);
-    actualAmount++;
-  }
-  return exerciseSetCopy;
-}
-
-function generateCoreExerciseSet(exerciseAmountVector) {
-  let actualAmount = 0;
-  let exerciseSet = [];
-  exerciseAmountVector.forEach((amount, i) => {
-    const exerciseSubset = generateExcerciseSet([indexToCategory(i)], amount);
-    exerciseSet = exerciseSet.concat(exerciseSubset);
-    actualAmount += amount;
-  });
-  return { actualAmount, exerciseSet };
 }
 
 function vectorToPercentVector(userProfile) {
@@ -71,8 +49,25 @@ function vectorToPercentVector(userProfile) {
 }
 
 function percentVectorToExerciseAmountVector(percentVector, amountOfExercises) {
-  console.log(helper.scalarMultiplication(amountOfExercises, percentVector));
   return round(helper.scalarMultiplication(amountOfExercises, percentVector));
+}
+
+function generateCoreExerciseSet(exerciseAmountVector) {
+  let exerciseSet = [];
+  exerciseAmountVector.forEach((amount, i) => {
+    const exerciseSubset = generateExcerciseSet([indexToCategory(i)], amount);
+    exerciseSet = exerciseSet.concat(exerciseSubset);
+  });
+  return exerciseSet;
+}
+
+function fillExerciseSetWithRandomExercises(amountOfExercises, exerciseSet) {
+  let exerciseSetCopy = [...exerciseSet];
+  while (exerciseSetCopy.length < amountOfExercises) {
+    const randomExercise = generateExcerciseSet([randomCategory()], 1);
+    exerciseSetCopy = exerciseSetCopy.concat(randomExercise);
+  }
+  return exerciseSetCopy;
 }
 
 function randomCategory() {
@@ -88,6 +83,10 @@ function indexToCategory(category) {
     case 4: return 'differentialligning';
     case 5: return 'funktionerAfToVariable';
     case 6: return 'statistik';
+    case 7: return 'infinitesimalregning';
+    case 8: return 'trigonometri';
+    case 9: return 'vektorfunktioner';
+    case 10: return 'differentialligninger';
     default: return '';
   }
 }
@@ -97,5 +96,9 @@ module.exports = {
   handleGenerateUserSetPostRequest,
   validateUserProfile,
   userProfileIsValid,
+  generateUserExerciseSet,
+  vectorToPercentVector,
+  percentVectorToExerciseAmountVector,
+  generateCoreExerciseSet,
   generateUserExerciseSet,
 };

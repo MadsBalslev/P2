@@ -2,21 +2,21 @@ const rup = require('./reviseUserProfile');
 
 const sampleExercise1 = {
   txt: 'Find x i følgende ligning.',
-  type: 'ligninger_C',
+  type: 'vektor3d',
   facit: '3.9',
   questionAnswers: '3.9',
 };
 
 const sampleExercise2 = {
   txt: 'sample text',
-  type: 'statistik_A',
+  type: 'statistik',
   facit: 'correct answer',
   questionAnswers: 'correct answer',
 };
 
 const sampleExercise3 = {
   txt: 'sample text',
-  type: 'regression_B',
+  type: 'trigonometri',
   facit: 'wrong answer',
   questionAnswers: 'correct answer',
 };
@@ -88,8 +88,8 @@ describe('convertExerciseSetToExerciseProfiles', () => {
     const exSet = [{ ...sampleExercise1 }, { ...sampleExercise1 }];
     exSet[1].questionAnswers = 'wrong answer';
     const testVector = [
-      [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
     expect(rup.convertExerciseSetToExerciseProfiles(exSet)).toEqual(testVector);
@@ -100,14 +100,14 @@ describe('calculateExerciseProfile', () => {
   test('calculateExerciseProfile correct answer', () => {
     const exerciseWithCorrectAnswer = { ...sampleExercise1 };
     expect(rup.calculateExerciseProfile(exerciseWithCorrectAnswer))
-      .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   });
 
   test('calculateExerciseProfile wrong answer', () => {
     const exerciseWithWrongAnswer = { ...sampleExercise1 };
     exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
     expect(rup.calculateExerciseProfile(exerciseWithWrongAnswer))
-      .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   });
 });
 
@@ -148,13 +148,12 @@ describe('calculateUserProfile', () => {
 
 describe('reviseUserProfile', () => {
   test('reviseUserProfile', () => {
-    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-    const newProfileExpected = [0.5, 0.566, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
-      0.5, 0.733, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.566];
+    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const newProfileExpected = [0.5, 0.5666666667, 0.5, 0.5, 0.5, 0.5, 0.5666666667, 0.5, 0.7333333333, 0.5, 0.5];
     const newProfileActual = rup.reviseUserProfile(sampleExerciseSet, userProfile);
 
     newProfileExpected.forEach((entry, i) => {
-      expect(newProfileActual[i]).toBeCloseTo(entry, 2);
+      expect(newProfileActual[i]).toBeCloseTo(entry);
     });
   });
 });
@@ -177,7 +176,7 @@ describe('requestBodyUserProfileIsValid', () => {
 
   test('requestBodyUserProfileIsValid valid userProfile', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       exerciseSet: [...sampleExerciseSet],
     };
     expect(rup.requestBodyUserProfileIsValid(requestBody)).toBeTruthy();
@@ -236,7 +235,7 @@ describe('requestBodyExerciseSetIsValid', () => {
 describe('requestBodyIsValid', () => {
   test('requestBodyIsValid valid requestBody', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       exerciseSet: [...sampleExerciseSet],
     };
     expect(rup.requestBodyIsValid(requestBody)).toBeTruthy();
@@ -244,7 +243,7 @@ describe('requestBodyIsValid', () => {
 
   test('requestBodyIsValid invalid requestBody', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       exerciseSet: [...sampleExerciseSet],
     };
     delete requestBody.exerciseSet[0].facit;
