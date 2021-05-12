@@ -1,4 +1,5 @@
 const { randNum } = require('../../helper');
+const { round2Dec } = require('../../helper') ;
 
 /**
  * Represents a differential equation exercise.
@@ -6,7 +7,7 @@ const { randNum } = require('../../helper');
  */
 function DifferentialLigningExercise() {
   const { A, B, C, D } = diffLigningVars();
-  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.txt = 'Find den fuldstændige løsning til differentialligningen. I tilfælde af kommatal, indtast 2 decimaler.';
   this.type = 'differentialligning';
   this.point = 10;
   this.tegn = '';
@@ -23,7 +24,7 @@ function DifferentialLigningExercise() {
  */
 function DifferentialLigningExercise2() {
   const { A, B, C, D } = diffLigningVars();
-  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.txt = 'Find den fuldstændige løsning til differentialligningen. I tilfælde af kommatal, indtast 2 decimaler.';
   this.type = 'differentialligning';
   this.point = 10;
   this.tegn = '';
@@ -39,7 +40,7 @@ function DifferentialLigningExercise2() {
  */
 function DifferentialLigningExercise3() {
   const { A, B, C } = diffLigningVars();
-  this.txt = 'Find den fuldstændige løsning til differentialligningen.';
+  this.txt = 'Find den fuldstændige løsning til differentialligningen. I tilfælde af kommatal, indtast 2 decimaler.';
   this.type = 'differentialligning';
   this.point = 10;
   this.tegn = '';
@@ -72,9 +73,9 @@ const diffLigningVars = () => {
  * @returns facit for the first diffLigningExercise.
  */
 const differentialLigningFacit = (A, B, C, D) => {
-  const Af = A / 4;
-  const Bf = B / 3;
-  const Cf = C / 2;
+  const Af = round2Dec(A / 4);
+  const Bf = round2Dec(B / 3);
+  const Cf = round2Dec(C / 2);
   const Df = D;
 
   const diffFacit = `f(x)=${Af}x^4+${Bf}x^3-${Cf}x^2+${Df}x+C`;
@@ -90,9 +91,9 @@ const differentialLigningFacit = (A, B, C, D) => {
  * @returns facit for the sceond diffLigningExercise.
  */
 const differentialLigning2Facit = (A, B, C, D) => {
-  const Af = A / 4;
-  const Bf = B / 3;
-  const Cf = C / 2;
+  const Af = round2Dec(A / 4);
+  const Bf = round2Dec(B / 3);
+  const Cf = round2Dec(C / 2);
   const Df = D;
 
   const diffFacit = `f(x)=${Af}x^4-${Bf}x^3-${Cf}x^2-${Df}x+C`;
@@ -108,7 +109,7 @@ const differentialLigning2Facit = (A, B, C, D) => {
  * @returns facit for the third diffLigningExercise.
  */
 const differentialLigning3Facit = (A, B, C) => {
-  const Af = A / B;
+  const Af = round2Dec(A / B);
   const Bf = B;
   const Cf = C;
 
