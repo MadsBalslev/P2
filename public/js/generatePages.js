@@ -201,7 +201,7 @@ const clearDom = () => {
  */
 const createExerciseForm = () => {
   const exerciseForm = document.createElement('form');
-  setAttribute(exerciseForm, { id: 'exerciseForm' });
+  setAttributes(exerciseForm, { id: 'exerciseForm' });
   return exerciseForm;
 };
 
