@@ -15,6 +15,7 @@ function VektorFunctionExercise() {
   this.type = 'vektorfunktioner';
   this.facit = VektorFunctionExerciseFacit();
   this.point = 25;
+  this.tegn = '*';
 }
 
 const VektorFunctionExerciseFacit = () => {
