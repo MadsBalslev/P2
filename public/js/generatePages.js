@@ -27,6 +27,10 @@ const subjects = [
     id: 'statistik',
   },
   {
+    name: 'Ligning af to variable',
+    id: 'funktionerAfToVariable',
+  },
+  {
     name: 'Infinitesimal regning',
     id: 'infinitesimalregning',
   },
