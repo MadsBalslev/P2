@@ -10,7 +10,7 @@ const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
-const trigonometri = require ('./trigonometri');
+const trigonometri = require('./trigonometri');
 const infinitesimalregning = require('./infinitesimal');
 
 /**
@@ -49,6 +49,7 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'trigonometri':
           set.push(generateTrigonometriExercise(amount));
+          break;
         case 'infinitesimalregning':
           set.push(generateInfinitesimalregning(amount));
           break;
@@ -227,7 +228,7 @@ const generateTrigonometriExercise = () => {
       break;
   }
   return exercise;
-}
+};
 
 /**
  * This function randomly generates an equation exercise and returns it.

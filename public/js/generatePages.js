@@ -32,10 +32,9 @@ const subjects = [
   },
 
   {
-    name : 'Trigonometri',
+    name: 'Trigonometri',
     id: 'trigonometri',
   },
-  
   {
     name: 'Infinitesimal regning',
     id: 'infinitesimalregning',
