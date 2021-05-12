@@ -158,9 +158,6 @@ const generateVektorFunctionExercise = () => {
     case 1:
       exercise = new vectorfunctions.VektorFunctionExercise();
       break;
-    case 2:
-      exercise = new vectorfunctions.VektorIntersectionExercise();
-      break;
     default:
       break;
   }
