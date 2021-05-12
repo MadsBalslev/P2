@@ -28,8 +28,11 @@ const arrShuffle = (arr) => {
   }
 };
 
+const round2Dec = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
+
 module.exports = {
   arrShuffle,
   randNum,
   errorResponse,
+  round2Dec,
 };
