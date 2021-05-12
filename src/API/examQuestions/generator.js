@@ -10,6 +10,7 @@ const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
+const infinitesimalregning = require('./infinitesimal');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -45,8 +46,12 @@ const generateExcerciseSet = (categories, amount) => {
         case 'statistik':
           set.push(generateStatistikExercise(amount));
           break;
+        case 'infinitesimalregning':
+          set.push(generateInfinitesimalregning(amount));
+          break;
         default:
           break;
+      
       }
     }
   });
@@ -150,7 +155,7 @@ const generateLigningExercise = () => {
 const generateDiffLigningExercise = () => {
   let exercise;
   const rand = randNum(diffligning.numOfTasks);
-  switch(rand) {
+  switch (rand) {
     case 1:
       exercise = new diffligning.DifferentialLigningExercise();
       break;
@@ -197,6 +202,23 @@ const generateStatistikExercise = () => {
   }
   return exercise;
 };
+
+const generateInfinitesimalregning = () => {
+  let exercise;
+  const rand = randNum(infinitesimalregning.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new infinitesimalregning.RotatingBodyExercise();
+      break;
+    case 2:
+      exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
+      break;
+      default:
+      break;
+  }
+return exercise;
+}
+
 
 module.exports = {
   generateExcerciseSet,
