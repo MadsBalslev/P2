@@ -44,6 +44,10 @@ const subjects = [
 
 let exerciseSet;
 
+/**
+ * Will generate the start page by clearing and thne adding all needed forms, roots, divs etc.
+ * It will also await the exercises
+ */
 const generateStartPage = () => {
   clearDom();
 
@@ -115,6 +119,11 @@ const generateStartPage = () => {
   }
 };
 
+/**
+ * Generates the label for chosen subject.
+ * @param {string} subject Takes the subject checked off
+ * @returns {string} Returns the label
+ */
 const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
@@ -125,6 +134,11 @@ const generateSubjectLabel = (subject) => {
   return label;
 };
 
+/**
+ * Generates the input for the chosen subject.
+ * @param {string} subject Takes the subject checked off
+ * @returns {string} Returns the subject ID and name.
+ */
 const generateSubjectInput = (subject) => {
   const input = document.createElement('input');
   const { id } = subject;

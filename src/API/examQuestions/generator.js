@@ -54,7 +54,6 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         default:
           break;
-      
       }
     }
   });
@@ -174,6 +173,10 @@ const generateDiffLigningExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateFunktionerAfToVariableExercise = () => {
   let exercise;
   const rand = randNum(funktionerAfToVariable.numOfTasks);
@@ -190,6 +193,10 @@ const generateFunktionerAfToVariableExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateStatistikExercise = () => {
   let exercise;
   const rand = randNum(statistik.numOfTasks);
@@ -222,6 +229,10 @@ const generateTrigonometriExercise = () => {
   return exercise;
 }
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateInfinitesimalregning = () => {
   let exercise;
   const rand = randNum(infinitesimalregning.numOfTasks);
@@ -232,12 +243,11 @@ const generateInfinitesimalregning = () => {
     case 2:
       exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
       break;
-      default:
+    default:
       break;
   }
-return exercise;
-}
-
+  return exercise;
+};
 
 module.exports = {
   generateExcerciseSet,

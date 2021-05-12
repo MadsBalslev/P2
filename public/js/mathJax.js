@@ -1,5 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+/**
+ * Converts the input and output into mathJax
+ * @param {} input The input from website.
+ * @param {} output The output to the website
+ */
 const convert = (input, output) => {
   MathJax.texReset();
   const options = MathJax.getMetricsFor(output);
