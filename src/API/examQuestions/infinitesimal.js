@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
@@ -6,9 +7,9 @@ const { randNum } = require('../../helper');
  * @return {{A: number, B: number, C: number}} Returns the randomly generated numbers.
  */
 const generateVars = () => {
-  const A = randNum(10) + 1;
-  const B = randNum(5) + 1;
-  const C = randNum(10) + 1;
+  const A = randNum(15) + 1;
+  const B = randNum(10) + 1;
+  const C = randNum(15) + 1;
   return { A, B, C };
 };
 
@@ -80,14 +81,17 @@ const rotatingBodyQuadraticFacit = (A, B, C) => {
 
 const rotatingBodyFacit = (A, B, C) => {
   const x = 'x';
-  const f = (B / A) ** 2;
+  const f = ((B / A) ** 2).toFixed(2);
   const diffExpression = math.derivative(f, x);
-  const lengthExpression = (Math.PI * ((diffExpression) ** 2) * C).toFixed(0);
+  const lengthExpression = (Math.PI * ((diffExpression) ^ 2) * C).toFixed(0);
+
+  console.log(f);
+  console.log(lengthExpression);
 
   return lengthExpression;
 };
 
-RotatingBodyQuadraticExercise();
+RotatingBodyExercise();
 
 const numOfTasks = 2;
 
