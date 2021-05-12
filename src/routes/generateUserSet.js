@@ -100,5 +100,4 @@ module.exports = {
   vectorToPercentVector,
   percentVectorToExerciseAmountVector,
   generateCoreExerciseSet,
-  generateUserExerciseSet,
 };
