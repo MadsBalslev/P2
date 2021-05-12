@@ -1,23 +1,25 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 const cookieExist = (cookie) => {
-  if (localStorage.getItem(cookie)) {
+  if (sessionStorage.getItem(cookie)) {
     return true;
   }
+
   return false;
 };
 
-const readCookie = (cookie) => localStorage.getItem(cookie);
-
-const setCookie = (cookie, value) => {
-  localStorage.setItem(cookie, value);
+const readCookie = (cookie) => {
+  const excerciseSet = sessionStorage.getItem(cookie);
+  const json = JSON.parse(excerciseSet);
+  return json;
 };
 
-const useCookie = (cookie) => {
-  if (cookieExist(cookie)) {
-    const state = readCookie(cookie);
-    console.log(state);
-  } else {
-    setCookie(cookie, 'start');
-  }
+const saveState = (name, value) => {
+  const strVal = JSON.stringify(value);
+
+  sessionStorage.setItem(name, strVal);
 };
 
-useCookie('state');
+const deleteCookie = (name) => {
+  sessionStorage.removeItem(name);
+};
