@@ -1,140 +1,57 @@
-const math = require('mathjs');
 const { randNum } = require('../../helper');
 
-/**
- * Generates a vector, and puts in a matrix
- * @return {math.Matrix} Returns the generated and formatted vector.
- */
+const a1 = randNum(8);
+const a2 = randNum(8);
+const a3 = randNum(8);
+const a4 = randNum(8);
+const t1 = randNum(4);
 
-const generateRandom3dVector = () => {
-  const a1 = randNum(8);
-
-  const v = math.matrix([
-    [a1],
-  ]);
-
-  return v;
-};
-
-/**
- * Formats a vector into a string
- * @param {math.Matrix} vector Takes a vector as input and formats it accordingly.
- * @return {string} Formats the vector as a string, and returns it.
- */
-// eslint-disable-next-line max-len
-const formatVector = (vector) => `${math.subset(vector, math.index(0, 0))}`;
-
-/**
- * Represents a vektor addition exercise  .
- * @constructor
- */
-function VektorAdditionExercise() {
-  const mathMatrixVectorA = generateRandom3dVector();
-  const mathMatrixFacit = getVektorAdditionFacit();
-
+function VektorFunctionExercise() {
   this.exerciseVars = {
-    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >
-(t) = (x(t),y(t)) = (4*cos(t),4-t-2*sin(t))`,
+    vectorA: `\\overrightarrow{r(t)} = (x(${t1}),y(${t1})) = (${a1}*cos(${t1}),${a1}-${t1}-${a2}*sin(${a3}*${t1}))`,
   };
-  this.facit = formatVector(mathMatrixFacit);
+  this.facit = getVektorFunctionFacit();
   this.type = 'vektorfunktioner';
   this.point = 25;
-  this.txt = 'Bestem koordinaterne til parameter­frem­stil­lingens første dobbeltpunkt.';
+  this.txt = 'Bestem koordinaterne til parameter­frem­stil­lingens dobbeltpunkter.';
   this.tegn = '*';
 }
 
-/**
- * This functions takes two vectors as input, adds them, and returns the resulting vector.
- * @param {math.Matrix} vectorA The first vector used as a parameter.
- *   The second vector used as a parameter.
- * @return {math.Matrix} The final vector from adding the two input parameters.
- */
-const getVektorAdditionFacit = () => {
-  const facit = '(x(t_1),y(t_1))=(x(t_2),y(t_2))=(-2,51,0,85)';
+const getVektorFunctionFacit = () => {
+  const v = (a2 * a3) * t1;
+  const A1 = a1 - (T1) - a2 * Math.sin(v);
+  const A2 = a2;
+  const A3 = a3;
+  const T1 = 2 * Math.PI - t1;
+  const facit = `\\overrightarrow{r(${t1})} = \\overrightarrow{r(${T1})} = (${A1},${A1},${A2},${A3})`;
   return facit;
 };
 
-/**
- * Represents a vektor subtraction exercise  .
- * @constructor
- */
-function VektorSubtractionExercise() {
-  const mathMatrixVectorA = generateRandom3dVector();
-  const mathMatrixVectorB = generateRandom3dVector();
-  const mathMatrixFacit = getVektorSubtractionFacit(mathMatrixVectorA, mathMatrixVectorB);
-
+function VektorIntersectionExercise() {
   this.exerciseVars = {
-    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >`,
-    vectorB: `\\vec{b} = < ${formatVector(mathMatrixVectorB)} >`,
+    vectorA: `x${a1}=${a2}*t^2+${a3}*t-${a4} og y(t)=t, hvor -\\{infty}<t<+\\{infty}`,
   };
-  this.facit = formatVector(mathMatrixFacit);
-  this.type = 'vektor3d';
-  this.point = 15;
-  this.txt = 'Hvad giver følgende to vektorer fratrukket hinanden?';
-  this.tegn = '-';
-}
-
-/**
- * This functions takes two vectors as input, subtracts them, and returns the resulting vector.
- * @param {math.Matrix} vectorA The first vector used as a parameter.
- *  The second vector used as a parameter.
- * @return {math.Matrix} The final vector from subtracting the two input parameters.
- */
-const getVektorSubtractionFacit = (vectorA, vectorB) => math.matrix([
-  [math.subset(vectorA, math.index(0, 0)) - math.subset(vectorB, math.index(0, 0))],
-  [math.subset(vectorA, math.index(1, 0)) - math.subset(vectorB, math.index(1, 0))],
-  [math.subset(vectorA, math.index(2, 0)) - math.subset(vectorB, math.index(2, 0))],
-]);
-
-/**
- * Represents a vektor multiplication exercise  .
- * @constructor
- */
-function VektorMultiplicationExercise() {
-  const mathMatrixVectorA = generateRandom3dVector();
-  const mathMatrixVectorB = generateRandom3dVector();
-  const facitNumber = getVektorMultiplicationFacit(mathMatrixVectorA, mathMatrixVectorB);
-
-  this.exerciseVars = {
-    vectorA: `\\vec{a} = < ${formatVector(mathMatrixVectorA)} >`,
-    vectorB: `\\vec{b} = < ${formatVector(mathMatrixVectorB)} >`,
-  };
-  this.facit = facitNumber.toString();
-  this.type = 'vektor3d';
-  this.point = 20;
-  this.txt = 'Find skalarproduktet af følgende to vektorer?';
+  this.facit = getVektorIntersectionFacit();
+  this.type = 'vektorfunktioner';
+  this.point = 25;
+  this.txt = 'Bestem koordinaterne til parameter­frem­stil­lingens dobbeltpunkter.';
   this.tegn = '*';
 }
 
-/*
-function VektorProductExercise() {
-  this.x = x || 0;
-  this.y = y || 0;
-}
+const getVektorIntersectionFacit = () => {
+  const xt = a1 * (t1 ** 2) + a2 * t1 - a4;
+  const yt = a1 * (t1 ** 2) + a2 * t1 + a4;
 
-VektorProductExercise.prototype = {
-  function() {
-    return new VektorProductExercise(-this.x, -this.y, -this.z);
-  },
-}
-*/
+  const facit = `(0,${xt}) og (0,${yt}) `;
+  return facit;
+};
 
-/**
- * This functions takes two vectors as input, multiplies them, and returns the resulting vector.
- * @param {math.Matrix} vectorA The first vector used as a parameter.
- * @param {math.Matrix} vectorB The second vector used as a parameter.
- * @return {integer} The dot product of two vectors.
- */
-const getVektorMultiplicationFacit = (vectorA, vectorB) => math.dot(vectorA, vectorB);
-
-const numOfTasks = 3;
+const numOfTasks = 2;
 
 module.exports = {
-  VektorAdditionExercise,
-  getVektorAdditionFacit,
-  VektorSubtractionExercise,
-  getVektorSubtractionFacit,
-  VektorMultiplicationExercise,
-  getVektorMultiplicationFacit,
+  VektorFunctionExercise,
+  getVektorFunctionFacit,
+  VektorIntersectionExercise,
+  getVektorIntersectionFacit,
   numOfTasks,
 };
