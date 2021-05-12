@@ -30,6 +30,11 @@ const subjects = [
     name: 'Ligning af to variable',
     id: 'funktionerAfToVariable',
   },
+
+  {
+    name : 'Trigonometri',
+    id: 'trigonometri',
+  },
 ];
 
 const generateStartPage = () => {
