@@ -32,6 +32,8 @@ const subjects = [
   },
 ];
 
+let exerciseSet;
+
 const generateStartPage = () => {
   clearDom();
 
@@ -51,6 +53,8 @@ const generateStartPage = () => {
 
   amountInput.setAttribute('type', 'number');
   amountInput.setAttribute('id', 'amount');
+  amountInput.setAttribute('min', '1');
+  amountInput.setAttribute('value', '1');
 
   submit.setAttribute('type', 'submit');
   submit.setAttribute('value', 'Indsend');
@@ -58,8 +62,13 @@ const generateStartPage = () => {
   form.setAttribute('id', 'form');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const exerciseSet = await getExerciseSetFromServer(event);
-    buildExercisePage(exerciseSet);
+
+    exerciseSet = await getExerciseSetFromServer(event);
+    saveState('exerciseSet', exerciseSet);
+    saveState('page', 'exercisePage');
+
+    buildExercisePage();
+    console.log(exerciseSet);
   });
   div.setAttribute('id', 'emneVælger');
 
@@ -85,6 +94,15 @@ const generateStartPage = () => {
   form.appendChild(submit);
 
   root.appendChild(form);
+
+  if (cookieExist('exerciseSet')) {
+    exerciseSet = readCookie('exerciseSet');
+    if (readCookie('page') === 'exercisePage') {
+      buildExercisePage();
+    } else if (readCookie('page') === 'resultPage') {
+      generateResultPage();
+    }
+  }
 };
 
 const generateSubjectLabel = (subject) => {
@@ -138,14 +156,14 @@ const getCheckedExerciseSubject = (element) => {
  * Builds a page for the generated exercise set.
  * @param {obj[]} exerciseSet
  */
-const buildExercisePage = (exerciseSet) => {
+const buildExercisePage = () => {
   clearDom();
   const exerciseForm = createExerciseForm();
   const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = 'visible';
 
   addExercisesToExerciseForm(exerciseForm, exerciseSet);
   addButtonToExerciseForm(exerciseForm, exerciseSet);
-  backBtn.style.visibility = 'visible';
 
   document.querySelector('#root').appendChild(exerciseForm);
 
@@ -174,7 +192,7 @@ const createExerciseForm = () => {
  * @param {*} exerciseForm
  * @param {obj[]} exerciseSet
  */
-const addExercisesToExerciseForm = (exerciseForm, exerciseSet) => {
+const addExercisesToExerciseForm = (exerciseForm) => {
   let i = 1;
   exerciseSet.forEach((exercise) => {
     addSingleExerciseToExerciseForm(i, exercise, exerciseForm);
@@ -268,7 +286,7 @@ const addButtonToExerciseForm = (exerciseForm) => {
  * Function that makes the submit button to get answers for the exercises.
  * @param {*} exerciseSet
  */
-const giveFormAction = (exerciseSet) => {
+const giveFormAction = () => {
   document.querySelector('#exerciseForm').addEventListener('submit', (event) => {
     event.preventDefault();
     exerciseSet.forEach((exercise) => {
@@ -282,9 +300,15 @@ const giveFormAction = (exerciseSet) => {
  * Function that takes the exerciseSet as a parameter and checks for correct answers.
  * @param {*} exerciseSet
  */
-const generateResultPage = (exerciseSet) => {
+const generateResultPage = () => {
+  const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = 'visible';
+
   clearDom();
+
   checkAnswer(exerciseSet);
+  saveState('exerciseSet', exerciseSet);
+  saveState('page', 'resultPage');
 };
 
 /**
@@ -310,8 +334,6 @@ const calcUserStats = (exersiceSet) => {
     maxPoints,
     userStatsData,
   };
-
-  console.log(AllData);
 
   return AllData;
 };
@@ -435,16 +457,14 @@ const checkUserAnswerValue = (answer, facit) => {
   if (answer !== facit) {
     return false;
   }
-  console.log('fejl i checkUserAnswerValue');
 
   return null;
 };
 
 /**
  * Function checks the entire exercise set answer and calls addPoints function for adding points.
- * @param {*} exerciseSet
  */
-const checkAnswer = (exerciseSet) => {
+const checkAnswer = () => {
   let userPoints = 0;
   let totalPoints = 0;
 
