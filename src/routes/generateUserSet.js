@@ -1,7 +1,7 @@
 const { round } = require('mathjs');
 const { generateExcerciseSet } = require('../API/examQuestions/generator');
 const helper = require('../helper');
-const { USER_PROFILE_LENGTH: USER_VECTOR_LENGTH } = require('./reviseUserProfile');
+const { USER_PROFILE_LENGTH } = require('./reviseUserProfile');
 
 /**
  * Handles a /generateUserSetRequest if the request method is post, else respond with bad request.
@@ -19,8 +19,8 @@ function handleGenerateUserSetRequest(request, response) {
 
 /**
  * Will try handling a /generateUserSet request, if an error is throw respond with the error. First
- * get the request body / user vector, then validate the request body / user vector. Then generate
- * an exercise set based on the user vector. Then respond with the exercise set.
+ * get the request body / user profile, then validate the request body / user profile. Then generate
+ * an exercise set based on the user profile. Then respond with the exercise set.
  *
  * @param {{}} request
  * @param {{}} response
@@ -28,8 +28,8 @@ function handleGenerateUserSetRequest(request, response) {
 async function handleGenerateUserSetPostRequest(request, response) {
   try {
     const requestBody = await helper.fetchJsonRequestBody(request);
-    const userVector = validateUserRequestIsUserVector(requestBody);
-    const userExerciseSet = generateUserExerciseSet(userVector, request.headers.amount);
+    const userProfile = validateUserRequestIsUserProfile(requestBody);
+    const userExerciseSet = generateUserExerciseSet(userProfile, request.headers.amount);
     helper.respondWithJsonObject(userExerciseSet, response);
   } catch (error) {
     helper.errorResponse(response, '400', `${error}`);
@@ -37,43 +37,43 @@ async function handleGenerateUserSetPostRequest(request, response) {
 }
 
 /**
- * If requestBody is userVector return userVector, else throw error.
+ * If requestBody is userProfile return userProfile, else throw error.
  *
  * @param {*} requestBody Request body to validate.
- * @returns {Array} RequestBody if requetBody is a userVector.
+ * @returns {Array} RequestBody if requetBody is a userProfile.
  */
-function validateUserRequestIsUserVector(requestBody) {
-  let userVector;
-  if (!isUserVector(requestBody)) {
+function validateUserRequestIsUserProfile(requestBody) {
+  let userProfile;
+  if (!isUserProfile(requestBody)) {
     throw 'invalid request body';
-  } else if (isUserVector(requestBody)) {
-    userVector = requestBody;
+  } else if (isUserProfile(requestBody)) {
+    userProfile = requestBody;
   }
-  return userVector;
+  return userProfile;
 }
 
 /**
- * Checks that requestBody is a userVector.
+ * Checks that requestBody is a userProfile.
  *
  * @param {{}} requestBody Arbitrary object or primitive value.
- * @returns True if requestBody is a userVector, else false.
+ * @returns True if requestBody is a userProfile, else false.
  */
-function isUserVector(requestBody) {
-  return requestBody.length === USER_VECTOR_LENGTH && helper.isUserProfileValidVector(requestBody);
+function isUserProfile(requestBody) {
+  return requestBody.length === USER_PROFILE_LENGTH && helper.isUserProfileValidVector(requestBody);
 }
 
 /**
- * Turn as userVector into a percentUserProfile, turn the percentUserProfile into a
+ * Turn as userProfile into a percentUserProfile, turn the percentUserProfile into a
  * exerciseAmountVector, generate the core of the exercise set based on the exerciseAmountVector,
  * fill the exercise set with random exercises if the lenght of the exercise set <
  * amountOfExercises.
  *
- * @param {Number[]}  userVector
+ * @param {Number[]}  userProfile
  * @param {Number} requestedAmountOfExercises Amount of exercises requested.
  * @returns The generated exercise set.
  */
-function generateUserExerciseSet(userVector, requestedAmountOfExercises) {
-  const percentUserProfile = vectorToPercentVector(userVector);
+function generateUserExerciseSet(userProfile, requestedAmountOfExercises) {
+  const percentUserProfile = vectorToPercentVector(userProfile);
   const exerciseAmountVector = percentVectorToExerciseAmountVector(percentUserProfile, requestedAmountOfExercises);
   let exerciseSet = generateCoreExerciseSet(exerciseAmountVector);
   exerciseSet = fillSparseExerciseSetWithRandomExercises(requestedAmountOfExercises, exerciseSet);
@@ -85,15 +85,15 @@ function generateUserExerciseSet(userVector, requestedAmountOfExercises) {
  * the sum of the elements in A. Each element in this new Array corresponds to the percentage value
  * of the orginal value compared to the sum af all elements.
  *
- * @param {Number[]} userVector
+ * @param {Number[]} userProfile
  * @returns {Number[]}
  */
-function vectorToPercentVector(userVector) {
+function vectorToPercentVector(userProfile) {
   let sum = 0;
-  userVector.forEach((element) => {
+  userProfile.forEach((element) => {
     sum += element;
   });
-  return helper.scalarMultiplication(1 / sum, userVector);
+  return helper.scalarMultiplication(1 / sum, userProfile);
 }
 
 /**
@@ -145,7 +145,7 @@ function fillSparseExerciseSetWithRandomExercises(amountOfExercises, exerciseSet
  * @returns {String} A random exercise type.
  */
 function randomType() {
-  return indexToType(helper.randNum(USER_VECTOR_LENGTH - 1) + 1);
+  return indexToType(helper.randNum(USER_PROFILE_LENGTH - 1) + 1);
 }
 
 /**
@@ -172,8 +172,8 @@ function indexToType(index) {
 module.exports = {
   handleGenerateUserSetRequest,
   handleGenerateUserSetPostRequest,
-  validateUserRequestIsUserVector,
-  isUserVector,
+  validateUserProfile: validateUserRequestIsUserProfile,
+  userProfileIsValid: isUserProfile,
   generateUserExerciseSet,
   vectorToPercentVector,
   percentVectorToExerciseAmountVector,
