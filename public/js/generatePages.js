@@ -65,8 +65,10 @@ const generateStartPage = () => {
 
     exerciseSet = await getExerciseSetFromServer(event);
     saveState('exerciseSet', exerciseSet);
+    saveState('page', 'exercisePage');
 
     buildExercisePage();
+    console.log(exerciseSet);
   });
   div.setAttribute('id', 'emneVælger');
 
@@ -95,7 +97,11 @@ const generateStartPage = () => {
 
   if (cookieExist('exerciseSet')) {
     exerciseSet = readCookie('exerciseSet');
-    buildExercisePage();
+    if (readCookie('page') === 'exercisePage') {
+      buildExercisePage();
+    } else if (readCookie('page') === 'resultPage') {
+      generateResultPage();
+    }
   }
 };
 
@@ -154,10 +160,10 @@ const buildExercisePage = () => {
   clearDom();
   const exerciseForm = createExerciseForm();
   const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = 'visible';
 
   addExercisesToExerciseForm(exerciseForm, exerciseSet);
   addButtonToExerciseForm(exerciseForm, exerciseSet);
-  backBtn.style.visibility = 'visible';
 
   document.querySelector('#root').appendChild(exerciseForm);
 
@@ -295,8 +301,14 @@ const giveFormAction = () => {
  * @param {*} exerciseSet
  */
 const generateResultPage = () => {
+  const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = 'visible';
+
   clearDom();
+
   checkAnswer(exerciseSet);
+  saveState('exerciseSet', exerciseSet);
+  saveState('page', 'resultPage');
 };
 
 /**
@@ -451,7 +463,6 @@ const checkUserAnswerValue = (answer, facit) => {
 
 /**
  * Function checks the entire exercise set answer and calls addPoints function for adding points.
- * @param {*} exerciseSet
  */
 const checkAnswer = () => {
   let userPoints = 0;
