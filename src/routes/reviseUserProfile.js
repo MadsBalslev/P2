@@ -1,6 +1,6 @@
 const helper = require('../helper');
 
-const USER_PROFILE_LENGTH = 11;
+const USER_VECTOR_LENGTH = 11;
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
@@ -22,8 +22,8 @@ function handleReviseUserProfileRequest(request, response) {
 
 /**
  * Handles a post rquest to /reviseUserProfile, will try fetching request body, then based on the
- * userProfile and exerciseSet in this body calculate a new userProfile, then responde with the new
- * userProfile.
+ * userVector and exerciseSet in this body calculate a new userVector, then responde with the new
+ * userVector.
  *
  * @param {{}} request
  * @param {{}} response
@@ -65,9 +65,9 @@ function requestBodyIsValid(requestBody) {
  */
 function requestBodyUserProfileIsValid(requestBody) {
   let isValidUserProfile;
-  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH)) {
+  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_VECTOR_LENGTH)) {
     isValidUserProfile = false;
-  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH) {
+  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_VECTOR_LENGTH) {
     isValidUserProfile = helper.isUserProfileValidVector(requestBody.userProfile);
   }
 
@@ -239,7 +239,7 @@ module.exports = {
   isCorrectAnswer,
   sumVectorArray,
   calculateUserProfile,
-  USER_PROFILE_LENGTH,
+  USER_PROFILE_LENGTH: USER_VECTOR_LENGTH,
   CORRECT_ANSWER_WEIGHT,
   WRONG_ANSWER_WEIGHT,
   USER_WEIGHT,
