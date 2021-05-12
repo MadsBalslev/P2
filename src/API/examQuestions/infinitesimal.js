@@ -3,7 +3,7 @@ const math = require('mathjs');
 const { randNum } = require('../../helper');
 
 /**
- * Generates randomly generated numbers, that can´t be 0
+ * Generates random  numbers, that can´t be 0
  * @return {{A: number, B: number, C: number}} Returns the randomly generated numbers.
  */
 const generateVars = () => {
@@ -14,7 +14,7 @@ const generateVars = () => {
 };
 
 /**
- * Generates randomly generated numbers with lower values, that can´t be 0
+ * Generates random numbers with lower values, that can´t be 0
  * @return {{A: number, B: number, C: number}} Returns the randomly generated numbers.
  */
 const generateVarsLow = () => {
