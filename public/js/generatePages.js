@@ -226,7 +226,7 @@ const addExercisesToExerciseForm = (exerciseForm) => {
  */
 const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
   const exerciseDiv = document.createElement('div');
-  setAttribute(exerciseDiv, { class: 'exercise' });
+  setAttributes(exerciseDiv, { class: 'exercise' });
 
   addExerciseHeader(i, exercise, exerciseDiv);
   addExerciseText(exercise, exerciseDiv);
@@ -271,7 +271,7 @@ const addExerciseVars = (exercise, exerciseDiv) => {
 
   exerciseVars.forEach((eVar) => {
     const questionText = document.createElement('p');
-    setAttribute(questionText, { class: 'mathTex' });
+    setAttributes(questionText, { class: 'mathTex' });
     convert(eVar, questionText);
     exerciseDiv.appendChild(questionText);
   });
@@ -485,7 +485,7 @@ const checkAnswer = () => {
   const AllData = calcUserStats(exerciseSet);
   const container = document.createElement('div');
 
-  container.setAttribute('class', 'container');
+  setAttributes(container, { class: 'container' });
 
   exerciseSet.forEach((exercise) => {
     totalPoints += exercise.point;
