@@ -12,8 +12,8 @@ function VektorFunctionExercise() {
   this.exerciseVars = {
     vectorfunction1: `$overrightarrow{r(t)}=(x(t),y(t))=(${x}*cos(${t}),${y}-${t}-${g}*sin(${h}*${t}))`,
   };
-  this.facit = VektorFunctionExerciseFacit();
   this.type = 'vektorfunktioner';
+  this.facit = VektorFunctionExerciseFacit();
   this.point = 25;
 }
 
