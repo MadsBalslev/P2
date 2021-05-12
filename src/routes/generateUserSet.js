@@ -69,14 +69,14 @@ function isUserProfile(requestBody) {
  * amountOfExercises.
  *
  * @param {Number[]}  userProfile
- * @param {Number} amountOfExercises Amount of exercises requested.
+ * @param {Number} requestedAmountOfExercises Amount of exercises requested.
  * @returns The generated exercise set.
  */
-function generateUserExerciseSet(userProfile, amountOfExercises) {
+function generateUserExerciseSet(userProfile, requestedAmountOfExercises) {
   const percentUserProfile = vectorToPercentVector(userProfile);
-  const exerciseAmountVector = percentVectorToExerciseAmountVector(percentUserProfile, amountOfExercises);
+  const exerciseAmountVector = percentVectorToExerciseAmountVector(percentUserProfile, requestedAmountOfExercises);
   let exerciseSet = generateCoreExerciseSet(exerciseAmountVector);
-  exerciseSet = fillExerciseSetWithRandomExercises(amountOfExercises, exerciseSet);
+  exerciseSet = fillSparseExerciseSetWithRandomExercises(requestedAmountOfExercises, exerciseSet);
   return exerciseSet;
 }
 
@@ -132,7 +132,7 @@ function generateCoreExerciseSet(exerciseAmountVector) {
  * @param {*} exerciseSet
  * @returns Exercise set.
  */
-function fillExerciseSetWithRandomExercises(amountOfExercises, exerciseSet) {
+function fillSparseExerciseSetWithRandomExercises(amountOfExercises, exerciseSet) {
   let exerciseSetCopy = [...exerciseSet];
   while (exerciseSetCopy.length < amountOfExercises) {
     const randomExercise = generateExcerciseSet([randomType()], 1);
@@ -150,7 +150,7 @@ function randomType() {
 
 /**
  * @param {Number} index
- * @returns exercise type corresponding to index.
+ * @returns Converts an index to at exercise type.
  */
 function indexToType(index) {
   switch (index) {
