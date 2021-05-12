@@ -38,15 +38,31 @@ const subjects = [
 
 let exerciseSet;
 
-/**
- * Will generate the start page by clearing and thne adding all needed forms, roots, divs etc.
- * It will also await the exercises
- */
+const backBtnVisibility = (visibility) => {
+  const backBtn = document.querySelector('#back-btn');
+  backBtn.style.visibility = visibility;
+};
+
+const setAttributes = (node, attributes) => {
+  const keys = Object.keys(attributes);
+
+  keys.forEach((key) => {
+    node.setAttribute(key, attributes[key]);
+  });
+};
+
+const submitForm = async (event) => {
+  event.preventDefault();
+  exerciseSet = await getExerciseSetFromServer(event);
+
+  saveState('exerciseSet', exerciseSet);
+  saveState('page', 'exercisePage');
+  buildExercisePage();
+};
+
 const generateStartPage = () => {
   clearDom();
-
-  const backBtn = document.querySelector('#back-btn');
-  backBtn.style.visibility = 'hidden';
+  backBtnVisibility('hidden');
 
   const root = document.querySelector('#root');
   const form = document.createElement('form');
@@ -56,29 +72,16 @@ const generateStartPage = () => {
   const amountInput = document.createElement('input');
   const submit = document.createElement('input');
 
-  amountLabel.setAttribute('for', 'amount');
   amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
-
-  amountInput.setAttribute('type', 'number');
-  amountInput.setAttribute('id', 'amount');
-  amountInput.setAttribute('min', '1');
-  amountInput.setAttribute('value', '1');
-
-  submit.setAttribute('type', 'submit');
-  submit.setAttribute('value', 'Indsend');
-
-  form.setAttribute('id', 'form');
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    exerciseSet = await getExerciseSetFromServer(event);
-    saveState('exerciseSet', exerciseSet);
-    saveState('page', 'exercisePage');
-
-    buildExercisePage();
-    console.log(exerciseSet);
+  setAttributes(amountLabel, { for: 'amount' });
+  setAttributes(submit, { type: 'submit', value: 'Indsend' });
+  setAttributes(amountInput, {
+    type: 'number', id: 'amount', min: '1', value: '1',
   });
-  div.setAttribute('id', 'emneVælger');
+  setAttributes(form, { id: 'form' });
+  setAttributes(div, { id: 'emneVælger' });
+
+  form.addEventListener('submit', submitForm);
 
   subjects.forEach((subject) => {
     const label = generateSubjectLabel(subject);
@@ -122,7 +125,7 @@ const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
 
-  label.setAttribute('for', id);
+  setAttributes(label, { for: id });
   label.innerHTML = subject.name;
 
   return label;
@@ -137,9 +140,7 @@ const generateSubjectInput = (subject) => {
   const input = document.createElement('input');
   const { id } = subject;
 
-  input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', id);
-  input.setAttribute('id', id);
+  setAttributes(input, { type: 'checkbox', name: id, id });
 
   return input;
 };
@@ -177,8 +178,7 @@ const getCheckedExerciseSubject = (element) => {
 const buildExercisePage = () => {
   clearDom();
   const exerciseForm = createExerciseForm();
-  const backBtn = document.querySelector('#back-btn');
-  backBtn.style.visibility = 'visible';
+  backBtnVisibility('visible');
 
   addExercisesToExerciseForm(exerciseForm, exerciseSet);
   addButtonToExerciseForm(exerciseForm, exerciseSet);
@@ -201,7 +201,7 @@ const clearDom = () => {
  */
 const createExerciseForm = () => {
   const exerciseForm = document.createElement('form');
-  exerciseForm.setAttribute('id', 'exerciseForm');
+  setAttribute(exerciseForm, { id: 'exerciseForm' });
   return exerciseForm;
 };
 
@@ -226,7 +226,7 @@ const addExercisesToExerciseForm = (exerciseForm) => {
  */
 const addSingleExerciseToExerciseForm = (i, exercise, exerciseForm) => {
   const exerciseDiv = document.createElement('div');
-  exerciseDiv.setAttribute('class', 'exercise');
+  setAttribute(exerciseDiv, { class: 'exercise' });
 
   addExerciseHeader(i, exercise, exerciseDiv);
   addExerciseText(exercise, exerciseDiv);
@@ -271,7 +271,7 @@ const addExerciseVars = (exercise, exerciseDiv) => {
 
   exerciseVars.forEach((eVar) => {
     const questionText = document.createElement('p');
-    questionText.setAttribute('class', 'mathTex');
+    setAttribute(questionText, { class: 'mathTex' });
     convert(eVar, questionText);
     exerciseDiv.appendChild(questionText);
   });
@@ -284,8 +284,7 @@ const addExerciseVars = (exercise, exerciseDiv) => {
  */
 const addExerciseInputField = (i, exerciseDiv) => {
   const textField = document.createElement('input');
-  textField.setAttribute('required', '1');
-  textField.setAttribute('id', `exercise${i}`);
+  setAttributes(textField, { required: '1', id: `exercise${i}` });
   exerciseDiv.appendChild(textField);
 };
 
@@ -295,8 +294,7 @@ const addExerciseInputField = (i, exerciseDiv) => {
  */
 const addButtonToExerciseForm = (exerciseForm) => {
   const submitButton = document.createElement('input');
-  submitButton.setAttribute('type', 'submit');
-  submitButton.setAttribute('value', 'kontroller dine svar');
+  setAttributes(submitButton, { type: 'submit', value: 'kontroller dine svar' });
   exerciseForm.appendChild(submitButton);
 };
 
@@ -319,12 +317,12 @@ const giveFormAction = () => {
  * @param {*} exerciseSet
  */
 const generateResultPage = () => {
-  const backBtn = document.querySelector('#back-btn');
-  backBtn.style.visibility = 'visible';
-
+  backBtnVisibility('visible');
   clearDom();
-
   checkAnswer(exerciseSet);
+  createGradeText(container, userPoints, totalPoints);
+  createStatsDivs(AllData, container);
+
   saveState('exerciseSet', exerciseSet);
   saveState('page', 'resultPage');
 };
@@ -368,7 +366,7 @@ const createStatsDivs = (AllData, container) => {
       // eslint-disable-next-line max-len
       txt.innerHTML = `Indenfor ${subject.name} fik du: ${AllData.userStatsData[subject.id]} ud af ${AllData.maxPoints[subject.id]} point`;
       div.appendChild(txt);
-      div.setAttribute('class', 'answer');
+      setAttributes(div, { class: 'answer' });
       container.appendChild(div);
     }
   });
@@ -402,54 +400,45 @@ const createGradeText = (container, userPoints, totalPoints) => {
 const showQuestionResult = (questionAnswer, facit, div) => {
   const yourAnswer = document.createElement('p');
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
+
   if (checkUserAnswerValue(questionAnswer, facit)) {
     yourAnswer.style.backgroundColor = 'green';
-    yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
-    div.appendChild(yourAnswer);
+    yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Rigtigt!`;
   } else {
     yourAnswer.style.backgroundColor = 'red';
     yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Forkert! <br /> Facit: ${facit}`;
-    div.appendChild(yourAnswer);
   }
+
+  div.appendChild(yourAnswer);
 };
 /**
  * Function calculating which grade user should get based on percentage of points
- * @param {*} points
- * @param {*} maxPoints
+ * @param {number} points
+ * @param {number} maxPoints
+ * @returns {string} A grade on the 12 step grading
  */
 const calcGrade = (points, maxPoints) => {
   const scalar = 250 / maxPoints;
   const normPoints = parseInt(scalar * points, 10);
-  let grade = '';
 
   switch (true) {
     case normPoints < 20:
-      grade = '-3';
-      break;
+      return '-3';
     case normPoints < 66:
-      grade = '00';
-      break;
+      return '00';
     case normPoints < 84:
-      grade = '02';
-      break;
+      return '02';
     case normPoints < 124:
-      grade = '4';
-      break;
+      return '4';
     case normPoints < 174:
-      grade = '7';
-      break;
+      return '7';
     case normPoints < 210:
-      grade = '10';
-      break;
+      return '10';
     case normPoints > 210:
-      grade = '12';
-      break;
+      return '12';
     default:
-      grade = '--';
-      break;
+      return '--';
   }
-
-  return grade;
 };
 
 /**
@@ -468,15 +457,21 @@ const addPoints = (exercise, userPoints) => {
  * @param {*} answer
  * @param {*} facit
  */
-const checkUserAnswerValue = (answer, facit) => {
-  if (answer === facit) {
-    return true;
-  }
-  if (answer !== facit) {
-    return false;
-  }
+const checkUserAnswerValue = (answer, facit) => answer === facit;
 
-  return null;
+const createAnswerDiv = (exercise) => {
+  const div = document.createElement('div');
+  const questionText = document.createElement('p');
+  const questionType = document.createElement('p');
+
+  setAttributes(div, { class: 'answer' });
+
+  questionText.innerHTML = exercise.txt;
+  questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
+
+  div.appendChild(questionText);
+  addExerciseVars(exercise, div);
+  div.appendChild(questionType);
 };
 
 /**
@@ -486,37 +481,23 @@ const checkAnswer = () => {
   let userPoints = 0;
   let totalPoints = 0;
 
+  const root = document.querySelector('#root');
+  const AllData = calcUserStats(exerciseSet);
   const container = document.createElement('div');
 
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
     totalPoints += exercise.point;
-
     userPoints = addPoints(exercise, userPoints);
 
-    const div = document.createElement('div');
-    const questionText = document.createElement('p');
-    const questionType = document.createElement('p');
-
-    div.setAttribute('class', 'answer');
-
-    questionText.innerHTML = exercise.txt;
-    questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-
-    div.appendChild(questionText);
-    addExerciseVars(exercise, div);
-    div.appendChild(questionType);
+    const div = createAnswerDiv(exercise);
     container.appendChild(div);
 
     showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
-  document.querySelector('#root').appendChild(container);
-  AllData = calcUserStats(exerciseSet);
-
-  createGradeText(container, userPoints, totalPoints);
-  createStatsDivs(AllData, container);
+  root.appendChild(container);
 };
 
 generateStartPage();
