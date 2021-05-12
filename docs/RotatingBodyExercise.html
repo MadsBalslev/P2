@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>deprecated/createTable.js - Documentation</title>
+    <title>RotatingBodyExercise - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,44 +29,133 @@
 
 <div id="main">
     
-    <h1 class="page-title">deprecated/createTable.js</h1>
+    <h1 class="page-title">RotatingBodyExercise</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const con = require('../db');
+        <h2>
+        RotatingBodyExercise
+        </h2>
+        
+    
+</header>
 
-/**
- * Checks if the given table is already in DB and if not creates it
- * @param {string} table Tablename to check if already exits or else create
- */
-const checkTable = (table) => {
-  const createTable = `CREATE TABLE IF NOT EXISTS ${table} (
-    id int NOT NULL AUTO_INCREMENT,
-    tekst varchar(255) NOT NULL COLLATE utf8_danish_ci,
-    var1 varchar(255) NOT NULL COLLATE utf8_danish_ci,
-    udtryk varchar(3) NOT NULL COLLATE utf8_danish_ci,
-    var2 varchar(255) NOT NULL COLLATE utf8_danish_ci,
-    facit varchar(255) NOT NULL COLLATE utf8_danish_ci,
-    type varchar(255) NOT NULL COLLATE utf8_danish_ci,
-    point int NOT NULL,
-    PRIMARY KEY (id)
-  );`;
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-  con.query(createTable, (err) => {
-    if (err) console.log(err);
-  });
-};
+    
 
-module.exports = { checkTable };
-</code></pre>
-        </article>
-    </section>
+    <h4 class="name" id="RotatingBodyExercise"><span class="type-signature"></span>new RotatingBodyExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Represents a exercise with a rotating body</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_API_examQuestions_infinitesimal.js.html">src/API/examQuestions/infinitesimal.js</a>, <a href="src_API_examQuestions_infinitesimal.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -30,6 +30,10 @@ const subjects = [
     name: 'Ligning af to variable',
     id: 'funktionerAfToVariable',
   },
+  {
+    name: 'Infinitesimal regning',
+    id: 'infinitesimalregning',
+  },
 ];
 
 let exerciseSet;
