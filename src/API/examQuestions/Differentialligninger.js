@@ -117,9 +117,6 @@ const differentialLigning3Facit = (A, B, C) => {
   return diffFacit;
 };
 
-a =  new DifferentialLigningExercise2();
-a.print();
-
 const numOfTasks = 3;
 module.exports = {
   DifferentialLigningExercise,
