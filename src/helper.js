@@ -19,6 +19,10 @@ const errorResponse = (response, code, reason) => {
  */
 const randNum = (range) => Math.floor(Math.random() * range) + 1;
 
+/**
+ * Shuffles an array.
+ * @param {[]]} arr Takes an array that needs to be shuffled
+ */
 const arrShuffle = (arr) => {
   let i = arr.length - 1;
 
@@ -86,6 +90,7 @@ const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeo
  * @return {number[]} A new vector which is multiplied with the scalar
  */
 const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
+const round2Dec = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 module.exports = {
   arrShuffle,
@@ -95,4 +100,5 @@ module.exports = {
   respondWithJsonObject,
   isUserProfileValidVector,
   scalarMultiplication,
+  round2Dec,
 };

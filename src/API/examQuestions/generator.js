@@ -10,6 +10,7 @@ const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
+const infinitesimalregning = require('./infinitesimal');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -44,6 +45,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'statistik':
           set.push(generateStatistikExercise(amount));
+          break;
+        case 'infinitesimalregning':
+          set.push(generateInfinitesimalregning(amount));
           break;
         default:
           break;
@@ -166,6 +170,10 @@ const generateDiffLigningExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateFunktionerAfToVariableExercise = () => {
   let exercise;
   const rand = randNum(funktionerAfToVariable.numOfTasks);
@@ -182,6 +190,10 @@ const generateFunktionerAfToVariableExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateStatistikExercise = () => {
   let exercise;
   const rand = randNum(statistik.numOfTasks);
@@ -191,6 +203,26 @@ const generateStatistikExercise = () => {
       break;
     case 2:
       exercise = new statistik.NormalConfidenceIntervalExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
+const generateInfinitesimalregning = () => {
+  let exercise;
+  const rand = randNum(infinitesimalregning.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new infinitesimalregning.RotatingBodyExercise();
+      break;
+    case 2:
+      exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
       break;
     default:
       break;

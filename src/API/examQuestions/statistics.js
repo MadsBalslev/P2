@@ -25,8 +25,8 @@ const generateAfgivelse = () => randNum(10) + 1;
  * @return {{A: number, B: number}} Returns the randomly generated numbers.
  */
 const generateVars = () => {
-  const A = randNum(75) + 1.01;
-  const B = randNum(50) + 1.01;
+  const A = randNum(75) + 1;
+  const B = randNum(50) + 1;
 
   return { A, B };
 };
