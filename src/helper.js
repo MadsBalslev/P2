@@ -19,6 +19,10 @@ const errorResponse = (response, code, reason) => {
  */
 const randNum = (range) => Math.floor(Math.random() * range) + 1;
 
+/**
+ * Shuffles an array.
+ * @param {[]]} arr Takes an array that needs to be shuffled
+ */
 const arrShuffle = (arr) => {
   let i = arr.length - 1;
 

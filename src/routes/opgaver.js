@@ -14,6 +14,11 @@ const handleOpgaverRequest = (request, response) => {
   }
 };
 
+/**
+ * Will handle requests to the '/opgaver' route
+ * @param {*} request
+ * @param {*} response
+ */
 const handleOpgaverGetRequest = (request, response) => {
   const subjects = subjectsStringToArray(request.headers.subjects);
   const result = generateExcerciseSet(subjects, request.headers.amount);
