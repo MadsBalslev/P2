@@ -22,6 +22,10 @@ const subjects = [
     name: 'Statistik',
     id: 'statistik',
   },
+  {
+    name: 'Vektorfunktioner',
+    id: 'vektorfunktioner',
+  },
 ];
 
 const generateStartPage = () => {

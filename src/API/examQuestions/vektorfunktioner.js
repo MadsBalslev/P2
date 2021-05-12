@@ -1,20 +1,20 @@
 const { randNum } = require('../../helper');
 
-const a1 = randNum(8);
-const a2 = randNum(8);
-const a3 = randNum(8);
-const a4 = randNum(8);
+const a1 = randNum(25);
+const a2 = randNum(25);
+const a3 = randNum(25);
+const a4 = randNum(25);
 const t1 = randNum(4);
 
 function VektorFunctionExercise() {
   this.exerciseVars = {
-    vectorA: `\\overrightarrow{r(t)} = (x(${t1}),y(${t1})) = (${a1}*cos(${t1}),${a1}-${t1}-${a2}*sin(${a3}*${t1}))`,
+    vectorA: `${t1}${t1}${a1}${t1}${a1}${t1}${a2}${a3}${t1}`,
   };
   this.facit = getVektorFunctionFacit();
   this.type = 'vektorfunktioner';
   this.point = 25;
   this.txt = 'Bestem koordinaterne til parameter­frem­stil­lingens dobbeltpunkter.';
-  this.tegn = '*';
+  this.txt = `\\overrightarrow{r(t)} = (x(${t1}),y(${t1})) = (${a1}*cos(${t1}),${a1}-${t1}-${a2}*sin(${a3}*${t1}))`;
 }
 
 const getVektorFunctionFacit = () => {
@@ -42,7 +42,7 @@ const getVektorIntersectionFacit = () => {
   const xt = a1 * (t1 ** 2) + a2 * t1 - a4;
   const yt = a1 * (t1 ** 2) + a2 * t1 + a4;
 
-  const facit = `(0,${xt}) og (0,${yt}) `;
+  const facit = `(0,${xt}) og (0,${yt})`;
   return facit;
 };
 

@@ -8,6 +8,7 @@ const vector3d = require('./vector3d');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
 const statistik = require('./statistics');
+const vectorfunctions = require('./vektorfunktioner');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -36,6 +37,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'statistik':
           set.push(generateStatistikExercise(amount));
+          break;
+        case 'vektorfunktioner':
+          set.push(generateVektorFunctionExercise(amount));
           break;
         default:
           break;
@@ -140,6 +144,22 @@ const generateStatistikExercise = () => {
       break;
     case 2:
       exercise = new statistik.NormalConfidenceIntervalExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateVektorFunctionExercise = () => {
+  let exercise;
+  const rand = randNum(vectorfunctions.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vectorfunctions.VektorFunctionExercise();
+      break;
+    case 2:
+      exercise = new vectorfunctions.VektorIntersectionExercise();
       break;
     default:
       break;
