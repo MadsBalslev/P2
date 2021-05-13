@@ -1,16 +1,22 @@
 const math = require('mathjs');
 const { randNum } = require('../../helper');
 
+/**
+ * Variable declarations
+ */
 const t = randNum(1);
 const x = randNum(10) + 2;
 const y = randNum(10) + 3;
 const g = randNum(4) + 4;
 const h = randNum(4) + 5;
 
+/**
+ * Represents 
+ */
 function VektorFunctionExercise() {
   this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens dobbeltpunkter. t = ${t} i (x,y) = (${x},${y})`;
   this.exerciseVars = {
-    vectorfunction1: `$overrightarrow{r(t)}=(x(t),y(t))=(${x}*cos(${t}),${y}-${t}-${g}*sin(${h}*${t}))`,
+    vectorfunction1: `overrightarrow${r(t)}=(x(t),y(t))=(${x}*cos(${t}),${y}-${t}-${g}*sin(${h}*${t}))`,
   };
   this.type = 'vektorfunktioner';
   this.facit = VektorFunctionExerciseFacit();
