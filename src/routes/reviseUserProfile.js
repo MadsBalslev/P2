@@ -1,5 +1,6 @@
-const { errorResponse } = require('../helper');
+const helper = require('../helper');
 
+const USER_PROFILE_LENGTH = 11;
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
@@ -29,45 +30,19 @@ function handleReviseUserProfileRequest(request, response) {
  */
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
-    const { userProfile, exerciseSet } = await fetchRequestBody(request);
-    const newUserProfile = reviseUserProfile(exerciseSet, userProfile);
-    respondWithNewUserProfile(newUserProfile, response);
+    const requestBody = await helper.fetchJsonRequestBody(request);
+    validateRequestBody(requestBody);
+    const newUserProfile = reviseUserProfile(requestBody.exerciseSet, requestBody.userProfile);
+    helper.respondWithJsonObject(newUserProfile, response);
   } catch (error) {
-    errorResponse(response, '400', `${error}`);
+    helper.errorResponse(response, '400', `${error}`);
   }
 }
 
-/**
- * fetch request body (JSON object).
- *
- * @param {*} request
- * @returns {Promise} Request body.
- */
-function fetchRequestBody(request) {
-  return new Promise((resolve, reject) => {
-    let requestBody = '';
-    request.on('data', (chunk) => {
-      requestBody += chunk;
-    });
-
-    request.on('end', () => {
-      try {
-        requestBody = JSON.parse(requestBody);
-
-        if (!requestBodyIsValid(requestBody)) {
-          throw 'invalid request body';
-        }
-
-        resolve(requestBody);
-      } catch (error) {
-        reject(error);
-      }
-    });
-
-    request.on('error', (error) => {
-      reject(error);
-    });
-  });
+function validateRequestBody(requestBody) {
+  if (!requestBodyIsValid(requestBody)) {
+    throw 'invalid request body';
+  }
 }
 
 /**
@@ -90,22 +65,14 @@ function requestBodyIsValid(requestBody) {
  */
 function requestBodyUserProfileIsValid(requestBody) {
   let isValidUserProfile;
-  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23)) {
+  if (!(requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH)) {
     isValidUserProfile = false;
-  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === 23) {
-    isValidUserProfile = isUserProfileValidVector(requestBody.userProfile);
+  } else if (requestBody.hasOwnProperty('userProfile') && requestBody.userProfile.length === USER_PROFILE_LENGTH) {
+    isValidUserProfile = helper.isUserProfileValidVector(requestBody.userProfile);
   }
 
   return isValidUserProfile;
 }
-
-/**
- * Checks that all items in an array are numbers, ie if it's vector.
- *
- * @param {Array} susVector Array to check.
- * @returns {Boolean} True if alle items are numbers, else false.
- */
-const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
 
 /**
  * Checks if requestBody contains the property exerciseSet, if it does checks if each exercise in
@@ -183,13 +150,14 @@ function calculateExerciseProfile(exercise) {
   let exerciseProfile = convertExerciseToVector(exercise);
 
   if (isCorrectAnswer(exercise)) {
-    exerciseProfile = scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseProfile);
+    exerciseProfile = helper.scalarMultiplication(CORRECT_ANSWER_WEIGHT, exerciseProfile);
   } else if (!isCorrectAnswer(exercise)) {
-    exerciseProfile = scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseProfile);
+    exerciseProfile = helper.scalarMultiplication(WRONG_ANSWER_WEIGHT, exerciseProfile);
   }
 
   return exerciseProfile;
 }
+
 /**
  * Converts and exercise to vector representation.
  *
@@ -198,54 +166,30 @@ function calculateExerciseProfile(exercise) {
  */
 function convertExerciseToVector(exercise) {
   switch (exercise.type) {
-    case 'talOgRegnearter_C':
-      return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'ligninger_C':
-      return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'funktioner_C':
-      return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_C':
-      return [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'geometri_C':
-      return [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'sandsynlighed_C':
-      return [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'andengradspolynomiumOgLigning_B':
-      return [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_B':
-      return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'funktioner_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'geometri_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'differentialregning_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'sandsynlighedOgKombinatori_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'statistik_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'regression_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorerI2d_B':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorerI3d_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
-    case 'vektorfunktioner_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-    case 'trigonometri_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-    case 'infinitesimalregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
-    case 'differentialregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-    case 'integralregning_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
-    case 'funktionerAfToVariable_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
-    case 'statistik_A':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+    case 'vektor2d':
+      return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    case 'vektor3d':
+      return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    case 'integralregning':
+      return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+    case 'ligninger':
+      return [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+    case 'differentialligning':
+      return [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+    case 'funktionerAfToVariable':
+      return [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
+    case 'statistik':
+      return [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
+    case 'infinitesimalregning':
+      return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+    case 'trigonometri':
+      return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+    case 'vektorfunktioner':
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+    case 'differentialligninger':
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
     default:
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   }
 }
 
@@ -265,23 +209,14 @@ const isCorrectAnswer = (exercise) => exercise.facit === exercise.questionAnswer
  * @returns {number[]} The re-calculated user profile
  */
 function calculateUserProfile(exerciseProfiles, currentUserProfile) {
-  const weightedUserProfile = scalarMultiplication(USER_WEIGHT, currentUserProfile);
+  const weightedUserProfile = helper.scalarMultiplication(USER_WEIGHT, currentUserProfile);
   let newUserProfile = sumVectorArray(exerciseProfiles);
 
-  newUserProfile = scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
+  newUserProfile = helper.scalarMultiplication(1 / exerciseProfiles.length, newUserProfile);
   newUserProfile = sumVectorArray([newUserProfile, weightedUserProfile]);
 
   return newUserProfile;
 }
-
-/**
- * Will scale a vector with the given scalar and return the new scaled vector
- *
- * @param {number} scalar The scalar to use for the weight
- * @param {number[]} vector The vector to multiply with the scalar
- * @return {number[]} A new vector which is multiplied with the scalar
- */
-const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
 
 /**
  * Will sum an array of vectors (arrays) together.
@@ -290,38 +225,21 @@ const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
  */
 const sumVectorArray = (vectors) => vectors.reduce((a, b) => a.map((c, i) => c + b[i]));
 
-/**
- * Respondes to request with the newUserProfile.
- *
- * @param {number[]} newUserProfile
- * @param {{}} response
- */
-function respondWithNewUserProfile(newUserProfile, response) {
-  const newUserProfileJsonString = JSON.stringify(newUserProfile);
-  response.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
-  response.end(newUserProfileJsonString);
-}
-
 module.exports = {
   handleReviseUserProfileRequest,
   handleReviseUserProfilePostRequest,
   reviseUserProfile,
-  fetchRequestBody,
   requestBodyIsValid,
   requestBodyUserProfileIsValid,
-  isUserProfileValidVector,
   requestBodyExerciseSetIsValid,
   validateEachExerciseInExerciseSet,
   convertExerciseSetToExerciseProfiles,
   calculateExerciseProfile,
-  scalarMultiplication,
   convertExerciseToVector,
   isCorrectAnswer,
   sumVectorArray,
-  respondWithNewUserProfile,
   calculateUserProfile,
+  USER_PROFILE_LENGTH,
   CORRECT_ANSWER_WEIGHT,
   WRONG_ANSWER_WEIGHT,
   USER_WEIGHT,
