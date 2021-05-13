@@ -85,13 +85,8 @@ const rotatingBodyFacit = (A, B, C) => {
   const diffExpression = math.derivative(f, x);
   const lengthExpression = (Math.PI * ((diffExpression) ^ 2) * C).toFixed(0);
 
-  console.log(f);
-  console.log(lengthExpression);
-
   return lengthExpression;
 };
-
-RotatingBodyExercise();
 
 const numOfTasks = 2;
 
