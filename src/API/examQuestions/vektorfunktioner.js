@@ -22,7 +22,7 @@ const VektorFunctionExerciseFacit = () => {
   const xt1 = x * math.cos(t);
   const yt1 = y - t - g * (math.sin(h * t));
   const xt2 = xt1 * t - (2 * Math.pi) + y * (math.sin(h * t));
-  const yt2 = 0;
+  const yt2 = '0';
   const facit = `$overrightarrow{r(t_1)}=$overrightarrow{r(t_2)}=(x(t_1),y(t_1))=
   (x(t_2),y(t_2))=(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
