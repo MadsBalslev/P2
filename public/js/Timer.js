@@ -1,4 +1,8 @@
-// Convert time to a format of hours, minutes, seconds, and milliseconds
+/**
+ * Converts the time into a string
+ * @param {number} time Takes the time
+ * @returns {string} Returns the time in string format
+ */
 function timeToString(time) {
   const diffInHrs = time / 3600000;
   const hours = Math.floor(diffInHrs);
@@ -16,20 +20,22 @@ function timeToString(time) {
   return `${formattedHrs}:${formattedMM}:${formattedSS}`;
 }
 
-// Declare variables to use in our functions below
-
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
 
-// Create function to modify innerHTML
+/**
+* Create function to modify innerHTML
+* @param {string} txt Takes the txt string
+*/
 
 function print(txt) {
   document.getElementById('display').innerHTML = txt;
 }
 
-// Create 'start', 'pause' and 'reset' functions
-
+/**
+* Create 'start'
+*/
 function start() {
   startTime = Date.now() - elapsedTime;
   timerInterval = setInterval(() => {
@@ -39,11 +45,17 @@ function start() {
   showButton('PAUSE');
 }
 
+/**
+* Create 'pause'
+*/
 function pause() {
   clearInterval(timerInterval);
   showButton('PLAY');
 }
 
+/**
+* Create 'reset'
+*/
 function reset() {
   clearInterval(timerInterval);
   print('00:00:00');
@@ -51,18 +63,19 @@ function reset() {
   showButton('PLAY');
 }
 
-// Create function to display buttons
-
+/**
+* Create function to display buttons and take their input
+* @param {string} buttonKey Takes the input from the button
+*/
 function showButton(buttonKey) {
   const buttonToShow = buttonKey === 'PLAY' ? playButton : pauseButton;
   const buttonToHide = buttonKey === 'PLAY' ? pauseButton : playButton;
   buttonToShow.style.display = 'block';
   buttonToHide.style.display = 'none';
 }
-// Create event listeners
 
-let playButton = document.getElementById('playButton');
-let pauseButton = document.getElementById('pauseButton');
+const playButton = document.getElementById('playButton');
+const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
 
 playButton.addEventListener('click', start);
