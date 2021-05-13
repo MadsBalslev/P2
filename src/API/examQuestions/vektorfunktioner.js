@@ -40,7 +40,7 @@ const VektorFunctionExerciseFacit = () => {
   return facit;
 };
 
-const numOfTasks = 2;
+const numOfTasks = 1;
 
 module.exports = {
   VektorFunctionExercise,
