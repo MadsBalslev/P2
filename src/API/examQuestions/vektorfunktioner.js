@@ -21,7 +21,8 @@ function VektorFunctionExercise() {
     vectorfunction1: `\\vec{r(t)}=(x(t),y(t))=(${x}*cos(${t}),${y}-${t}-${g}*sin(${h}*${t}))`,
   };
   this.type = 'vektorfunktioner';
-  this.facit = VektorFunctionExerciseFacit();
+  this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
+  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit()}`;
   this.point = 25;
   this.tegn = '*';
 }
@@ -35,8 +36,7 @@ const VektorFunctionExerciseFacit = () => {
   const yt1 = round2Dec(y - t - g * (math.sin(h * t)));
   const xt2 = round2Dec(xt1 * t - 2 * pi + y * (math.sin(h * t)));
   const yt2 = '0';
-  const facit = `\\vec{r(t\\_{1})}=\\vec{r(t\\_{2})}=(x(t_1),y(t_1))=
-  (x(t_2),y(t_2))=(${xt1},${yt1},${xt2},${yt2})`;
+  const facit = `(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
 };
 
