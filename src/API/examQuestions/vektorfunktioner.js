@@ -1,5 +1,6 @@
 const math = require('mathjs');
 const { randNum } = require('../../helper');
+const { round2Dec } = require('../../helper');
 
 /**
  * Variable declarations randomly
@@ -33,9 +34,9 @@ const VektorFunctionExerciseFacit = () => {
   const yt1 = y - t - g * (math.sin(h * t));
   const xt2 = xt1 * t - (2 * Math.pi) + y * (math.sin(h * t));
   const yt2 = '0';
-  const facit = `\\vec{r(t_1)}=\\vec{r(t_2)}=(x(t_1),y(t_1))=
-  (x(t_2),y(t_2))=(${xt1},${yt1},${xt2},${yt2})`;
-  return facit;
+  const facit = `\\vec{r(t_{1)}=\\vec{r(t_{2})}=(x(t_{1}),y(t_{1}))=
+  (x(t_{2}),y(t_{2}))=(${xt1},${yt1},${xt2},${yt2})`;
+  return facit.round2Dec();
 };
 
 const numOfTasks = 2;
