@@ -404,7 +404,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
   if (checkUserAnswerValue(questionAnswer, facit)) {
     yourAnswer.style.backgroundColor = 'green';
-    yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
+    yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Rigtigt!`;
     div.appendChild(yourAnswer);
   } else {
     yourAnswer.style.backgroundColor = 'red';
