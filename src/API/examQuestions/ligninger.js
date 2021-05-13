@@ -1,5 +1,6 @@
 // const math = require('mathjs');
 const { randNum } = require('../../helper');
+const { round2Dec } = require('../../helper');
 
 /**
  * Generates random numbers
@@ -56,10 +57,10 @@ const LigningFacit = (A, B, C, symbol) => {
 
   if (symbol === '+') {
     const answer = (C - B) / A;
-    ansFixed = answer.toFixed(1);
+    ansFixed = round2Dec(answer);
   } else if (symbol === '-') {
     const answer = (C + B) / A;
-    ansFixed = answer.toFixed(1);
+    ansFixed = round2Dec(answer);
   }
 
   return `${ansFixed}`;
