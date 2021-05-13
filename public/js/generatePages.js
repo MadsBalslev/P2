@@ -11,6 +11,10 @@ const subjects = [
     id: 'vektor3d',
   },
   {
+    name: 'Vektorfunktioner',
+    id: 'vektorfunktioner',
+  },
+  {
     name: 'Integralregning',
     id: 'integralregning',
   },
