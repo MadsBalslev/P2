@@ -60,9 +60,12 @@ const generateStartPage = () => {
   const amountLabel = document.createElement('label');
   const amountInput = document.createElement('input');
   const submit = document.createElement('input');
+  const header = document.createElement('h1');
 
   amountLabel.setAttribute('for', 'amount');
   amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  header.innerHTML = 'Lav en tilfældig opgave med følgende emner';
 
   amountInput.setAttribute('type', 'number');
   amountInput.setAttribute('id', 'amount');
@@ -99,6 +102,7 @@ const generateStartPage = () => {
     start();
   });
 
+  form.appendChild(header);
   form.appendChild(div);
   form.appendChild(br.cloneNode(true));
   form.appendChild(amountLabel);
@@ -107,6 +111,40 @@ const generateStartPage = () => {
   form.appendChild(submit);
 
   root.appendChild(form);
+  root.appendChild(document.createElement('br'));
+
+  const userExerciseForm = document.createElement('form');
+  const userExerciseFormHeader = document.createElement('h1');
+  const userExerciseFormAmountLabel = document.createElement('label');
+  const userExerciseFormAmountInput = document.createElement('input');
+  const userExerciseFormSubmit = document.createElement('input');
+
+  userExerciseForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    exerciseSet = await getUserExerciseSetFromServer(event);
+    saveState('exerciseSet', exerciseSet);
+    saveState('page', 'exercisePage');
+    buildExercisePage();
+  });
+
+  userExerciseFormHeader.innerText = 'Eller lav et brugerspecificeret opgavesæt';
+  userExerciseFormAmountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  userExerciseFormAmountInput.setAttribute('type', 'number');
+  userExerciseFormAmountInput.setAttribute('id', 'userExerciseFormAmount');
+  userExerciseFormAmountInput.setAttribute('min', '1');
+  userExerciseFormAmountInput.setAttribute('value', '1');
+
+  userExerciseFormSubmit.setAttribute('type', 'submit');
+  userExerciseFormSubmit.setAttribute('value', 'Indsend');
+
+  userExerciseForm.appendChild(userExerciseFormHeader);
+  userExerciseForm.appendChild(userExerciseFormAmountLabel);
+  userExerciseForm.appendChild(userExerciseFormAmountInput);
+  userExerciseForm.appendChild(document.createElement('br'));
+  userExerciseForm.appendChild(userExerciseFormSubmit);
+
+  root.appendChild(userExerciseForm);
 
   if (cookieExist('exerciseSet')) {
     exerciseSet = readCookie('exerciseSet');
@@ -316,6 +354,7 @@ const giveFormAction = () => {
       exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
     });
     generateResultPage(exerciseSet);
+    updateUserProfile();
   });
 };
 
@@ -468,6 +507,7 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
+
 /**
  * Function to check if user answer is equal to the facit.
  * @param {*} answer
@@ -523,4 +563,24 @@ const checkAnswer = () => {
   createStatsDivs(AllData, container);
 };
 
+function checkUserProfile() {
+  if (userProfileEmpty()) {
+    setUserProfileToDefaultValue();
+  }
+}
+
+function setUserProfileToDefaultValue() {
+  localStorage.setItem('userProfile', JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+}
+
+function userProfileEmpty() {
+  return localStorage.getItem('userProfile') === null;
+}
+
+async function updateUserProfile() {
+  const revisedUserProfile = await makeServerReviseUserProfile();
+  localStorage.setItem('userProfile', JSON.stringify(revisedUserProfile));
+}
+
+checkUserProfile();
 generateStartPage();
