@@ -463,6 +463,7 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
+
 /**
  * Function to check if user answer is equal to the facit.
  * @param {*} answer
