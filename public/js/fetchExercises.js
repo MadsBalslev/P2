@@ -20,7 +20,25 @@ const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .then((response) => response.json())
     .then((data) => {
       resolve(data);
-      // console.log(exerciseSubjects);
+    })
+    .catch((error) => reject(error));
+});
+
+const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
+  const baseUrl = window.location.href;
+  const exerciseAmount = document.querySelector('#userExerciseFormAmount').value;
+  const requestBody = localStorage.getItem('userProfile');
+
+  fetch(`${baseUrl}generateUserSet`, {
+    method: 'POST',
+    headers: {
+      amount: exerciseAmount,
+    },
+    body: requestBody,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
     })
     .catch((error) => reject(error));
 });

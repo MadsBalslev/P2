@@ -60,7 +60,7 @@ const generateStartPage = () => {
   amountLabel.setAttribute('for', 'amount');
   amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
 
-  header.innerHTML = 'lave en tilfældig opgave med følgende emner';
+  header.innerHTML = 'Lav en tilfældig opgave med følgende emner';
 
   amountInput.setAttribute('type', 'number');
   amountInput.setAttribute('id', 'amount');
@@ -114,11 +114,19 @@ const generateStartPage = () => {
   const userExerciseFormAmountInput = document.createElement('input');
   const userExerciseFormSubmit = document.createElement('input');
 
+  userExerciseForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    exerciseSet = await getUserExerciseSetFromServer(event);
+    saveState('exerciseSet', exerciseSet);
+    saveState('page', 'exercisePage');
+    buildExercisePage();
+  });
+
   userExerciseFormHeader.innerText = 'Eller lav et brugerspecificeret opgavesæt';
   userExerciseFormAmountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
 
   userExerciseFormAmountInput.setAttribute('type', 'number');
-  userExerciseFormAmountInput.setAttribute('id', 'amount');
+  userExerciseFormAmountInput.setAttribute('id', 'userExerciseFormAmount');
   userExerciseFormAmountInput.setAttribute('min', '1');
   userExerciseFormAmountInput.setAttribute('value', '1');
 
@@ -550,4 +558,19 @@ const checkAnswer = () => {
   createStatsDivs(AllData, container);
 };
 
+function checkUserProfile() {
+  if (userProfileEmpty()) {
+    setUserProfileToDefaultValue();
+  }
+}
+
+function setUserProfileToDefaultValue() {
+  localStorage.setItem('userProfile', JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+}
+
+function userProfileEmpty() {
+  return localStorage.getItem('userProfile') === null;
+}
+
+checkUserProfile();
 generateStartPage();
