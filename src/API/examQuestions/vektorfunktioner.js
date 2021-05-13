@@ -35,7 +35,7 @@ const VektorFunctionExerciseFacit = () => {
   const yt1 = round2Dec(y - t - g * (math.sin(h * t)));
   const xt2 = round2Dec(xt1 * t - 2 * pi + y * (math.sin(h * t)));
   const yt2 = '0';
-  const facit = `\\vec{r(t\\sub{1})}=\\vec{r(t\\sub{2})}=(x(t_1),y(t_1))=
+  const facit = `\\vec{r(t\\_{1})}=\\vec{r(t\\_{2})}=(x(t_1),y(t_1))=
   (x(t_2),y(t_2))=(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
 };
