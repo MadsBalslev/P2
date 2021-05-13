@@ -51,7 +51,7 @@ const generateExcerciseSet = (categories, amount) => {
           set.push(generateInfinitesimalregning(amount));
           break;
         case 'vektorfunktioner':
-          set.push(generateVektorFunktioner(amount));
+          set.push(vektorFunctionExercise(amount));
           break;
         default:
           break;
@@ -234,7 +234,7 @@ const generateInfinitesimalregning = () => {
   return exercise;
 };
 
-const generateVektorFunktioner = () => {
+const vektorFunctionExercise = () => {
   let exercise;
   const rand = randNum(vektorfunktioner.numOfTasks);
   switch (rand) {
