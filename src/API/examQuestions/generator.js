@@ -10,6 +10,7 @@ const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
+const trigonometri = require('./trigonometri');
 const infinitesimalregning = require('./infinitesimal');
 
 /**
@@ -45,6 +46,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'statistik':
           set.push(generateStatistikExercise(amount));
+          break;
+        case 'trigonometri':
+          set.push(generateTrigonometriExercise(amount));
           break;
         case 'infinitesimalregning':
           set.push(generateInfinitesimalregning(amount));
@@ -203,6 +207,22 @@ const generateStatistikExercise = () => {
       break;
     case 2:
       exercise = new statistik.NormalConfidenceIntervalExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateTrigonometriExercise = () => {
+  let exercise;
+  const rand = randNum(trigonometri.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new trigonometri.SinusExercise();
+      break;
+    case 2:
+      exercise = new trigonometri.TangensExercise();
       break;
     default:
       break;

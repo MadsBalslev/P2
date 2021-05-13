@@ -30,6 +30,11 @@ const subjects = [
     name: 'Ligning af to variable',
     id: 'funktionerAfToVariable',
   },
+
+  {
+    name: 'Trigonometri',
+    id: 'trigonometri',
+  },
   {
     name: 'Infinitesimal regning',
     id: 'infinitesimalregning',
@@ -475,7 +480,6 @@ const checkUserAnswerValue = (answer, facit) => {
   if (answer !== facit) {
     return false;
   }
-
   return null;
 };
 
