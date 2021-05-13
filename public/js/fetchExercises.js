@@ -42,3 +42,24 @@ const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
     })
     .catch((error) => reject(error));
 });
+
+const makeServerReviseUserProfile = () => new Promise((resolve, reject) => {
+  const baseUrl = window.location.href;
+  const jsonRequestBody = {
+    userProfile: JSON.parse(localStorage.getItem('userProfile')),
+    exerciseSet,
+  };
+  const stringRequestBody = JSON.stringify(jsonRequestBody)
+
+  fetch(`${baseUrl}reviseUserProfile`, {
+    method: 'POST',
+    headers: {
+    },
+    body: stringRequestBody,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch((error) => reject(error));
+});

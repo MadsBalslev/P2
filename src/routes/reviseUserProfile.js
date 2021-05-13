@@ -31,6 +31,7 @@ function handleReviseUserProfileRequest(request, response) {
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
     const requestBody = await helper.fetchJsonRequestBody(request);
+    console.log(requestBody);
     validateRequestBody(requestBody);
     const newUserProfile = reviseUserProfile(requestBody.exerciseSet, requestBody.userProfile);
     helper.respondWithJsonObject(newUserProfile, response);
@@ -57,7 +58,7 @@ function requestBodyIsValid(requestBody) {
 }
 
 /**
- * Checks that requestBody has property userProfile and that the lenght of userProfile is 23. If
+ * Checks that requestBody has property userProfile and that the lenght of userProfile is 11. If
  * this is the case check if it's a true vector.
  *
  * @param {Object} requestBody Object to control.

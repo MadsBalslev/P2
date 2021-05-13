@@ -349,6 +349,7 @@ const giveFormAction = () => {
       exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
     });
     generateResultPage(exerciseSet);
+    updateUserProfile();
   });
 };
 
@@ -570,6 +571,11 @@ function setUserProfileToDefaultValue() {
 
 function userProfileEmpty() {
   return localStorage.getItem('userProfile') === null;
+}
+
+async function updateUserProfile() {
+  const revisedUserProfile = await makeServerReviseUserProfile();
+  localStorage.setItem('userProfile', JSON.stringify(revisedUserProfile));
 }
 
 checkUserProfile();
