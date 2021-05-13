@@ -1,5 +1,5 @@
 const { randNum } = require('../../helper');
-const { round2Dec } = require('../../helper') ;
+const { round2Dec } = require('../../helper');
 
 /**
  * Represents a differential equation exercise.
