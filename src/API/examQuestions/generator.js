@@ -5,13 +5,13 @@ const {
 
 const vectors = require('./vector');
 const vector3d = require('./vector3d');
-const vektorfunktioner = require('./vektorfunktioner');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
 const infinitesimalregning = require('./infinitesimal');
+const vektorfunktioner = require('./vektorfunktioner');
 
 /**
  * Will generate an exerciseset with the given catagories
