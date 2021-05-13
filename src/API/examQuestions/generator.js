@@ -12,6 +12,7 @@ const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
 const trigonometri = require('./trigonometri');
 const infinitesimalregning = require('./infinitesimal');
+const vektorfunktioner = require('./vektorfunktioner');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -52,6 +53,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'infinitesimalregning':
           set.push(generateInfinitesimalregning(amount));
+          break;
+        case 'vektorfunktioner':
+          set.push(vektorFunctionExercise(amount));
           break;
         default:
           break;
@@ -243,6 +247,19 @@ const generateInfinitesimalregning = () => {
       break;
     case 2:
       exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const vektorFunctionExercise = () => {
+  let exercise;
+  const rand = randNum(vektorfunktioner.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vektorfunktioner.VektorFunctionExercise();
       break;
     default:
       break;

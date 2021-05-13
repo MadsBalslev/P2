@@ -39,6 +39,10 @@ const subjects = [
     name: 'Infinitesimal regning',
     id: 'infinitesimalregning',
   },
+  {
+    name: 'Vektorfunktioner',
+    id: 'vektorfunktioner',
+  },
 ];
 
 let exerciseSet;
