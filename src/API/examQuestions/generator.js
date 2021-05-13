@@ -5,6 +5,7 @@ const {
 
 const vectors = require('./vector');
 const vector3d = require('./vector3d');
+const vektorfunktioner = require('./vektorfunktioner');
 const integrals = require('./integral');
 const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
@@ -48,6 +49,9 @@ const generateExcerciseSet = (categories, amount) => {
           break;
         case 'infinitesimalregning':
           set.push(generateInfinitesimalregning(amount));
+          break;
+        case 'vektorfunktioner':
+          set.push(generateVektorFunktioner(amount));
           break;
         default:
           break;
@@ -223,6 +227,19 @@ const generateInfinitesimalregning = () => {
       break;
     case 2:
       exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+const generateVektorFunktioner = () => {
+  let exercise;
+  const rand = randNum(vektorfunktioner.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vektorfunktioner.VektorFunctionExercise();
       break;
     default:
       break;
