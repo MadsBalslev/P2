@@ -32,11 +32,73 @@ const arrShuffle = (arr) => {
   }
 };
 
+/**
+ * fetch request body (JSON object).
+ *
+ * @param {*} request
+ * @returns {Promise} Request body.
+ */
+function fetchJsonRequestBody(request) {
+  return new Promise((resolve, reject) => {
+    let requestBody = '';
+    request.on('data', (chunk) => {
+      requestBody += chunk;
+    });
+
+    request.on('end', () => {
+      try {
+        requestBody = JSON.parse(requestBody);
+        resolve(requestBody);
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+    request.on('error', (error) => {
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Respondes to request with the newUserProfile.
+ *
+ * @param {number[]} jsonObject
+ * @param {{}} response
+ */
+function respondWithJsonObject(jsonObject, response) {
+  const jsonString = JSON.stringify(jsonObject);
+  response.writeHead(200, {
+    'Content-Type': 'application/json',
+  });
+  response.end(jsonString);
+}
+
+/**
+ * Checks that all items in an array are numbers, ie if it's vector.
+ *
+ * @param {Array} susVector Array to check.
+ * @returns {Boolean} True if alle items are numbers, else false.
+ */
+const isUserProfileValidVector = (susVector) => susVector.every((entry) => typeof entry === 'number');
+
+/**
+ * Will scale a vector with the given scalar and return the new scaled vector
+ *
+ * @param {number} scalar The scalar to use for the weight
+ * @param {number[]} vector The vector to multiply with the scalar
+ * @return {number[]} A new vector which is multiplied with the scalar
+ */
+const scalarMultiplication = (scalar, vector) => vector.map((x) => x * scalar);
 const round2Dec = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 module.exports = {
   arrShuffle,
   randNum,
   errorResponse,
+  fetchJsonRequestBody,
+  respondWithJsonObject,
+  isUserProfileValidVector,
+  scalarMultiplication,
   round2Dec,
 };
