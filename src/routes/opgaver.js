@@ -15,7 +15,7 @@ const handleOpgaverRequest = (request, response) => {
 };
 
 /**
- * Will handle requests to the '/opgaver' route
+ * Will get the  requests for '/opgaver' route
  * @param {*} request
  * @param {*} response
  */
