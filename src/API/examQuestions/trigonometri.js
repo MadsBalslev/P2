@@ -42,7 +42,7 @@ function SinusExercise(){
 function sinusFacit(a, b) {
   let facit;
   facit = Math.sin((a*3.14)/b);
-  if (facit === -0 || (facit < 0.0016 && facit > 0.0)) {
+  if (facit === 0 || (facit < 0.005 && facit > -0.005)) {
     facit = 0;
     return String(facit);
   }
@@ -73,7 +73,7 @@ function TangensExercise() {
  * @return {String} The correct answer to the given variables.
  */
 function tangensFacit(a) {
-  facit = math.round(math.tan(a),2);
+  let facit = math.round(math.tan(a),2);
   return String(facit);
 
 }
