@@ -110,8 +110,6 @@ const binormalConfidenceIntervalFacit = (A, B) => {
   const middelværdi = (B / A);
   const n = (A + B);
   const sqrt = math.sqrt((middelværdi * ((1 - middelværdi) / n)));
-  console.log(sqrt);
-  console.log(middelværdi * ((1 - middelværdi) / n));
   const confidenceinterval1 = parseFloat((middelværdi - 1.96 * sqrt).toFixed(2));
   const confidenceinterval2 = parseFloat((middelværdi + 1.96 * sqrt).toFixed(2));
 
