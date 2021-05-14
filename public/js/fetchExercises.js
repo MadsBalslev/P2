@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /**
  * Gets the generated exercise set from the server.
- * @param event
+ *
  * @returns New promise for a resolve or reject.
  */
 const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
@@ -24,6 +24,12 @@ const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+/**
+ * Makes a post request to /generateUserSet, with the userProfile in localStorage as the request
+ * body.
+ *
+ * @returns JSON object representing an exercise setJSON object.
+ */
 const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
   const baseUrl = window.location.href;
   const exerciseAmount = document.querySelector('#userExerciseFormAmount').value;
@@ -43,13 +49,20 @@ const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+/**
+ * Makes a post request to /reviseUserProfile, with the userProfile stored in localStorage and the
+ * global variable exerciseSet as the request body.
+ *
+ * @returns A userProfile that has been revised by the server with the information in the
+* exerciseSet
+ */
 const makeServerReviseUserProfile = () => new Promise((resolve, reject) => {
   const baseUrl = window.location.href;
   const jsonRequestBody = {
     userProfile: JSON.parse(localStorage.getItem('userProfile')),
     exerciseSet,
   };
-  const stringRequestBody = JSON.stringify(jsonRequestBody)
+  const stringRequestBody = JSON.stringify(jsonRequestBody);
 
   fetch(`${baseUrl}reviseUserProfile`, {
     method: 'POST',

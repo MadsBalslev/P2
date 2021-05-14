@@ -53,11 +53,26 @@ let exerciseSet;
  */
 const generateStartPage = () => {
   clearDom();
+  hideBackBtn();
+  generateStartPageForms();
+  handleCookies();
+};
 
+function generateStartPageForms() {
+  const root = document.querySelector('#root');
+  const form = generateNormalExerciseForm();
+  root.appendChild(form);
+  root.appendChild(document.createElement('br'));
+  const userExerciseForm = generateUserExerciseForm();
+  root.appendChild(userExerciseForm);
+}
+
+function hideBackBtn() {
   const backBtn = document.querySelector('#back-btn');
   backBtn.style.visibility = 'hidden';
+}
 
-  const root = document.querySelector('#root');
+function generateNormalExerciseForm() {
   const form = document.createElement('form');
   const div = document.createElement('div');
   const br = document.createElement('br');
@@ -113,10 +128,10 @@ const generateStartPage = () => {
   form.appendChild(amountInput);
   form.appendChild(br.cloneNode(true));
   form.appendChild(submit);
+  return form;
+}
 
-  root.appendChild(form);
-  root.appendChild(document.createElement('br'));
-
+function generateUserExerciseForm() {
   const userExerciseForm = document.createElement('form');
   const userExerciseFormHeader = document.createElement('h1');
   const userExerciseFormAmountLabel = document.createElement('label');
@@ -147,9 +162,10 @@ const generateStartPage = () => {
   userExerciseForm.appendChild(userExerciseFormAmountInput);
   userExerciseForm.appendChild(document.createElement('br'));
   userExerciseForm.appendChild(userExerciseFormSubmit);
+  return userExerciseForm;
+}
 
-  root.appendChild(userExerciseForm);
-
+function handleCookies() {
   if (cookieExist('exerciseSet')) {
     exerciseSet = readCookie('exerciseSet');
     if (readCookie('page') === 'exercisePage') {
@@ -158,7 +174,7 @@ const generateStartPage = () => {
       generateResultPage();
     }
   }
-};
+}
 
 /**
  * Generates the label for chosen subject.
@@ -403,6 +419,7 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
+
 /**
  * Function that creates html responsible for showing score in each subject.
  * @param {*} AllData
@@ -421,6 +438,7 @@ const createStatsDivs = (AllData, container) => {
     }
   });
 };
+
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -460,6 +478,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
     div.appendChild(yourAnswer);
   }
 };
+
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -539,7 +558,6 @@ const checkAnswer = () => {
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
-    
     totalPoints += exercise.point;
     userPoints = addPoints(exercise, userPoints);
     const div = createCheckAnswerDiv(exercise, container);
@@ -552,10 +570,11 @@ const checkAnswer = () => {
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
 };
+
 /**
  * helper function for checkAnswer which creates the div responsible for showing answered questions
  * @param {*} exercise the exerciseSet
- * @param {*} container the container the div gets appended to 
+ * @param {*} container the container the div gets appended to
  * @returns the created div
  */
 const createCheckAnswerDiv = (exercise, container) => {

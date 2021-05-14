@@ -43,5 +43,3 @@ const saveState = (name, value) => {
 const deleteCookie = (name) => {
   sessionStorage.removeItem(name);
 };
-
-
