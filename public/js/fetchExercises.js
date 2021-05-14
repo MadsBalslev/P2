@@ -49,7 +49,7 @@ const makeServerReviseUserProfile = () => new Promise((resolve, reject) => {
     userProfile: JSON.parse(localStorage.getItem('userProfile')),
     exerciseSet,
   };
-  const stringRequestBody = JSON.stringify(jsonRequestBody)
+  const stringRequestBody = JSON.stringify(jsonRequestBody);
 
   fetch(`${baseUrl}reviseUserProfile`, {
     method: 'POST',
