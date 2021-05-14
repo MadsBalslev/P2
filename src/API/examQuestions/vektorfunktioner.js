@@ -14,7 +14,7 @@ const VektorVars = () => {
   const pi = Math.PI;
 
   return { radian, xVar, yVar, constantVar, CVar, pi };
-}
+};
 
 
 /**
