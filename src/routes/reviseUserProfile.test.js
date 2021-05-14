@@ -148,8 +148,8 @@ describe('calculateUserProfile', () => {
 
 describe('reviseUserProfile', () => {
   test('reviseUserProfile', () => {
-    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-    const newProfileExpected = [0.5, 0.5666666667, 0.5, 0.5, 0.5, 0.5, 0.5666666667, 0.5, 0.7333333333, 0.5, 0.5];
+    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const newProfileExpected = [0.5, 0.5666666667, 0.5, 0.5, 0.5, 0.5, 0.5666666667, 0.5, 0.7333333333, 0.5];
     const newProfileActual = rup.reviseUserProfile(sampleExerciseSet, userProfile);
 
     newProfileExpected.forEach((entry, i) => {
