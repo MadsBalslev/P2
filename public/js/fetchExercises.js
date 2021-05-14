@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /**
  * Gets the generated exercise set from the server.
- * @param event
+ *
  * @returns New promise for a resolve or reject.
  */
 const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
