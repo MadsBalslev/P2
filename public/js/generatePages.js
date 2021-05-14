@@ -403,6 +403,7 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
+
 /**
  * Function that creates html responsible for showing score in each subject.
  * @param {*} AllData
@@ -421,6 +422,7 @@ const createStatsDivs = (AllData, container) => {
     }
   });
 };
+
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -460,6 +462,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
     div.appendChild(yourAnswer);
   }
 };
+
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -554,7 +557,7 @@ const checkAnswer = () => {
 /**
  * helper function for checkAnswer which creates the div responsible for showing answered questions
  * @param {*} exercise the exerciseSet
- * @param {*} container the container the div gets appended to 
+ * @param {*} container the container the div gets appended to
  * @returns the created div
  */
 const createCheckAnswerDiv = (exercise, container) => {
