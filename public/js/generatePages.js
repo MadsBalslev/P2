@@ -539,7 +539,6 @@ const checkAnswer = () => {
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
-    
     totalPoints += exercise.point;
     userPoints = addPoints(exercise, userPoints);
     const div = createCheckAnswerDiv(exercise, container);
