@@ -8,6 +8,14 @@ test('binormalConfidenceIntervalFacit', () => {
   expect(statistik.binormalConfidenceIntervalFacit(A, B)).toEqual(confidenceintervalExpect);
 });
 
+test('binormalConfidenceIntervalFacit nan', () => {
+  const A = 3;
+  const B = 18;
+  const confidenceintervalExpect = '[NaN;NaN]';
+
+  expect(statistik.binormalConfidenceIntervalFacit(A, B)).toEqual(confidenceintervalExpect);
+});
+
 test('normalConfidenceIntervalFacit', () => {
   const numbers = [2, 8, 7, 8, 5, 5, 11, 9, 6, 3, 6, 1];
   const i = 12;
