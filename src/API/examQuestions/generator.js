@@ -261,6 +261,9 @@ const vektorFunctionExercise = () => {
     case 1:
       exercise = new vektorfunktioner.VektorFunctionExercise();
       break;
+    case 2:
+      exercise = new vektorfunktioner.VektorFunctionExercise2();
+      break;
     default:
       break;
   }
