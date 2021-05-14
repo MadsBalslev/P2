@@ -27,8 +27,7 @@ function VektorFunctionExercise() {
     cos(${radian}),${yVar}-${radian}-${constantVar}*sin(${CVar}*${radian}))`,
   };
   this.type = 'vektorfunktioner';
-  this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
-  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit(radian, xVar, yVar, constantVar, CVar, pi)}`;
+  this.facit = `${VektorFunctionExerciseFacit(radian, xVar, yVar, constantVar, CVar, pi)}`;
   this.point = 25;
   this.tegn = '*';
 }
@@ -58,8 +57,7 @@ function VektorFunctionExercise2() {
     ${yVar}-${radian}-${constantVar}*cos(${CVar}*${radian}))`,
   };
   this.type = 'vektorfunktioner';
-  this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
-   (x(t_2),y(t_2))=${VektorFunctionExerciseFacit2(radian, xVar, yVar, constantVar, CVar, pi)}`;
+  this.facit = `${VektorFunctionExerciseFacit2(radian, xVar, yVar, constantVar, CVar, pi)}`;
   this.point = 25;
   this.tegn = '*';
 }
