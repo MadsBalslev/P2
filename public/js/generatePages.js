@@ -554,6 +554,7 @@ const checkAnswer = () => {
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
 };
+
 /**
  * helper function for checkAnswer which creates the div responsible for showing answered questions
  * @param {*} exercise the exerciseSet
