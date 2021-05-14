@@ -30,7 +30,7 @@ const generateVarsLow = () => {
  */
 function RotatingBodyQuadraticExercise() {
   const { A, B, C } = generateVarsLow();
-  this.txt = `Vi har en andengradspolynomie og vi ønsker at udregne integralet indenfor intervallet [0:${C}]`;
+  this.txt = `Vi har et andengradspolynomie og vi ønsker at udregne integralet indenfor intervallet [0:${C}]`;
   this.type = 'infinitesimalregning';
   this.point = 5;
   this.tegn = '';

@@ -145,7 +145,7 @@ function fillSparseExerciseSetWithRandomExercises(amountOfExercises, exerciseSet
  * @returns {String} A random exercise type.
  */
 function randomType() {
-  return indexToType(helper.randNum(USER_PROFILE_LENGTH - 1) + 1);
+  return indexToType(helper.randNum(USER_PROFILE_LENGTH + 1) - 1);
 }
 
 /**
@@ -164,7 +164,6 @@ function indexToType(index) {
     case 7: return 'infinitesimalregning';
     case 8: return 'trigonometri';
     case 9: return 'vektorfunktioner';
-    case 10: return 'differentialligninger';
     default: return '';
   }
 }

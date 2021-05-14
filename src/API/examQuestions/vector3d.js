@@ -107,7 +107,7 @@ function VektorMultiplicationExercise() {
   this.facit = facitNumber.toString();
   this.type = 'vektor3d';
   this.point = 20;
-  this.txt = 'Find skalarproduktet af følgende to vektorer?';
+  this.txt = 'Find skalarproduktet af følgende to vektorer.';
   this.tegn = '*';
 }
 

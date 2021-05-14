@@ -1,6 +1,6 @@
 const helper = require('../helper');
 
-const USER_PROFILE_LENGTH = 11;
+const USER_PROFILE_LENGTH = 10;
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
@@ -31,7 +31,6 @@ function handleReviseUserProfileRequest(request, response) {
 async function handleReviseUserProfilePostRequest(request, response) {
   try {
     const requestBody = await helper.fetchJsonRequestBody(request);
-    console.log(requestBody);
     validateRequestBody(requestBody);
     const newUserProfile = reviseUserProfile(requestBody.exerciseSet, requestBody.userProfile);
     helper.respondWithJsonObject(newUserProfile, response);
@@ -168,29 +167,27 @@ function calculateExerciseProfile(exercise) {
 function convertExerciseToVector(exercise) {
   switch (exercise.type) {
     case 'vektor2d':
-      return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     case 'vektor3d':
-      return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
     case 'integralregning':
-      return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
     case 'ligninger':
-      return [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
     case 'differentialligning':
-      return [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
     case 'funktionerAfToVariable':
-      return [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     case 'statistik':
-      return [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
     case 'infinitesimalregning':
-      return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
     case 'trigonometri':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
     case 'vektorfunktioner':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
-    case 'differentialligninger':
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
     default:
-      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   }
 }
 

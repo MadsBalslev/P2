@@ -88,8 +88,8 @@ describe('convertExerciseSetToExerciseProfiles', () => {
     const exSet = [{ ...sampleExercise1 }, { ...sampleExercise1 }];
     exSet[1].questionAnswers = 'wrong answer';
     const testVector = [
-      [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
     expect(rup.convertExerciseSetToExerciseProfiles(exSet)).toEqual(testVector);
@@ -100,14 +100,14 @@ describe('calculateExerciseProfile', () => {
   test('calculateExerciseProfile correct answer', () => {
     const exerciseWithCorrectAnswer = { ...sampleExercise1 };
     expect(rup.calculateExerciseProfile(exerciseWithCorrectAnswer))
-      .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      .toEqual([0, rup.CORRECT_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0]);
   });
 
   test('calculateExerciseProfile wrong answer', () => {
     const exerciseWithWrongAnswer = { ...sampleExercise1 };
     exerciseWithWrongAnswer.questionAnswers = 'wrong answer';
     expect(rup.calculateExerciseProfile(exerciseWithWrongAnswer))
-      .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      .toEqual([0, rup.WRONG_ANSWER_WEIGHT, 0, 0, 0, 0, 0, 0, 0, 0]);
   });
 });
 
@@ -148,8 +148,8 @@ describe('calculateUserProfile', () => {
 
 describe('reviseUserProfile', () => {
   test('reviseUserProfile', () => {
-    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-    const newProfileExpected = [0.5, 0.5666666667, 0.5, 0.5, 0.5, 0.5, 0.5666666667, 0.5, 0.7333333333, 0.5, 0.5];
+    const userProfile = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const newProfileExpected = [0.5, 0.5666666667, 0.5, 0.5, 0.5, 0.5, 0.5666666667, 0.5, 0.7333333333, 0.5];
     const newProfileActual = rup.reviseUserProfile(sampleExerciseSet, userProfile);
 
     newProfileExpected.forEach((entry, i) => {
@@ -176,7 +176,7 @@ describe('requestBodyUserProfileIsValid', () => {
 
   test('requestBodyUserProfileIsValid valid userProfile', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       exerciseSet: [...sampleExerciseSet],
     };
     expect(rup.requestBodyUserProfileIsValid(requestBody)).toBeTruthy();
@@ -218,14 +218,14 @@ describe('requestBodyUserProfileIsValid', () => {
 describe('requestBodyExerciseSetIsValid', () => {
   test('requestBodyExerciseSetIsValid missing exerciseSet', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     };
     expect(rup.requestBodyExerciseSetIsValid(requestBody)).toBeFalsy();
   });
 
   test('requestBodyExerciseSetIsValid valid requestBody', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       exerciseSet: [...sampleExerciseSet],
     };
     expect(rup.requestBodyExerciseSetIsValid(requestBody)).toBeTruthy();
@@ -235,7 +235,7 @@ describe('requestBodyExerciseSetIsValid', () => {
 describe('requestBodyIsValid', () => {
   test('requestBodyIsValid valid requestBody', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       exerciseSet: [...sampleExerciseSet],
     };
     expect(rup.requestBodyIsValid(requestBody)).toBeTruthy();
@@ -243,7 +243,7 @@ describe('requestBodyIsValid', () => {
 
   test('requestBodyIsValid invalid requestBody', () => {
     const requestBody = {
-      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      userProfile: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       exerciseSet: [...sampleExerciseSet],
     };
     delete requestBody.exerciseSet[0].facit;
