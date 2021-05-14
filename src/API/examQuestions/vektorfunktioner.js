@@ -21,7 +21,7 @@ const VektorVars = () => {
  * Represents a vectorfunction exercise
  */
 function VektorFunctionExercise() {
-  const { radian, xVar, yvar, constantVar, CVar } = VektorVars();
+  const { radian, xVar, yvar, constantVar, CVar, pi } = VektorVars();
   this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens 
   dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yvar})`;
   this.exerciseVars = {
@@ -30,7 +30,7 @@ function VektorFunctionExercise() {
   };
   this.type = 'vektorfunktioner';
   this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
-  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit( radian, xVar, yvar, constantVar, CVar )}`;
+  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit( radian, xVar, yvar, constantVar, CVar, pi )}`;
   this.point = 25;
   this.tegn = '*';
 }
@@ -39,10 +39,10 @@ function VektorFunctionExercise() {
  * Calculate facit and returning a string
  * @return facit
  */
-const VektorFunctionExerciseFacit = (radian, xVar, yvar, constantVar, CVar) => {
-  const xt1 = round2Dec(xVar * math.cos(radian));
-  const yt1 = round2Dec(yvar - radian - constantVar * (math.sin(CVar * radian)));
-  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (math.sin(CVar * radian)));
+const VektorFunctionExerciseFacit = (radian, xVar, yvar, constantVar, CVar, pi) => {
+  const xt1 = round2Dec(xVar * Math.cos(radian));
+  const yt1 = round2Dec(yvar - radian - constantVar * (Math.sin(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.sin(CVar * radian)));
   const yt2 = '0';
   const facit = `(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
@@ -71,9 +71,9 @@ function VektorFunctionExercise2() {
   * @return facit
   */
 const VektorFunctionExerciseFacit2 = (radian, xVar, yvar, constantVar, CVar, pi) => {
-  const xt1 = round2Dec(xVar * math.sin(radian));
-  const yt1 = round2Dec(yvar - radian - constantVar * (math.cos(CVar * radian)));
-  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (math.cos(CVar * radian)));
+  const xt1 = round2Dec(xVar * Math.sin(radian));
+  const yt1 = round2Dec(yvar - radian - constantVar * (Math.cos(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.cos(CVar * radian)));
   const yt2 = '0';
   const facit = `(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
