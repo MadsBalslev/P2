@@ -1,6 +1,6 @@
 const helper = require('../helper');
 
-const USER_PROFILE_LENGTH = 11;
+const USER_PROFILE_LENGTH = 10;
 const CORRECT_ANSWER_WEIGHT = 0.2;
 const WRONG_ANSWER_WEIGHT = 0.7;
 const USER_WEIGHT = 0.5;
