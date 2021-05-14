@@ -15,21 +15,20 @@ const VektorVars = () => {
   return { radian, xVar, yVar, constantVar, CVar, pi };
 };
 
-
 /**
  * Represents a vectorfunction exercise
  */
 function VektorFunctionExercise() {
-  const { radian, xVar, yvar, constantVar, CVar, pi } = VektorVars();
+  const { radian, xVar, yVar, constantVar, CVar, pi } = VektorVars();
   this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens 
-  dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yvar})`;
+  dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yVar})`;
   this.exerciseVars = {
     vectorfunction1: `\\vec{r(t)}=(x(t),y(t))=(${xVar}*
-    cos(${radian}),${yvar}-${radian}-${constantVar}*sin(${CVar}*${radian}))`,
+    cos(${radian}),${yVar}-${radian}-${constantVar}*sin(${CVar}*${radian}))`,
   };
   this.type = 'vektorfunktioner';
   this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
-  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit( radian, xVar, yvar, constantVar, CVar, pi )}`;
+  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit(radian, xVar, yVar, constantVar, CVar, pi)}`;
   this.point = 25;
   this.tegn = '*';
 }
@@ -38,10 +37,10 @@ function VektorFunctionExercise() {
  * Calculate facit and returning a string
  * @return facit
  */
-const VektorFunctionExerciseFacit = (radian, xVar, yvar, constantVar, CVar, pi) => {
+const VektorFunctionExerciseFacit = (radian, xVar, yVar, constantVar, CVar, pi) => {
   const xt1 = round2Dec(xVar * Math.cos(radian));
-  const yt1 = round2Dec(yvar - radian - constantVar * (Math.sin(CVar * radian)));
-  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.sin(CVar * radian)));
+  const yt1 = round2Dec(yVar - radian - constantVar * (Math.sin(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yVar * (Math.sin(CVar * radian)));
   const yt2 = '0';
   const facit = `(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
@@ -51,16 +50,16 @@ const VektorFunctionExerciseFacit = (radian, xVar, yvar, constantVar, CVar, pi) 
   * Represents a vectorfunction exercise
   */
 function VektorFunctionExercise2() {
-  const { radian, xVar, yvar, constantVar, CVar, pi } = VektorVars();
+  const { radian, xVar, yVar, constantVar, CVar, pi } = VektorVars();
   this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens 
-   dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yvar})`;
+   dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yVar})`;
   this.exerciseVars = {
     vectorfunction1: `\\vec{r(t)}=(x(t),y(t))=(${xVar}*sin(${radian}),
-    ${yvar}-${radian}-${constantVar}*cos(${CVar}*${radian}))`,
+    ${yVar}-${radian}-${constantVar}*cos(${CVar}*${radian}))`,
   };
   this.type = 'vektorfunktioner';
   this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
-   (x(t_2),y(t_2))=${VektorFunctionExerciseFacit2(radian, xVar, yvar, constantVar, CVar, pi)}`;
+   (x(t_2),y(t_2))=${VektorFunctionExerciseFacit2(radian, xVar, yVar, constantVar, CVar, pi)}`;
   this.point = 25;
   this.tegn = '*';
 }
@@ -69,10 +68,10 @@ function VektorFunctionExercise2() {
   * Calculate facit and returning a string
   * @return facit
   */
-const VektorFunctionExerciseFacit2 = (radian, xVar, yvar, constantVar, CVar, pi) => {
+const VektorFunctionExerciseFacit2 = (radian, xVar, yVar, constantVar, CVar, pi) => {
   const xt1 = round2Dec(xVar * Math.sin(radian));
-  const yt1 = round2Dec(yvar - radian - constantVar * (Math.cos(CVar * radian)));
-  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.cos(CVar * radian)));
+  const yt1 = round2Dec(yVar - radian - constantVar * (Math.cos(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yVar * (Math.cos(CVar * radian)));
   const yt2 = '0';
   const facit = `(${xt1},${yt1},${xt2},${yt2})`;
   return facit;
