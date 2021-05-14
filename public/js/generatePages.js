@@ -539,24 +539,10 @@ const checkAnswer = () => {
   container.setAttribute('class', 'container');
 
   exerciseSet.forEach((exercise) => {
+    
     totalPoints += exercise.point;
-
     userPoints = addPoints(exercise, userPoints);
-
-    const div = document.createElement('div');
-    const questionText = document.createElement('p');
-    const questionType = document.createElement('p');
-
-    div.setAttribute('class', 'answer');
-
-    questionText.innerHTML = exercise.txt;
-    questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-
-    div.appendChild(questionText);
-    addExerciseVars(exercise, div);
-    div.appendChild(questionType);
-    container.appendChild(div);
-
+    const div = createCheckAnswerDiv(exercise, container);
     showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
@@ -565,6 +551,28 @@ const checkAnswer = () => {
 
   createGradeText(container, userPoints, totalPoints);
   createStatsDivs(AllData, container);
+};
+/**
+ * helper function for checkAnswer which creates the div responsible for showing answered questions
+ * @param {*} exercise the exerciseSet
+ * @param {*} container the container the div gets appended to 
+ * @returns the created div
+ */
+const createCheckAnswerDiv = (exercise, container) => {
+  const div = document.createElement('div');
+  const questionText = document.createElement('p');
+  const questionType = document.createElement('p');
+
+  div.setAttribute('class', 'answer');
+
+  questionText.innerHTML = exercise.txt;
+  questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
+
+  div.appendChild(questionText);
+  addExerciseVars(exercise, div);
+  div.appendChild(questionType);
+  container.appendChild(div);
+  return div;
 };
 
 function checkUserProfile() {
