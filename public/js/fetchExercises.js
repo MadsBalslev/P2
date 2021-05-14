@@ -24,6 +24,12 @@ const getExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+/**
+ * Makes a post request to /generateUserSet, with the userProfile in localStorage as the request
+ * body.
+ *
+ * @returns JSON object representing an exercise setJSON object.
+ */
 const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
   const baseUrl = window.location.href;
   const exerciseAmount = document.querySelector('#userExerciseFormAmount').value;
