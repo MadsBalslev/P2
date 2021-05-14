@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PartielDifferentiationExercise - Documentation</title>
+    <title>src/API/examQuestions/trigonometri.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,107 @@
 
 <div id="main">
     
-    <h1 class="page-title">PartielDifferentiationExercise</h1>
+    <h1 class="page-title">src/API/examQuestions/trigonometri.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PartielDifferentiationExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const math = require('mathjs');
+const { randNum } = require('../../helper');
+/**
+ * Generates random variables for a SinusExercise
+ * @param a first variable in the exercise
+ */
+function sinusGenerateVars() {
+  let a = randNum(5) + 1;
+  let b = randNum(5) + 1;
+  return {a, b};
+}
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Generates a random variable from range 0-271
+ * @return {integer} Returns the random-generated integer.
+ */
+function tangensGeneratevars() {
+ let a = randNum(270) + 1;
+ return a
+}
 
-    
+/**
+ * Generates a sinus exercise
+ * @constructor
+ */
+function SinusExercise(){
+  const {a, b} = sinusGenerateVars();
+  this.txt = "Udregn sinus til 1 decimal hvis relevant. Udregnes i radianer";
+  this.type = "trigonometri"
+  this.point = 5;
+  this.tegn ='';
+  this.exerciseVars = {trigonometri: `\\sin(\\dfrac{ ${a} \\pi }{ ${b} })`};
+  this.facit = sinusFacit(a,b);
+}
 
-    <h4 class="name" id="PartielDifferentiationExercise"><span class="type-signature"></span>new PartielDifferentiationExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+/**
+ * Calculates facit of given SinusExercise
+ * @param a the first variable in the exercise
+ * @param b the second variable in the exercise
+ * @returns {String} The correct answer to the given variables.
+ */
+function sinusFacit(a, b) {
+  let facit;
+  facit = Math.sin((a*3.14)/b);
+  if (facit === 0 || (facit &lt; 0.005 &amp;&amp; facit > -0.005)) {
+    facit = 0;
+    return String(facit);
+  }
 
-    
+  else {
+    facit = math.round(facit,3);
+    return String(facit);
+  }
+}
 
+/**
+ * Generates a tan exercise
+ * @constructor
+ */
+function TangensExercise() {
+  const a = tangensGeneratevars();
+  this.txt = "Udregn tangens i radianer";
+  this.type = "trigonometri";
+  this.point = 5;
+  this.tegn = '';
+  this.exerciseVars = {trigonometri: `tan ${a}`}
+  this.facit = tangensFacit(a);
+}
 
+/**
+ * Calculates facit of a Tan
+ * @param a Variable from the generated exercise used to calculate the correct answer.
+ * @return {String} The correct answer to the given variables.
+ */
+function tangensFacit(a) {
+  let facit = math.round(math.tan(a),2);
+  return String(facit);
 
-<div class="description">
-    <p>Construct for exercise, so it can make a new exercise when called.</p>
-</div>
+}
+const numOfTasks = 2;
 
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_ligningertovariabler.js.html">src/API/examQuestions/ligningertovariabler.js</a>, <a href="src_API_examQuestions_ligningertovariabler.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = {
+    SinusExercise,
+    TangensExercise,
+    tangensFacit,
+    sinusFacit,
+    numOfTasks,
+  };
+</code></pre>
+        </article>
+    </section>
 
 
 

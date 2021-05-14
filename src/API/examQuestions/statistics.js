@@ -25,8 +25,8 @@ const generateAfgivelse = () => randNum(10) + 1;
  * @return {{A: number, B: number}} Returns the randomly generated numbers.
  */
 const generateVars = () => {
-  const A = randNum(75) + 1.01;
-  const B = randNum(50) + 1.01;
+  const A = randNum(75) + 1;
+  const B = randNum(50) + 1;
 
   return { A, B };
 };
@@ -45,7 +45,7 @@ function BinormalConfidenceIntervalExercise() {
   const { A, B } = generateVars();
 
   // eslint-disable-next-line max-len
-  this.txt = `En klasse har ${A} elever har svaret på et spørgeskema og ${B} har stemt ja på spørgeskemaet. Bestem nu sandsynlighedsparameteren og bagefter brug det til at finde 95%-konfidensintervallet`;
+  this.txt = `En klasse med ${A} elever har svaret på et spørgeskema og ${B} har stemt ja på spørgeskemaet. Bestem nu sandsynlighedsparameteren og bagefter brug det til at finde 95%-konfidensintervallet`;
   this.type = 'statistik';
   this.point = 5;
   this.tegn = '';
@@ -64,7 +64,7 @@ function NormalConfidenceIntervalExercise() {
   const afgivelse = generateAfgivelse();
 
   // eslint-disable-next-line max-len
-  this.txt = `En klasse har svaret på et spørgeskema omkring hvor mange timer de på deres mobil, hvor ${i} elever har svaret på testen. Standard afgivelsen er ${afgivelse}. Udregn middelværdien og bagefter bestem 95%-konfidensintervallet`;
+  this.txt = `En klasse har svaret på et spørgeskema omkring hvor mange timer de bruger på deres mobil, hvor ${i} elever har svaret på testen. Standard afgivelsen er ${afgivelse}. Udregn middelværdien og bagefter bestem 95%-konfidensintervallet`;
   this.type = 'statistik';
   this.point = 5;
   this.tegn = '';

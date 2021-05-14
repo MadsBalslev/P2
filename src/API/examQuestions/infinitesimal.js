@@ -3,7 +3,7 @@ const math = require('mathjs');
 const { randNum } = require('../../helper');
 
 /**
- * Generates randomly generated numbers, that can´t be 0
+ * Generates random  numbers, that can´t be 0
  * @return {{A: number, B: number, C: number}} Returns the randomly generated numbers.
  */
 const generateVars = () => {
@@ -14,7 +14,7 @@ const generateVars = () => {
 };
 
 /**
- * Generates randomly generated numbers with lower values, that can´t be 0
+ * Generates random numbers with lower values, that can´t be 0
  * @return {{A: number, B: number, C: number}} Returns the randomly generated numbers.
  */
 const generateVarsLow = () => {
@@ -30,7 +30,7 @@ const generateVarsLow = () => {
  */
 function RotatingBodyQuadraticExercise() {
   const { A, B, C } = generateVarsLow();
-  this.txt = `Vi har en andengradspolynomie og vi ønsker at udregne integralet indenfor intervallet [0:${C}]`;
+  this.txt = `Vi har et andengradspolynomie og vi ønsker at udregne integralet indenfor intervallet [0:${C}]`;
   this.type = 'infinitesimalregning';
   this.point = 5;
   this.tegn = '';
@@ -85,13 +85,8 @@ const rotatingBodyFacit = (A, B, C) => {
   const diffExpression = math.derivative(f, x);
   const lengthExpression = (Math.PI * ((diffExpression) ^ 2) * C).toFixed(0);
 
-  console.log(f);
-  console.log(lengthExpression);
-
   return lengthExpression;
 };
-
-RotatingBodyExercise();
 
 const numOfTasks = 2;
 

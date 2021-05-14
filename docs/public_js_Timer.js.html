@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PartielDifferentiationExercise - Documentation</title>
+    <title>public/js/Timer.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,102 @@
 
 <div id="main">
     
-    <h1 class="page-title">PartielDifferentiationExercise</h1>
+    <h1 class="page-title">public/js/Timer.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PartielDifferentiationExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Converts the time into a string
+ * @param {number} time Takes the time
+ * @returns {string} Returns the time in string format
+ */
+function timeToString(time) {
+  const diffInHrs = time / 3600000;
+  const hours = Math.floor(diffInHrs);
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+  const diffInMin = (diffInHrs - hours) * 60;
+  const minutes = Math.floor(diffInMin);
 
-    
+  const diffInSec = (diffInMin - minutes) * 60;
+  const seconds = Math.floor(diffInSec);
 
-    <h4 class="name" id="PartielDifferentiationExercise"><span class="type-signature"></span>new PartielDifferentiationExercise<span class="signature">()</span><span class="type-signature"></span></h4>
+  const formattedHrs = hours.toString().padStart(2, '0');
+  const formattedMM = minutes.toString().padStart(2, '0');
+  const formattedSS = seconds.toString().padStart(2, '0');
 
-    
+  return `${formattedHrs}:${formattedMM}:${formattedSS}`;
+}
 
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
 
+/**
+* Create function to modify innerHTML
+* @param {string} txt Takes the txt string
+*/
 
-<div class="description">
-    <p>Construct for exercise, so it can make a new exercise when called.</p>
-</div>
+function print(txt) {
+  document.getElementById('display').innerHTML = txt;
+}
 
+/**
+* Create 'start'
+*/
+function start() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(() => {
+    elapsedTime = Date.now() - startTime;
+    print(timeToString(elapsedTime));
+  }, 10);
+  showButton('PAUSE');
+}
 
+/**
+* Create 'pause'
+*/
+function pause() {
+  clearInterval(timerInterval);
+  showButton('PLAY');
+}
 
+/**
+* Create 'reset'
+*/
+function reset() {
+  clearInterval(timerInterval);
+  print('00:00:00');
+  elapsedTime = 0;
+  showButton('PLAY');
+}
 
+/**
+* Create function to display buttons and take their input
+* @param {string} buttonKey Takes the input from the button
+*/
+function showButton(buttonKey) {
+  const buttonToShow = buttonKey === 'PLAY' ? playButton : pauseButton;
+  const buttonToHide = buttonKey === 'PLAY' ? pauseButton : playButton;
+  buttonToShow.style.display = 'block';
+  buttonToHide.style.display = 'none';
+}
 
-<dl class="details">
+const playButton = document.getElementById('playButton');
+const pauseButton = document.getElementById('pauseButton');
+const resetButton = document.getElementById('resetButton');
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_ligningertovariabler.js.html">src/API/examQuestions/ligningertovariabler.js</a>, <a href="src_API_examQuestions_ligningertovariabler.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+playButton.addEventListener('click', start);
+pauseButton.addEventListener('click', pause);
+resetButton.addEventListener('click', reset);
+</code></pre>
+        </article>
+    </section>
 
 
 

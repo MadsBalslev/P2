@@ -5,6 +5,7 @@ const fs = require('fs');
 const { lookup } = require('mime-types');
 const handleOpgaverRequest = require('./routes/opgaver');
 const rup = require('./routes/reviseUserProfile.js');
+const gus = require('./routes/generateUserSet.js');
 const { errorResponse } = require('./helper');
 
 global.globalSet = [];
@@ -29,14 +30,6 @@ const tryHandleRequest = (request, response) => {
   }
 };
 
-// const logRequest = (request) => {
-//   console.log(`NEW ${request.method} REQUEST`);
-//   console.log(`Request url: ${request.url}`);
-//   console.log('Request headers:');
-//   console.log(request.headers);
-//   console.log('');
-// };
-
 /**
  * Will check which route is requested and use the correct handler function. If a non-existing route
  * is requsted it will throw an error which will be catched in {@link tryHandleRequest}
@@ -51,9 +44,9 @@ const handleRequest = (request, response) => {
     case '/reviseUserProfile':
       rup.handleReviseUserProfileRequest(request, response);
       break;
-    // case '/generateUserSet':
-      // handleGenerateUserSetProfile(request, response);
-      // break;
+    case '/generateUserSet':
+      gus.handleGenerateUserSetRequest(request, response);
+      break;
     case '':
       handleBaseRequest(request, response);
       break;

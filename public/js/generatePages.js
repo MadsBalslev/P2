@@ -30,30 +30,61 @@ const subjects = [
     name: 'Ligning af to variable',
     id: 'funktionerAfToVariable',
   },
+
+  {
+    name: 'Trigonometri',
+    id: 'trigonometri',
+  },
   {
     name: 'Infinitesimal regning',
     id: 'infinitesimalregning',
+  },
+  {
+    name: 'Vektorfunktioner',
+    id: 'vektorfunktioner',
   },
 ];
 
 let exerciseSet;
 
+/**
+ * Will generate the start page by clearing and thne adding all needed forms, roots, divs etc.
+ * It will also await the exercises
+ */
 const generateStartPage = () => {
   clearDom();
+  hideBackBtn();
+  generateStartPageForms();
+  handleCookies();
+};
 
+function generateStartPageForms() {
+  const root = document.querySelector('#root');
+  const form = generateNormalExerciseForm();
+  root.appendChild(form);
+  root.appendChild(document.createElement('br'));
+  const userExerciseForm = generateUserExerciseForm();
+  root.appendChild(userExerciseForm);
+}
+
+function hideBackBtn() {
   const backBtn = document.querySelector('#back-btn');
   backBtn.style.visibility = 'hidden';
+}
 
-  const root = document.querySelector('#root');
+function generateNormalExerciseForm() {
   const form = document.createElement('form');
   const div = document.createElement('div');
   const br = document.createElement('br');
   const amountLabel = document.createElement('label');
   const amountInput = document.createElement('input');
   const submit = document.createElement('input');
+  const header = document.createElement('h1');
 
   amountLabel.setAttribute('for', 'amount');
   amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  header.innerHTML = 'Lav en tilfældig opgave med følgende emner';
 
   amountInput.setAttribute('type', 'number');
   amountInput.setAttribute('id', 'amount');
@@ -90,15 +121,51 @@ const generateStartPage = () => {
     start();
   });
 
+  form.appendChild(header);
   form.appendChild(div);
   form.appendChild(br.cloneNode(true));
   form.appendChild(amountLabel);
   form.appendChild(amountInput);
   form.appendChild(br.cloneNode(true));
   form.appendChild(submit);
+  return form;
+}
 
-  root.appendChild(form);
+function generateUserExerciseForm() {
+  const userExerciseForm = document.createElement('form');
+  const userExerciseFormHeader = document.createElement('h1');
+  const userExerciseFormAmountLabel = document.createElement('label');
+  const userExerciseFormAmountInput = document.createElement('input');
+  const userExerciseFormSubmit = document.createElement('input');
 
+  userExerciseForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    exerciseSet = await getUserExerciseSetFromServer(event);
+    saveState('exerciseSet', exerciseSet);
+    saveState('page', 'exercisePage');
+    buildExercisePage();
+  });
+
+  userExerciseFormHeader.innerText = 'Eller lav et brugerspecificeret opgavesæt';
+  userExerciseFormAmountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  userExerciseFormAmountInput.setAttribute('type', 'number');
+  userExerciseFormAmountInput.setAttribute('id', 'userExerciseFormAmount');
+  userExerciseFormAmountInput.setAttribute('min', '1');
+  userExerciseFormAmountInput.setAttribute('value', '1');
+
+  userExerciseFormSubmit.setAttribute('type', 'submit');
+  userExerciseFormSubmit.setAttribute('value', 'Indsend');
+
+  userExerciseForm.appendChild(userExerciseFormHeader);
+  userExerciseForm.appendChild(userExerciseFormAmountLabel);
+  userExerciseForm.appendChild(userExerciseFormAmountInput);
+  userExerciseForm.appendChild(document.createElement('br'));
+  userExerciseForm.appendChild(userExerciseFormSubmit);
+  return userExerciseForm;
+}
+
+function handleCookies() {
   if (cookieExist('exerciseSet')) {
     exerciseSet = readCookie('exerciseSet');
     if (readCookie('page') === 'exercisePage') {
@@ -107,8 +174,13 @@ const generateStartPage = () => {
       generateResultPage();
     }
   }
-};
+}
 
+/**
+ * Generates the label for chosen subject.
+ * @param {string} subject Takes the subject checked off
+ * @returns {string} Returns the label
+ */
 const generateSubjectLabel = (subject) => {
   const label = document.createElement('label');
   const { id } = subject;
@@ -119,6 +191,11 @@ const generateSubjectLabel = (subject) => {
   return label;
 };
 
+/**
+ * Generates the input for the chosen subject.
+ * @param {string} subject Takes the subject checked off
+ * @returns {string} Returns the subject ID and name.
+ */
 const generateSubjectInput = (subject) => {
   const input = document.createElement('input');
   const { id } = subject;
@@ -297,6 +374,7 @@ const giveFormAction = () => {
       exercise.questionAnswers = document.querySelector(`#exercise${exercise.questionNumber}`).value;
     });
     generateResultPage(exerciseSet);
+    updateUserProfile();
   });
 };
 
@@ -341,6 +419,7 @@ const calcUserStats = (exersiceSet) => {
 
   return AllData;
 };
+
 /**
  * Function that creates html responsible for showing score in each subject.
  * @param {*} AllData
@@ -359,6 +438,7 @@ const createStatsDivs = (AllData, container) => {
     }
   });
 };
+
 /**
  * Function that creates html responsible for grade and score.
  * @param {*} container
@@ -390,7 +470,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
   yourAnswer.innerHTML = `Dit svar: ${questionAnswer}`;
   if (checkUserAnswerValue(questionAnswer, facit)) {
     yourAnswer.style.backgroundColor = 'green';
-    yourAnswer.innerHTML = `a ${questionAnswer} <br /> Rigtigt!`;
+    yourAnswer.innerHTML = `Dit svar: ${questionAnswer} <br /> Rigtigt!`;
     div.appendChild(yourAnswer);
   } else {
     yourAnswer.style.backgroundColor = 'red';
@@ -398,6 +478,7 @@ const showQuestionResult = (questionAnswer, facit, div) => {
     div.appendChild(yourAnswer);
   }
 };
+
 /**
  * Function calculating which grade user should get based on percentage of points
  * @param {*} points
@@ -449,6 +530,7 @@ const addPoints = (exercise, userPoints) => {
   }
   return userPoints;
 };
+
 /**
  * Function to check if user answer is equal to the facit.
  * @param {*} answer
@@ -461,7 +543,6 @@ const checkUserAnswerValue = (answer, facit) => {
   if (answer !== facit) {
     return false;
   }
-
   return null;
 };
 
@@ -478,23 +559,8 @@ const checkAnswer = () => {
 
   exerciseSet.forEach((exercise) => {
     totalPoints += exercise.point;
-
     userPoints = addPoints(exercise, userPoints);
-
-    const div = document.createElement('div');
-    const questionText = document.createElement('p');
-    const questionType = document.createElement('p');
-
-    div.setAttribute('class', 'answer');
-
-    questionText.innerHTML = exercise.txt;
-    questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
-
-    div.appendChild(questionText);
-    addExerciseVars(exercise, div);
-    div.appendChild(questionType);
-    container.appendChild(div);
-
+    const div = createCheckAnswerDiv(exercise, container);
     showQuestionResult(exercise.questionAnswers, exercise.facit, div);
   });
 
@@ -505,4 +571,47 @@ const checkAnswer = () => {
   createStatsDivs(AllData, container);
 };
 
+/**
+ * helper function for checkAnswer which creates the div responsible for showing answered questions
+ * @param {*} exercise the exerciseSet
+ * @param {*} container the container the div gets appended to
+ * @returns the created div
+ */
+const createCheckAnswerDiv = (exercise, container) => {
+  const div = document.createElement('div');
+  const questionText = document.createElement('p');
+  const questionType = document.createElement('p');
+
+  div.setAttribute('class', 'answer');
+
+  questionText.innerHTML = exercise.txt;
+  questionType.innerHTML = `Spørgsmålstype: ${exercise.type}`;
+
+  div.appendChild(questionText);
+  addExerciseVars(exercise, div);
+  div.appendChild(questionType);
+  container.appendChild(div);
+  return div;
+};
+
+function checkUserProfile() {
+  if (userProfileEmpty()) {
+    setUserProfileToDefaultValue();
+  }
+}
+
+function setUserProfileToDefaultValue() {
+  localStorage.setItem('userProfile', JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+}
+
+function userProfileEmpty() {
+  return localStorage.getItem('userProfile') === null;
+}
+
+async function updateUserProfile() {
+  const revisedUserProfile = await makeServerReviseUserProfile();
+  localStorage.setItem('userProfile', JSON.stringify(revisedUserProfile));
+}
+
+checkUserProfile();
 generateStartPage();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PartielDifferentiationExercise - Documentation</title>
+    <title>src/API/examQuestions/vektorfunktioner.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,108 @@
 
 <div id="main">
     
-    <h1 class="page-title">PartielDifferentiationExercise</h1>
+    <h1 class="page-title">src/API/examQuestions/vektorfunktioner.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        PartielDifferentiationExercise
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { randNum } = require('../../helper');
+const { round2Dec } = require('../../helper');
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Variable declarations randomly
+ */
+const VektorVars = () => {
+  const radian = randNum(1);
+  const xVar = randNum(10) + 2;
+  const yVar = randNum(10) + 3;
+  const constantVar = randNum(4) + 4;
+  const CVar = randNum(4) + 5;
+  const pi = Math.PI;
 
-    
-
-    <h4 class="name" id="PartielDifferentiationExercise"><span class="type-signature"></span>new PartielDifferentiationExercise<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Construct for exercise, so it can make a new exercise when called.</p>
-</div>
+  return { radian, xVar, yVar, constantVar, CVar, pi };
+};
 
 
+/**
+ * Represents a vectorfunction exercise
+ */
+function VektorFunctionExercise() {
+  const { radian, xVar, yvar, constantVar, CVar, pi } = VektorVars();
+  this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens 
+  dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yvar})`;
+  this.exerciseVars = {
+    vectorfunction1: `\\vec{r(t)}=(x(t),y(t))=(${xVar}*
+    cos(${radian}),${yvar}-${radian}-${constantVar}*sin(${CVar}*${radian}))`,
+  };
+  this.type = 'vektorfunktioner';
+  this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
+  (x(t_2),y(t_2))=${VektorFunctionExerciseFacit( radian, xVar, yvar, constantVar, CVar, pi )}`;
+  this.point = 25;
+  this.tegn = '*';
+}
 
+/**
+ * Calculate facit and returning a string
+ * @return facit
+ */
+const VektorFunctionExerciseFacit = (radian, xVar, yvar, constantVar, CVar, pi) => {
+  const xt1 = round2Dec(xVar * Math.cos(radian));
+  const yt1 = round2Dec(yvar - radian - constantVar * (Math.sin(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.sin(CVar * radian)));
+  const yt2 = '0';
+  const facit = `(${xt1},${yt1},${xt2},${yt2})`;
+  return facit;
+};
 
+/**
+  * Represents a vectorfunction exercise
+  */
+function VektorFunctionExercise2() {
+  const { radian, xVar, yvar, constantVar, CVar, pi } = VektorVars();
+  this.txt = `Bestem koordinaterne til parameter­frem­stil­lingens 
+   dobbeltpunkter. t = ${radian} i (x,y) = (${xVar},${yvar})`;
+  this.exerciseVars = {
+    vectorfunction1: `\\vec{r(t)}=(x(t),y(t))=(${xVar}*sin(${radian}),
+    ${yvar}-${radian}-${constantVar}*cos(${CVar}*${radian}))`,
+  };
+  this.type = 'vektorfunktioner';
+  this.facit = `r(t_1)=r(t_2})=(x(t_1),y(t_1))=
+   (x(t_2),y(t_2))=${VektorFunctionExerciseFacit2(radian, xVar, yvar, constantVar, CVar, pi)}`;
+  this.point = 25;
+  this.tegn = '*';
+}
 
-<dl class="details">
+/**
+  * Calculate facit and returning a string
+  * @return facit
+  */
+const VektorFunctionExerciseFacit2 = (radian, xVar, yvar, constantVar, CVar, pi) => {
+  const xt1 = round2Dec(xVar * Math.sin(radian));
+  const yt1 = round2Dec(yvar - radian - constantVar * (Math.cos(CVar * radian)));
+  const xt2 = round2Dec(xt1 * radian - 2 * pi + yvar * (Math.cos(CVar * radian)));
+  const yt2 = '0';
+  const facit = `(${xt1},${yt1},${xt2},${yt2})`;
+  return facit;
+};
 
-    
+const numOfTasks = 2;
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_API_examQuestions_ligningertovariabler.js.html">src/API/examQuestions/ligningertovariabler.js</a>, <a href="src_API_examQuestions_ligningertovariabler.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = {
+  VektorFunctionExercise,
+  VektorFunctionExerciseFacit,
+  VektorFunctionExercise2,
+  VektorFunctionExerciseFacit2,
+  numOfTasks,
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

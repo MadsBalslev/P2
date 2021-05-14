@@ -10,7 +10,9 @@ const ligninger = require('./ligninger');
 const diffligning = require('./Differentialligninger');
 const funktionerAfToVariable = require('./ligningertovariabler');
 const statistik = require('./statistics');
+const trigonometri = require('./trigonometri');
 const infinitesimalregning = require('./infinitesimal');
+const vektorfunktioner = require('./vektorfunktioner');
 
 /**
  * Will generate an exerciseset with the given catagories
@@ -46,12 +48,17 @@ const generateExcerciseSet = (categories, amount) => {
         case 'statistik':
           set.push(generateStatistikExercise(amount));
           break;
+        case 'trigonometri':
+          set.push(generateTrigonometriExercise(amount));
+          break;
         case 'infinitesimalregning':
           set.push(generateInfinitesimalregning(amount));
           break;
+        case 'vektorfunktioner':
+          set.push(vektorFunctionExercise(amount));
+          break;
         default:
           break;
-      
       }
     }
   });
@@ -171,6 +178,10 @@ const generateDiffLigningExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateFunktionerAfToVariableExercise = () => {
   let exercise;
   const rand = randNum(funktionerAfToVariable.numOfTasks);
@@ -187,6 +198,10 @@ const generateFunktionerAfToVariableExercise = () => {
   return exercise;
 };
 
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateStatistikExercise = () => {
   let exercise;
   const rand = randNum(statistik.numOfTasks);
@@ -203,6 +218,26 @@ const generateStatistikExercise = () => {
   return exercise;
 };
 
+const generateTrigonometriExercise = () => {
+  let exercise;
+  const rand = randNum(trigonometri.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new trigonometri.SinusExercise();
+      break;
+    case 2:
+      exercise = new trigonometri.TangensExercise();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
+
+/**
+ * This function randomly generates an equation exercise and returns it.
+ * @return {object} Returns the generated exercise object.
+ */
 const generateInfinitesimalregning = () => {
   let exercise;
   const rand = randNum(infinitesimalregning.numOfTasks);
@@ -213,12 +248,27 @@ const generateInfinitesimalregning = () => {
     case 2:
       exercise = new infinitesimalregning.RotatingBodyQuadraticExercise();
       break;
-      default:
+    default:
       break;
   }
-return exercise;
-}
+  return exercise;
+};
 
+const vektorFunctionExercise = () => {
+  let exercise;
+  const rand = randNum(vektorfunktioner.numOfTasks);
+  switch (rand) {
+    case 1:
+      exercise = new vektorfunktioner.VektorFunctionExercise();
+      break;
+    case 2:
+      exercise = new vektorfunktioner.VektorFunctionExercise2();
+      break;
+    default:
+      break;
+  }
+  return exercise;
+};
 
 module.exports = {
   generateExcerciseSet,
