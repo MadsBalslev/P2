@@ -42,17 +42,23 @@ const add = (accumulator, a) => accumulator + a;
  * @constructor
  */
 function BinormalConfidenceIntervalExercise() {
-  const { A, B } = generateVars();
+  let antalElever;
+  let antalJa;
+  while (binormalConfidenceIntervalFacit(antalElever, antalJa) === '[NaN;NaN]') {
+    const temp = generateVars();
+    antalElever = temp.A;
+    antalJa = temp.B;
+  }
 
   // eslint-disable-next-line max-len
-  this.txt = `En klasse med ${A} elever har svaret på et spørgeskema og ${B} har stemt ja på spørgeskemaet. Bestem nu sandsynlighedsparameteren og bagefter brug det til at finde 95%-konfidensintervallet`;
+  this.txt = `En klasse med ${antalElever} elever har svaret på et spørgeskema og ${antalJa} har stemt ja på spørgeskemaet. Bestem nu sandsynlighedsparameteren og bagefter brug det til at finde 95%-konfidensintervallet`;
   this.type = 'statistik';
   this.point = 5;
   this.tegn = '';
   this.exerciseVars = {
     ligning: '\\hat{p} - 1.96 * \\sqrt{\\hat{p}*(1-\\hat{p})/n} ; \\hat{p} + 1.96* \\sqrt{\\hat{p}*(1-\\hat{p})/n}',
   };
-  this.facit = binormalConfidenceIntervalFacit(A, B);
+  this.facit = binormalConfidenceIntervalFacit(antalElever, antalJa);
 }
 
 /**
@@ -104,6 +110,8 @@ const binormalConfidenceIntervalFacit = (A, B) => {
   const middelværdi = (B / A);
   const n = (A + B);
   const sqrt = math.sqrt((middelværdi * ((1 - middelværdi) / n)));
+  console.log(sqrt);
+  console.log(middelværdi * ((1 - middelværdi) / n));
   const confidenceinterval1 = parseFloat((middelværdi - 1.96 * sqrt).toFixed(2));
   const confidenceinterval2 = parseFloat((middelværdi + 1.96 * sqrt).toFixed(2));
 
