@@ -74,12 +74,25 @@ function hideBackBtn() {
 
 function generateNormalExerciseForm() {
   const form = document.createElement('form');
-  const div = generateEmneVælger(br);
+  const div = document.createElement('div');
   const br = document.createElement('br');
-  const amountLabel = createAmountLabel();
-  const amountInput = createAmountInput();
-  const submit = createSubmit();
-  const header = createHeader();
+  const amountLabel = document.createElement('label');
+  const amountInput = document.createElement('input');
+  const submit = document.createElement('input');
+  const header = document.createElement('h1');
+
+  amountLabel.setAttribute('for', 'amount');
+  amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
+
+  header.innerHTML = 'Lav en tilfældig opgave med følgende emner';
+
+  amountInput.setAttribute('type', 'number');
+  amountInput.setAttribute('id', 'amount');
+  amountInput.setAttribute('min', '1');
+  amountInput.setAttribute('value', '1');
+
+  submit.setAttribute('type', 'submit');
+  submit.setAttribute('value', 'Indsend');
 
   form.setAttribute('id', 'form');
   form.addEventListener('submit', async (event) => {
@@ -90,6 +103,22 @@ function generateNormalExerciseForm() {
     saveState('page', 'exercisePage');
 
     buildExercisePage();
+    console.log(exerciseSet);
+  });
+  div.setAttribute('id', 'emneVælger');
+
+  subjects.forEach((subject) => {
+    const label = generateSubjectLabel(subject);
+    const input = generateSubjectInput(subject);
+
+    div.appendChild(input);
+    div.appendChild(label);
+    div.appendChild(br.cloneNode(true));
+  });
+
+  submit.addEventListener('click', () => {
+    reset();
+    start();
   });
 
   form.appendChild(header);
@@ -100,53 +129,6 @@ function generateNormalExerciseForm() {
   form.appendChild(br.cloneNode(true));
   form.appendChild(submit);
   return form;
-}
-
-function createHeader() {
-  const header = document.createElement('h1');
-  header.innerHTML = 'Lav en tilfældig opgave med følgende emner';
-  return header;
-}
-
-function createSubmit() {
-  const submit = document.createElement('input');
-  submit.setAttribute('type', 'submit');
-  submit.setAttribute('value', 'Indsend');
-  submit.addEventListener('click', () => {
-    reset();
-    start();
-  });
-  return submit;
-}
-
-function createAmountInput() {
-  const amountInput = document.createElement('input');
-  amountInput.setAttribute('type', 'number');
-  amountInput.setAttribute('id', 'amount');
-  amountInput.setAttribute('min', '1');
-  amountInput.setAttribute('value', '1');
-  return amountInput;
-}
-
-function createAmountLabel() {
-  const amountLabel = document.createElement('label');
-  amountLabel.setAttribute('for', 'amount');
-  amountLabel.innerHTML = 'Hvor mange opgaver vil du lave?';
-  return amountLabel;
-}
-
-function generateEmneVælger(br) {
-  const div = document.createElement('div');
-  div.setAttribute('id', 'emneVælger');
-  subjects.forEach((subject) => {
-    const label = generateSubjectLabel(subject);
-    const input = generateSubjectInput(subject);
-
-    div.appendChild(input);
-    div.appendChild(label);
-    div.appendChild(br.cloneNode(true));
-  });
-  return div;
 }
 
 function generateUserExerciseForm() {
