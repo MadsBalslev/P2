@@ -53,11 +53,26 @@ let exerciseSet;
  */
 const generateStartPage = () => {
   clearDom();
+  hideBackBtn();
+  generateStartPageForms();
+  handleCookies();
+};
 
+function generateStartPageForms() {
+  const root = document.querySelector('#root');
+  const form = generateNormalExerciseForm();
+  root.appendChild(form);
+  root.appendChild(document.createElement('br'));
+  const userExerciseForm = generateUserExerciseForm();
+  root.appendChild(userExerciseForm);
+}
+
+function hideBackBtn() {
   const backBtn = document.querySelector('#back-btn');
   backBtn.style.visibility = 'hidden';
+}
 
-  const root = document.querySelector('#root');
+function generateNormalExerciseForm() {
   const form = document.createElement('form');
   const div = document.createElement('div');
   const br = document.createElement('br');
@@ -113,10 +128,10 @@ const generateStartPage = () => {
   form.appendChild(amountInput);
   form.appendChild(br.cloneNode(true));
   form.appendChild(submit);
+  return form;
+}
 
-  root.appendChild(form);
-  root.appendChild(document.createElement('br'));
-
+function generateUserExerciseForm() {
   const userExerciseForm = document.createElement('form');
   const userExerciseFormHeader = document.createElement('h1');
   const userExerciseFormAmountLabel = document.createElement('label');
@@ -147,9 +162,10 @@ const generateStartPage = () => {
   userExerciseForm.appendChild(userExerciseFormAmountInput);
   userExerciseForm.appendChild(document.createElement('br'));
   userExerciseForm.appendChild(userExerciseFormSubmit);
+  return userExerciseForm;
+}
 
-  root.appendChild(userExerciseForm);
-
+function handleCookies() {
   if (cookieExist('exerciseSet')) {
     exerciseSet = readCookie('exerciseSet');
     if (readCookie('page') === 'exercisePage') {
@@ -158,7 +174,7 @@ const generateStartPage = () => {
       generateResultPage();
     }
   }
-};
+}
 
 /**
  * Generates the label for chosen subject.
