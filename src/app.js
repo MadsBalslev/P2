@@ -30,14 +30,6 @@ const tryHandleRequest = (request, response) => {
   }
 };
 
-// const logRequest = (request) => {
-//   console.log(`NEW ${request.method} REQUEST`);
-//   console.log(`Request url: ${request.url}`);
-//   console.log('Request headers:');
-//   console.log(request.headers);
-//   console.log('');
-// };
-
 /**
  * Will check which route is requested and use the correct handler function. If a non-existing route
  * is requsted it will throw an error which will be catched in {@link tryHandleRequest}

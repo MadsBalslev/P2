@@ -25,7 +25,7 @@ function tangensGeneratevars() {
  */
 function SinusExercise(){
   const {a, b} = sinusGenerateVars();
-  this.txt = "udregn sinus til 1 decimal hvis relevant. Udregnes i radianer";
+  this.txt = "Udregn sinus til 1 decimal hvis relevant. Udregnes i radianer";
   this.type = "trigonometri"
   this.point = 5;
   this.tegn ='';
