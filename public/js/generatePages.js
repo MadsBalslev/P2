@@ -574,7 +574,7 @@ function checkUserProfile() {
 }
 
 function setUserProfileToDefaultValue() {
-  localStorage.setItem('userProfile', JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+  localStorage.setItem('userProfile', JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
 }
 
 function userProfileEmpty() {
