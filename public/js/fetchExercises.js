@@ -49,6 +49,13 @@ const getUserExerciseSetFromServer = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+/**
+ * Makes a post request to /reviseUserProfile, with the userProfile stored in localStorage and the
+ * global variable exerciseSet as the request body.
+ *
+ * @returns A userProfile that has been revised by the server with the information in the
+* exerciseSet
+ */
 const makeServerReviseUserProfile = () => new Promise((resolve, reject) => {
   const baseUrl = window.location.href;
   const jsonRequestBody = {
