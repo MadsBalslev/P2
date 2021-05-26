@@ -23,8 +23,10 @@ For at køre programmet skal man blot skrive
 ```
 $ npm start
 ``` 
+Det er derefter muligt at tilgå webapplikationen på <http://localhost:8080/>
 
 ## Ydeligere info
+En live version af programmet kan også findes på <https://sw2c2-5.p2datsw.cs.aau.dk/node0/>, såfremt AAU's server stadig kører.
 
 Det er muligt at teste programmet ved at skrive:
 ```
