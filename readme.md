@@ -1,15 +1,15 @@
 # Online platform til træning af matematik på A-niveau
 Dette program er udarbejdet i forbindelse med P2-projektet på Software uddannelse på AAU.
 
-## Beksrivelse
+## Beskrivelse
 Programmet har til formål at understøtte læring i matematik blandt gymnasieelever med matematik på A-niveau.
 
-## Sådan kommer du igang
-Der er enktelte trin man lige skal sikre sig, før det er muligt at køre programmet.
+## Sådan kommer du i gang
+Der er enkelte trin man lige skal sikre sig, før det er muligt at køre programmet.
 
-### Dependencies
+### Afhængigheder
 
-Kræver at [NodeJS](https://nodejs.org/en/) er installeret på computeren for at kunne køre programmet.
+Det kræves at [NodeJS](https://nodejs.org/en/) er installeret på computeren for at kunne køre programmet.
 
 #### Installation af Node Pakker
 
@@ -28,12 +28,20 @@ Det er derefter muligt at tilgå webapplikationen på <http://localhost:8080/>
 ## Ydeligere info
 En live version af programmet kan også findes på <https://sw2c2-5.p2datsw.cs.aau.dk/node0/>, såfremt AAU's server stadig kører.
 
+### Struktur af program
+Programmet er opdelt i to hoveddele: 
+
+I mappen `public` ligger alt koden der køres på klientsiden. Dette inkluderer det JavaScript, som genererer vores HTML-side, som findes i `js/generatePages.js`. 
+
+I mappen `src` ligger koden, som kører på serversiden. Dette har sin start i filen `app.js`. Denne gør ydeligere brug af en masse hjælpefunktioner. Bl.a. bliver alle requests håndteret i deres respektive filer i mappen `routes`. Generering af opgaver sker i mappen `API/examQuestions`. Her findes der JavaScript-filer til hvert emne, samt en overordnet generator, som findes i `API/examQuestions/generator.js`
+### Andre kommandoer
+
 Det er muligt at teste programmet ved at skrive:
 ```
 $ npm run test
 ```
 
-Det er også muligt at få `test-coverage` af programet ved at skrive:
+Det er også muligt at få `test-coverage` af programmet ved at skrive:
 ```
 $ npm run coverage
 ```
