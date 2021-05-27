@@ -7,9 +7,9 @@ Programmet har til formål at understøtte læring i matematik blandt gymnasieel
 ## Sådan kommer du igang
 Der er enktelte trin man lige skal sikre sig, før det er muligt at køre programmet.
 
-### Dependencies
+### Afhængigheder
 
-Kræver at [NodeJS](https://nodejs.org/en/) er installeret på computeren for at kunne køre programmet.
+Det kræves at [NodeJS](https://nodejs.org/en/) er installeret på computeren for at kunne køre programmet.
 
 #### Installation af Node Pakker
 
@@ -25,6 +25,14 @@ $ npm start
 ``` 
 
 ## Ydeligere info
+
+### Struktur af program
+Programmet er opdelt i to hoveddele: 
+
+I mappen `public` ligger alt koden der køres på klientsiden. Dette inkluderer det JavaScript, som genererer vores HTML-side, som findes i `js/generatePages.js`. 
+
+I mappen `src` ligger koden, som kører på serversiden. Dette har sin start i filen `app.js`. Denne gør ydeligere brug af en masse hjælpefunktioner. Bl.a. bliver alle requests håndteret i deres respektive filer i mappen `routes`. Generering af opgaver sker i mappen `API/examQuestions`. Her findes der JavaScript-filer til hvert emne, samt en overordet generator, som findes i `API/examQuestions/generator.js`
+### Andre kommandoer
 
 Det er muligt at teste programmet ved at skrive:
 ```
