@@ -5,7 +5,7 @@
  * @param {} input The input from website.
  * @param {} output The output to the website
  */
-const convert = (input, output) => {
+const convert = (input, output) => { // I understand what this function does, but now how?
   MathJax.texReset();
   const options = MathJax.getMetricsFor(output);
   MathJax.tex2chtmlPromise(input, options).then((node) => {

@@ -63,7 +63,7 @@ const generateExcerciseSet = (categories, amount) => {
     }
   });
 
-  global.globalSet = set;
+  global.globalSet = set; // what's the point of this?
   return set;
 };
 
